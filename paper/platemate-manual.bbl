@@ -1,0 +1,151 @@
+\begin{thebibliography}{10}
+
+\bibitem{amft05:analysis}
+Amft, O., St{\"a}ger, M., Lukowicz, P., and Tr{\"o}ster, G.
+\newblock Analysis of chewing sounds for dietary monitoring.
+\newblock In {\em Ubicomp\/}. Springer, 2005, volume 3660 of {\em Lecture Notes
+  in Computer Science\/}, 56--72.
+
+\bibitem{ann2006use}
+Ann~Yon, B., Johnson, R., Harvey-Berino, J., and Gold, B.
+\newblock The use of a personal digital assistant for dietary self-monitoring
+  does not improve the validity of self-reports of energy intake.
+\newblock {\em Journal of the American Dietetic Association\/}, {\em 106\/}, 8
+  (2006), 1256--1259.
+
+\bibitem{bernstein2010soylent}
+Bernstein, M., Little, G., Miller, R., Hartmann, B., Ackerman, M., Karger, D.,
+  Crowell, D., and Panovich, K.
+\newblock Soylent: a word processor with a crowd inside.
+\newblock In {\em Proc. UIST'10\/}. ACM, 2010, 313--322.
+
+\bibitem{champagne2002energy}
+Champagne, C., Bray, G., Kurtz, A., Monteiro, J., Tucker, E., Volaufova, J.,
+  and Delany, J.
+\newblock Energy intake and energy expenditure:: A controlled study comparing
+  dietitians and non-dietitians.
+\newblock {\em Journal of the American Dietetic Association\/}, {\em 102\/}, 10
+  (2002), 1428--1432.
+
+\vspace*{-.5mm}
+\bibitem{dinkins2000beliefs}
+Dinkins, J.
+\newblock Beliefs and attitudes of americans towards their diet.
+\newblock US Department of Agriculture Center for Nutrition Policy and
+  Promotion (2000).
+
+\vspace*{-.5mm}
+\bibitem{goris2000undereating}
+Goris, A., Westerterp-Plantenga, M., and Westerterp, K.
+\newblock Undereating and underrecording of habitual food intake in obese men:
+  selective underreporting of fat intake.
+\newblock {\em The American journal of clinical nutrition\/}, {\em 71\/}, 1
+  (2000), 130.
+
+\vspace*{-.5mm}
+\bibitem{kitamura2010image}
+Kitamura, K., de~Silva, C., Yamasaki, T., and Aizawa, K.
+\newblock Image processing based approach to food balance analysis for personal
+  food logging.
+\newblock In {\em IEEE International Conference on Multimedia and Expo
+  (ICME)\/}. IEEE, 2010, 625--630.
+
+\vspace*{-.5mm}
+\bibitem{crowdforge}
+Kittur, A., Smus, B., and Kraut, R.
+\newblock {\em CrowdForge: Crowdsourcing Complex Work\/}.
+\newblock Technical Report CMU-HCII-11-100, CMU (2011).
+
+\vspace*{-.5mm}
+\bibitem{little2010turkit}
+Little, G., Chilton, L., Goldman, M., and Miller, R.
+\newblock Turkit: human computation algorithms on mechanical turk.
+\newblock In {\em Proc. UIST'10\/}. ACM, 2010, 57--66.
+
+\vspace*{-.5mm}
+\bibitem{little10:exploring}
+Little, G., Chilton, L.~B., Goldman, M., and Miller, R.~C.
+\newblock Exploring iterative and parallel human computation processes.
+\newblock In {\em Proc. ACM SIGKDD Workshop on Human
+  Computation\/}. ACM, New York, NY, USA, 2010, HCOMP '10, 68--76.
+
+\vspace*{-.5mm}
+\bibitem{locke02:building}
+Locke, E. and Latham, G.
+\newblock Building a practically useful theory of goal setting and task
+  motivation.
+\newblock {\em American Psychologist\/}, {\em 57\/}, 9 (2002), 705--717.
+
+\vspace*{-.5mm}
+\bibitem{mankoff02:using}
+Mankoff, J., Hsieh, G., Hung, H.~C., Lee, S., and Nitao, E.
+\newblock Using low-cost sensing to support nutritional awareness.
+\newblock In {\em Proc. UbiComp '02\/}. Springer-Verlag, London, UK, 2002, 371--376.
+
+\vspace*{-.5mm}
+\bibitem{mann2007medicare}
+Mann, T., Tomiyama, A., Westling, E., Lew, A., Samuels, B., and Chatman, J.
+\newblock {Medicare's search for effective obesity treatments: Diets are not
+  the answer.}
+\newblock {\em American Psychologist\/}, {\em 62\/}, 3 (2007), 220.
+
+\vspace*{-.5mm}
+\bibitem{qurk}
+Marcus, A., Wu, E., Karger, D., Madden, S., and Miller, R.
+\newblock {Crowdsourced databases: Query processing with people}.
+\newblock In {\em CIDR\/}. 2011.
+
+\vspace*{-.5mm}
+\bibitem{martin2007empirical}
+Martin, C., Anton, S., York-Crowe, E., Heilbronn, L., VanSkiver, C., Redman,
+  L., Greenway, F., Ravussin, E., and Williamson, D.
+\newblock Empirical evaluation of the ability to learn a calorie counting
+  system and estimate portion size and food intake.
+\newblock {\em British Journal of Nutrition\/}, {\em 98\/}, 02 (2007),
+  439--444.
+
+\vspace*{-.5mm}
+\bibitem{martin2009novel}
+Martin, C., Han, H., Coulon, S., Allen, H., Champagne, C., and Anton, S.
+\newblock A novel method to remotely measure food intake of free-living
+  individuals in real time: the remote food photography method.
+\newblock {\em British Journal of Nutrition\/}, {\em 101\/}, 03 (2009),
+  446--456.
+
+\vspace*{-.5mm}
+\bibitem{pikholz2004under}
+Pikholz, C., Swinburn, B., and Metcalf, P.
+\newblock Under-reporting of energy intake in the 1997 national nutrition
+  survey.
+\newblock {\em The New Zealand Medical Journal\/}, {\em 117\/}, 1202 (2004).
+
+\vspace*{-.5mm}
+\bibitem{reisner08:diet}
+Reisner, R. and Thompson, D.
+\newblock The diet industry: A big fat lie.
+\newblock {\em BuisinessWeek\/} (2008).
+
+\vspace*{-.5mm}
+\bibitem{schoeller1990inaccuracies}
+Schoeller, D., Bandini, L., and Dietz, W.
+\newblock Inaccuracies in self-reported intake identified by comparison with
+  the doubly labelled water method.
+\newblock {\em Canadian journal of physiology and pharmacology\/}, {\em 68\/},
+  7 (1990), 941.
+
+\vspace*{-.5mm}
+\bibitem{wisdom}
+Surowiecki, J.
+\newblock {\em The wisdom of crowds: why the many are smarter than the few and
+  how collective wisdom shapes business, economies, societies, and nations\/}.
+\newblock Doubleday, 2004.
+
+\vspace*{-.5mm}
+\bibitem{yon2007personal}
+Yon, B., Johnson, R., Harvey-Berino, J., Gold, B., and Howard, A.
+\newblock Personal digital assistants are comparable to traditional diaries for
+  dietary self-monitoring during a weight loss program.
+\newblock {\em Journal of behavioral medicine\/}, {\em 30\/}, 2 (2007),
+  165--175.
+
+\end{thebibliography}

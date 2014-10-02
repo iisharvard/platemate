@@ -1,0 +1,34 @@
+\section{DISCUSSION AND FUTURE DIRECTIONS}
+
+%This section considers several successes and failures of PlateMate and opportunities for related work in crowdsourced remote food photography and crowdsourcing at large.  
+The results from our evaluations of PlateMate suggest that through careful coordination, untrained workers can approach experts in their accuracy in estimating nutrition information from photographs of meals. These estimates are close to those logged by the people who actually ate the meals. However, several issues which became apparent during the course of our evaluations could be addressed through future work.
+
+PlateMate consistently struggled to produce good results on liquids like beverages and salad dressing. One participant drinks a low-fat latte each morning, but PlateMate consistently identified it as coffee with cream.  Another only used low-fat salad dressings, which were identified as their full-fat versions.  These issues could be addressed by introducing personalization mechanisms.  For example, the interface could give users access to images of foods they eat frequently---instead of taking a picture of today's latte, a user would simply select a picture of last week's, ensuring correct logging and obviating the need for engaging the crowd. Statistical methods could also be used to adapt the Turker interface to emphasize the foods most common in a user's diet and thus most likely to appear in their photos.  These approaches could result in improvements to both reliability and cost.
+
+%Two approaches in future work could address this type of issue.  First, allowing users to denote ``favorite foods'' could both provide guides for Turkers during the Identify stage and make it faster for users to select these items when correcting estimates.  A more involved approach could also utilize machine learning based on users' corrections to either guide workers to select the items more likely to be chosen by each user or automatically correct estimates which appear to replicate past mistakes.
+
+%Unsurprisingly, nearly all subjects were frustrated by the effort required to transfer photos to a computer and manually upload them to PlateMate. Many commented that a smartphone application to combine photography, uploading, and receiving estimates would simplify this process.  In addition to a smartphone application replicating our online interface, interesting future work exists around location.  
+
+Geolocation capabilities available in many mobile devices could be used to further improve accuracy of the crowdsourced analysis of restaurant meals. Photos could be annotated with the cuisine of the restaurant in which they were taken, providing Turkers with helpful context while maintaining the privacy of user's actual location.  Integrating with existing local ``check-in'' applications like Foursquare\footnote{\url{https://foursquare.com/}} would make it even simpler to associate meals with their places of origin.
+% could also provide a means to retrieve meals later if one forgot to take a picture or felt that taking a picture would be socially awkward---would require that a person marks a location without taking a pic
+
+\newcontent{Permitting optional textual annotations by users (e.g., ``skim latte'', ``mango curry'') would naturally further improve accuracy and reduce cost.  So would employing computer vision and machine learning for parts of the process:}  over time and continued use, PlateMate could build a large database mapping tagged sections of photographs to specific foods and portions.  An algorithmic approach could be taken to analyze new photos for similarity with previously processed images.  This could result in fully computerized analysis based on the prior crowdsourced work, extending the vision approach in~\cite{kitamura2010image}, or these potential similar items could be surfaced in alternate HIT interfaces to Turkers as a way of skipping unnecessary stages of the PlateMate process.
+
+\newcontent{This work was done on the assumption that lowering the barrier to monitoring one's food intake may result in a larger number of people persisting in their attempts to alter their eating habits.  We are aware, however, that making the process too easy may reduce the opportunities for reflection.  Ultimately, PlateMate's success depends on the users' willingness to engage with the information it provides.  But if they do, PlateMate can help its users correct misconceptions about nutritional content of the foods they consume and to improve their ability to estimate portion sizes.}
+
+The Remote Food Photography Method relies on two images of each meal:
+a photograph of the original portion and a photograph of any food that was left
+uneaten. We have explored the first part of the process and we expect
+that the second can be performed in a similar manner.  A major difficulty in analyzing images of
+leftovers is likely to be in identifying the foods in the photo. But
+as such foods are already identified in the first part of the process, a reasonable approach to extend PlateMate may be to display an annotated
+image of the original plate next to the photograph of the
+leftovers, and ask Turkers to identify portions of the second image where the
+original foods are present and, in the subsequent step, to estimate the
+amounts of the leftover foods. Our future work will aim to test the efficacy
+of such an approach and to thus fully implement the Remote Food Photography Method.
+%By combining algorithmic and crowdsourcing approaches, these types of extensions could allow PlateMate to reach higher accuracy.  They also suggest a different type of role for human computation than what has been suggested in prior work.  While this paper has focused solely on crowdsourcing nutrition analysis, future evolutions of this system could use Mechanical Turk as one part of a larger hole, in which human workers build training datasets for learning algorithms and are automatically employed to cover other gaps in automated algorithms.
+
+%\fix{hq: I am also ok with cut below}
+%\cut{Finally, our work focused on providing an accurate and unobtrusive way of measuring a user's eating habits. Other work has explored how accurate sensing of a user's behavior can be used to motivate positive behavior change.  UbiFit, Houston, and Fish'n'Steps use personal displays, games, and social networks to encourage physical activity~\cite{Consolvo:2008:FRA:1409635.1409644,Consolvo:2006:DRT:1124772.1124840,Lin:2006fk}, while projects like UbiGreen apply similar principles to promoting sustainable activities~\cite{Froehlich:2009:UIM:1518701.1518861}.  PlateMate can enable these techniques to be used to help people make healthier eating choices.
+%}

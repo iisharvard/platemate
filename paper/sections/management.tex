@@ -1,0 +1,116 @@
+\section{THE MANAGEMENT FRAMEWORK}
+In this section, we introduce a programming framework for solving
+problems with crowds based on a human organizational hierarchy. This
+approach differs conceptually from prior work, which has focused on
+creating ``crowd programming languages'' that combine human and
+machine computation. For example, TurKit~\cite{little2010turkit} lets requesters
+program crowds in JavaScript, Qurk~\cite{qurk} integrated crowds into
+SQL, and CrowdForge~\cite{crowdforge} parallelized work with MapReduce
+scripts. In each case, these toolkits have attempted to make working
+with crowds more like working with computers.
+This approach emphasizes computation as the natural glue for combining individual worker contributions and the resulting artifact is a computer program with some of the primitive operations implemented as ``functional calls'' to human workers~\cite{little2010turkit}.
+
+Because PlateMate relies primarily on human work, divided into a number of heterogenous and interacting tasks, and because the issues of worker skill and motivation were central to our design process, we found it conceptually helpful to use human organizational hierarchies as the metaphor for designing our system.  Specifically, we observe that in the real world, expert-level work (e.g., building a table) can be reproduced by less skilled workers---each working on a specific part of the process---supervised by managers who are not necessarily skilled craftsmen themselves, but who know how to assign tasks, route work among workers, and verify the quality of the work.
+
+%To illustrate, in the real world, expert-level work can be reproduced by less skilled workers
+%through division of labor in an organized hierarchy. Large, complex
+%goals are decomposed into simpler operations overseen by managers who
+%supervise workers with clear areas of responsibility. Consider making
+%a table. One approach is to have a highly-trained expert craftsman
+%build the table alone. Alternatively, a factory can build a table by
+%assigning each worker a small piece of the job. One worker may saw
+%the wood, another may polish it, and a third may assemble the
+%pieces together. Supervisors---who need not be experts, either---assign tasks to workers, route work between them, and verify the quality of work. 
+
+%Such approach is conceptually useful for processing large computational tasks with human
+%intelligence as an extra ``functional call''~\cite{little2010turkit}. 
+
+%PlateMate,
+%however, aims to emulate the reasoning of an individual human
+%expert. In this domain, we found the abstraction of ``programming
+%crowds'' as if they were computers unnatural. 
+%We could not think of
+%the crowd as a function call, since our HITs and workflows were based
+%on careful observation of Turker psychology and motivation. 
+%Instead, 
+%PlateMate
+%thus follows the opposite approach. 
+
+%With PlateMate, however, we 
+%
+%PlateMate tries to make programming crowds more like instructing and
+%organizing a team of humans.
+
+
+%This approach of distributing
+%work has been profoundly successful with material goods, and we seek
+%to do the same thing with expert thought and reasoning.\fix{Consider removing this last sentence -- this is a broad claim with no citations.}
+
+
+
+%\section{The Management Framework}
+Thus, to implement division of labor for crowdsourcing, we created a new
+framework organized around objects called \em managers.\em\  
+%Managers are independent of their peers.  
+%written as if they are independent agents in a distributed system. 
+Managers communicate with their supervisors and their \em employees \em using asynchronous message passing: managers assign tasks by placing them in inboxes of lower level managers and communicate with their superiors by placing results of completed tasks in their own outboxes.
+%They constantly check for new assignments, assign work to
+%their \em employees,\em\ receive completed work, and send their own outputs up
+%the hierarchy. 
+This hierarchical message-passing approach allows programmers
+to implement workflows by decomposing problems into progressively
+smaller steps.
+
+As illustrated earlier in Figure~\ref{fig:system}, the root of this tree is a \em chief \em manager, which gathers new inputs
+and produces completed outputs. In PlateMate, the chief has three
+employees: Tag, Identify, and Measure. Each of these are in turn
+managers and have their own employees, corresponding to the individual
+HITs described above.
+
+This hierarchical structure creates a flexible workflow consisting of
+ modules connected by higher-level managers. Managers can route work intelligently among their
+employees, and may dynamically alter the sequence of steps in the process depending on a situation. For example, PlateMate's Tag manager compares the outputs from its
+DrawBoxes employee. If they are sufficiently different, they are sent
+to the VoteBoxes manager to decide between them. Otherwise, one answer
+is chosen randomly and sent up the hierarchy as Tag's completed
+output. All managers work in parallel, each processing its own stream of
+work. 
+
+When multiple tasks are submitted, processing is done just-in-time: for example, as soon as one photograph is tagged, the Identify manager begins the process of finding out what foods are present in each of the boxes without waiting for the remaining photographs to be tagged.  
+
+%This asynchronous approach improves on the iterative workflows
+%in TurKit, where each stage blocks until every task in that stage has
+%been completed. 
+%It also differs from CrowdForge, where intermediate
+%outputs must all be finished before they can be recombined. Instead,
+%completed work is sent up the chain and on to the next step
+%immediately, where another manager can begin to process it.
+
+At the lowest level of the hierarchy are managers whose employees are
+the crowd workers. Managers at this level create jobs (such as asking
+for the food in one tagged box on a photo to be identified) and
+receive responses. Programmers create HIT templates and validation
+functions which are used by the framework to create HITs and approve
+work. Managers simply assign work to the crowd and receive validated outputs that can be passed up the
+tree.
+
+Of course, the Management Framework \em is \em a computational framework, and it naturally supports a number of the recently introduced design patterns for programming the crowds.  For example, the Tag step is an analog of the map step in MapReduce and the Describe step (part of Identify, see Figure~\ref{fig:system}) relies on iterative refinement~\cite{little10:exploring} to improve the level of detail of the descriptions.
+
+Management is implemented as an extension of Django, a web application
+framework for Python. It builds on several useful features from
+Django, including an HTML template language for defining HIT
+instructions, examples, and interfaces. It also uses Django's
+object-relational mapper, which automatically stores Python objects in
+a MySQL database. This means that the precise state of the system is
+always stored, including managers' inboxes and outboxes, active HITs
+and completed assignments, and intermediate inputs and outputs. This
+simplifies later analysis, since requesters can go back and query
+responses from each stage in the workflow. It also protects completed
+work from program errors or service outages; after crashes, execution simply  
+resumes from the last good state. 
+%\fix{drop this: ``rather than restarting from the
+%beginning as in TurKit's crash-and-rerun
+%model~\cite{little2010turkit}.'' -- turkit doesn't really start from the beginning, it also picks up where 
+%you leave off}
+
+

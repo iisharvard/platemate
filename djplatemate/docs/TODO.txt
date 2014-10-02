@@ -1,0 +1,84 @@
+Model changes
+- link up input, job, response, output
+- add timing to all of them
+- use it to prevent workers voting on stuff they did!
+- on response, store the raw data they entered
+
+describe only needs 2 iters, or shittier workers
+tag /voteshouldn't prevent overlap
+
+match improvements
+- emphasize that they should NOT select everything that matches. instead, pick the best
+- part vs. whole is still hard, like "Garnish" for "lettuce and onion"
+- stop using word "ingredients"! Distinguish between parts and ingredients, like "butter", "salt", etc.
+- maybe use language like, "imagine someone had to draw a picture from your description" or something
+- limit # of ingredients. 4?
+- take duplication down to 2
+- Emphasize picking most general, or specific, or something
+
+match vote needs more guidance
+- branding
+- generality vs. specificity
+- avoiding duplicates within one list
+- automatically decide if identical lists
+
+measure improvements
+- leaving out stuff in other boxes
+- Emphasize measuring by volume or pieces, not weight, discourage "serving"
+   + javascript warning if they choose a weight measurement. "judging weight by eye is difficult, unless you're using the portion guide"
+   + javascript message if they choose volume "use the portion guide!"
+   + js message if they choose serving "since people disagree about servings, only use this option as a last resort"
+   + js message if they choose a tiny or huge number "this is a very small (big) number. are you sure there isn't a better unit to measure in?"
+   + if they have tiny calories "this is almost no calories / huge number of calories. are you sure about your answer?"
+- Measuring guide
+- Show the total calorie calculation. Ask, does that look reasonable?
+- Get variable number of answers, depending on agreement
+- Detect outliers somehow!
+- Background too dark to judge scale?
+
+questions / general todo
+- have people ignore foods that have no impact?
+- run an experiment merge identify/describe desc and ingr
+- extra step for marking reasonable/unreasonable measurements?
+- do we want a standard volume to compare to?
+- count the # of tasks for each thing, and the hourly wage on each, and total expenditure. general stats page
+- read thru instructions one more time
+
+=================
+CODE ORGANIZATION
+=================
+Move to SEAS SVN
+
+=================
+   EXPERIMENTS
+=================
+
+=================
+   MANAGEMENT
+=================
+
+Models
+======
+Automatically refresh HITs after a certain time
+Get export.py working
+
+Views/Templates
+===============
+Browser user agent detection is buggy
+
+
+=================
+      FOOD
+=================
+
+Tag
+---
+Get rid of "boxes should never overlap"
+
+Identify
+---------
+Checkbox for "this description is perfect"
+
+Measure
+-------
+Checkbox for "this item isn't in the picture"

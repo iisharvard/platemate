@@ -1,0 +1,1983 @@
+[
+    {
+        "pk": 5777, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "", 
+            "content_type": 14, 
+            "food_name": "Mashed Potato"
+        }
+    }, 
+    {
+        "pk": 6037, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "", 
+            "content_type": 14, 
+            "food_name": "Cooked Carrots"
+        }
+    }, 
+    {
+        "pk": 6229, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 31kcal | Fat: 0.12g | Carbs: 7.13g | Protein: 1.82g", 
+            "content_type": 14, 
+            "food_name": "Green String Beans"
+        }
+    }, 
+    {
+        "pk": 6314, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 131g - Calories: 77kcal | Fat: 4.05g | Carbs: 9.94g | Protein: 2.38g", 
+            "content_type": 14, 
+            "food_name": "Cooked Green String Beans (from Fresh)"
+        }
+    }, 
+    {
+        "pk": 6429, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 140g - Calories: 60kcal | Fat: 3.84g | Carbs: 6.16g | Protein: 1.57g", 
+            "content_type": 14, 
+            "food_name": "Low Sodium Green String Beans (Canned)"
+        }
+    }, 
+    {
+        "pk": 6640, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 101g - Calories: 65kcal | Fat: 0.85g | Carbs: 12.18g | Protein: 3.46g", 
+            "content_type": 14, 
+            "food_name": "Cooked Green String Beans with Chickpeas (Fat Not Added in Cooking)"
+        }
+    }, 
+    {
+        "pk": 6704, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 162g - Calories: 254kcal | Fat: 18.70g | Carbs: 17.08g | Protein: 10.32g", 
+            "content_type": 14, 
+            "food_name": "Cooked Green String Beans with Almonds (Fat Not Added in Cooking)"
+        }
+    }, 
+    {
+        "pk": 6805, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 503g - Calories: 141kcal | Fat: 0.50g | Carbs: 31.67g | Protein: 7.99g", 
+            "content_type": 14, 
+            "food_name": "Pickled Green String Beans"
+        }
+    }, 
+    {
+        "pk": 6857, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 291g - Calories: 160kcal | Fat: 8.24g | Carbs: 18.57g | Protein: 5.03g", 
+            "content_type": 14, 
+            "food_name": "Cooked Green String Beans with Mushroom Sauce"
+        }
+    }, 
+    {
+        "pk": 33703, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 413kcal | Fat: 32.34g | Carbs: 0.36g | Protein: 29.81g", 
+            "content_type": 14, 
+            "food_name": "Gruyere Cheese"
+        }
+    }, 
+    {
+        "pk": 33814, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "", 
+            "content_type": 14, 
+            "food_name": "Butter"
+        }
+    }, 
+    {
+        "pk": 33892, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 255kcal | Fat: 3.26g | Carbs: 64.81g | Protein: 10.95g", 
+            "content_type": 14, 
+            "food_name": "Black Pepper"
+        }
+    }, 
+    {
+        "pk": 34822, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 53kcal | Fat: 2.36g | Carbs: 4.81g | Protein: 3.75g", 
+            "content_type": 14, 
+            "food_name": "Beef Gravy (Canned)"
+        }
+    }, 
+    {
+        "pk": 34824, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 79kcal | Fat: 5.71g | Carbs: 5.42g | Protein: 1.93g", 
+            "content_type": 14, 
+            "food_name": "Chicken Gravy (Canned)"
+        }
+    }, 
+    {
+        "pk": 34830, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 51kcal | Fat: 2.10g | Carbs: 5.10g | Protein: 2.60g", 
+            "content_type": 14, 
+            "food_name": "Turkey Gravy (Canned)"
+        }
+    }, 
+    {
+        "pk": 35815, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 32kcal | Fat: 0.10g | Carbs: 8.08g | Protein: 0.63g", 
+            "content_type": 14, 
+            "food_name": "Grapefruit (Pink and Red and White)"
+        }
+    }, 
+    {
+        "pk": 35819, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 33kcal | Fat: 0.10g | Carbs: 8.41g | Protein: 0.69g", 
+            "content_type": 14, 
+            "food_name": "White Grapefruit"
+        }
+    }, 
+    {
+        "pk": 35830, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 67kcal | Fat: 0.35g | Carbs: 17.15g | Protein: 0.63g", 
+            "content_type": 14, 
+            "food_name": "Grapes (American Type, Slip Skin)"
+        }
+    }, 
+    {
+        "pk": 35831, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 69kcal | Fat: 0.16g | Carbs: 18.10g | Protein: 0.72g", 
+            "content_type": 14, 
+            "food_name": "Grapes (Red or Green, European Type Varieties Such As Thompson Seedless)"
+        }
+    }, 
+    {
+        "pk": 35832, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 40kcal | Fat: 0.11g | Carbs: 10.30g | Protein: 0.50g", 
+            "content_type": 14, 
+            "food_name": "Thompson Seedless Grapes (Solids and Liquids, Water Pack, Canned)"
+        }
+    }, 
+    {
+        "pk": 35833, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 73kcal | Fat: 0.10g | Carbs: 19.65g | Protein: 0.48g", 
+            "content_type": 14, 
+            "food_name": "Thompson Seedless Grapes (Solids and Liquids, Heavy Syrup Pack, Canned)"
+        }
+    }, 
+    {
+        "pk": 36276, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 31kcal | Fat: 0.12g | Carbs: 7.13g | Protein: 1.82g", 
+            "content_type": 14, 
+            "food_name": "Green Snap Beans"
+        }
+    }, 
+    {
+        "pk": 36278, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 15kcal | Fat: 0.10g | Carbs: 3.50g | Protein: 0.80g", 
+            "content_type": 14, 
+            "food_name": "Green Snap Beans (Solids and Liquids, Canned)"
+        }
+    }, 
+    {
+        "pk": 36279, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 20kcal | Fat: 0.10g | Carbs: 4.50g | Protein: 1.15g", 
+            "content_type": 14, 
+            "food_name": "Green Snap Beans (Drained Solids, Canned)"
+        }
+    }, 
+    {
+        "pk": 36281, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 33kcal | Fat: 0.21g | Carbs: 7.58g | Protein: 1.80g", 
+            "content_type": 14, 
+            "food_name": "Green Snap Beans (Frozen)"
+        }
+    }, 
+    {
+        "pk": 36480, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 20kcal | Fat: 0.17g | Carbs: 4.64g | Protein: 0.86g", 
+            "content_type": 14, 
+            "food_name": "Green Peppers"
+        }
+    }, 
+    {
+        "pk": 36482, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 18kcal | Fat: 0.30g | Carbs: 3.90g | Protein: 0.80g", 
+            "content_type": 14, 
+            "food_name": "Green Peppers (Solids and Liquids, Canned)"
+        }
+    }, 
+    {
+        "pk": 36483, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 20kcal | Fat: 0.21g | Carbs: 4.45g | Protein: 1.08g", 
+            "content_type": 14, 
+            "food_name": "Green Peppers (Chopped, Frozen)"
+        }
+    }, 
+    {
+        "pk": 36696, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 314kcal | Fat: 3.00g | Carbs: 68.70g | Protein: 17.90g", 
+            "content_type": 14, 
+            "food_name": "Green Peppers (Freeze-Dried)"
+        }
+    }, 
+    {
+        "pk": 36754, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 15kcal | Fat: 0.10g | Carbs: 3.50g | Protein: 0.80g", 
+            "content_type": 14, 
+            "food_name": "Green Snap Beans (No Salt Added, Solids and Liquids, Canned)"
+        }
+    }, 
+    {
+        "pk": 36757, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 20kcal | Fat: 0.10g | Carbs: 4.50g | Protein: 1.15g", 
+            "content_type": 14, 
+            "food_name": "Green Snap Beans (No Salt Added, Drained Solids, Canned)"
+        }
+    }, 
+    {
+        "pk": 36991, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 93kcal | Fat: 2.12g | Carbs: 17.31g | Protein: 5.60g", 
+            "content_type": 14, 
+            "food_name": "Grape Leaves"
+        }
+    }, 
+    {
+        "pk": 36992, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 69kcal | Fat: 1.97g | Carbs: 11.71g | Protein: 4.27g", 
+            "content_type": 14, 
+            "food_name": "Grape Leaves (Canned)"
+        }
+    }, 
+    {
+        "pk": 37479, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 332kcal | Fat: 30.00g | Carbs: 0.00g | Protein: 14.35g", 
+            "content_type": 14, 
+            "food_name": "Ground Beef (70% Lean / 30% Fat)"
+        }
+    }, 
+    {
+        "pk": 38235, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 339kcal | Fat: 1.14g | Carbs: 62.37g | Protein: 21.86g", 
+            "content_type": 14, 
+            "food_name": "Great Northern Beans (Mature Seeds)"
+        }
+    }, 
+    {
+        "pk": 40391, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 137kcal | Fat: 5.00g | Carbs: 0.00g | Protein: 21.41g", 
+            "content_type": 14, 
+            "food_name": "Ground Beef (95% Lean / 5% Fat)"
+        }
+    }, 
+    {
+        "pk": 40396, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 176kcal | Fat: 10.00g | Carbs: 0.00g | Protein: 20.00g", 
+            "content_type": 14, 
+            "food_name": "Ground Beef (90% Lean / 10% Fat)"
+        }
+    }, 
+    {
+        "pk": 40401, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 215kcal | Fat: 15.00g | Carbs: 0.00g | Protein: 18.59g", 
+            "content_type": 14, 
+            "food_name": "Ground Beef (85% Lean / 15% Fat)"
+        }
+    }, 
+    {
+        "pk": 40406, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 254kcal | Fat: 20.00g | Carbs: 0.00g | Protein: 17.17g", 
+            "content_type": 14, 
+            "food_name": "Ground Beef (80% Lean / 20% Fat)"
+        }
+    }, 
+    {
+        "pk": 40411, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 293kcal | Fat: 25.00g | Carbs: 0.00g | Protein: 15.76g", 
+            "content_type": 14, 
+            "food_name": "Ground Beef (75% Lean / 25% Fat)"
+        }
+    }, 
+    {
+        "pk": 40413, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 100g - Calories: 248kcal | Fat: 16.44g | Carbs: 0.00g | Protein: 23.45g", 
+            "content_type": 14, 
+            "food_name": "Ground Beef (75% Lean / 25% Fat, Patty, Cooked, Pan-Broiled)"
+        }
+    }, 
+    {
+        "pk": 43075, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 1/2 cup - Calories: 20kcal | Fat: 0.00g | Carbs: 4.00g | Protein: 1.00g", 
+            "content_type": 14, 
+            "food_name": "Wylwood Green Beans"
+        }
+    }, 
+    {
+        "pk": 43467, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 1/2 cup - Calories: 20kcal | Fat: 0.00g | Carbs: 4.00g | Protein: 0.00g", 
+            "content_type": 14, 
+            "food_name": "Great Value Whole Green Beans"
+        }
+    }, 
+    {
+        "pk": 46272, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 3/4 cup - Calories: 20kcal | Fat: 0.00g | Carbs: 5.00g | Protein: 1.00g", 
+            "content_type": 14, 
+            "food_name": "GreenLine Green Beans"
+        }
+    }, 
+    {
+        "pk": 46523, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 1/2 cup - Calories: 20kcal | Fat: 0.00g | Carbs: 4.00g | Protein: 1.00g", 
+            "content_type": 14, 
+            "food_name": "Green Giant Kitchen Sliced Green Beans"
+        }
+    }, 
+    {
+        "pk": 47620, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 1/2 cup - Calories: 25kcal | Fat: 0.00g | Carbs: 5.00g | Protein: 0.50g", 
+            "content_type": 14, 
+            "food_name": "American Value Green Beans (Canned)"
+        }
+    }, 
+    {
+        "pk": 48490, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 1 serving - Calories: 60kcal | Fat: 3.50g | Carbs: 7.00g | Protein: 2.00g", 
+            "content_type": 14, 
+            "food_name": "Boston Market Green Beans"
+        }
+    }, 
+    {
+        "pk": 48791, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 1/2 cup - Calories: 20kcal | Fat: 0.00g | Carbs: 4.00g | Protein: 1.00g", 
+            "content_type": 14, 
+            "food_name": "Market Pantry Green Beans"
+        }
+    }, 
+    {
+        "pk": 49059, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 1/2 cup - Calories: 25kcal | Fat: 0.00g | Carbs: 5.00g | Protein: 0.00g", 
+            "content_type": 14, 
+            "food_name": "Food Lion Cut Green Beans"
+        }
+    }, 
+    {
+        "pk": 50057, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 1 cup - Calories: 70kcal | Fat: 2.00g | Carbs: 10.00g | Protein: 2.00g", 
+            "content_type": 14, 
+            "food_name": "Trader Joe's Prig Khing Green Beans"
+        }
+    }, 
+    {
+        "pk": 50529, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 1/2 cup - Calories: 20kcal | Fat: 0.00g | Carbs: 4.00g | Protein: 1.00g", 
+            "content_type": 14, 
+            "food_name": "Great Value Green Beans (No Salted Added)"
+        }
+    }, 
+    {
+        "pk": 50810, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 3/4 cup - Calories: 25kcal | Fat: 0.00g | Carbs: 4.00g | Protein: 1.00g", 
+            "content_type": 14, 
+            "food_name": "Europe's Best Green and Yellow Beans"
+        }
+    }, 
+    {
+        "pk": 50909, 
+        "model": "food.food", 
+        "fields": {
+            "food_description": "Per 1/2 cup - Calories: 20kcal | Fat: 0.00g | Carbs: 4.00g | Protein: 1.00g", 
+            "content_type": 14, 
+            "food_name": "Butter Kernel Sliced Green Beans"
+        }
+    }, 
+    {
+        "pk": "gr", 
+        "model": "food.foodsearchresults", 
+        "fields": {
+            "content_type": 16
+        }
+    }, 
+    {
+        "pk": "green bean", 
+        "model": "food.foodsearchresults", 
+        "fields": {
+            "content_type": 16
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 40391, 
+            "ordering": 0, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 40396, 
+            "ordering": 1, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 40401, 
+            "ordering": 2, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 40406, 
+            "ordering": 3, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 36480, 
+            "ordering": 4, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 35830, 
+            "ordering": 5, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 35831, 
+            "ordering": 6, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 37479, 
+            "ordering": 7, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 36991, 
+            "ordering": 8, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 36992, 
+            "ordering": 9, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 36483, 
+            "ordering": 10, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 36482, 
+            "ordering": 11, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 35832, 
+            "ordering": 12, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 35833, 
+            "ordering": 13, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 36696, 
+            "ordering": 14, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 33703, 
+            "ordering": 15, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 40411, 
+            "ordering": 16, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 40413, 
+            "ordering": 17, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 38235, 
+            "ordering": 18, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 35815, 
+            "ordering": 19, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 21, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 33892, 
+            "ordering": 20, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 22, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 35819, 
+            "ordering": 21, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 34822, 
+            "ordering": 22, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 24, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 34830, 
+            "ordering": 23, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 25, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 34824, 
+            "ordering": 24, 
+            "results": "gr", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 26, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 36276, 
+            "ordering": 0, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 27, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 36281, 
+            "ordering": 1, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 28, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 6229, 
+            "ordering": 2, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 29, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 36279, 
+            "ordering": 3, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 30, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 36278, 
+            "ordering": 4, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 31, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 36757, 
+            "ordering": 5, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 32, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 6429, 
+            "ordering": 6, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 33, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 6314, 
+            "ordering": 7, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 34, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 6704, 
+            "ordering": 8, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 35, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 6857, 
+            "ordering": 9, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 36, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 6640, 
+            "ordering": 10, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 37, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 6805, 
+            "ordering": 11, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 38, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 36754, 
+            "ordering": 12, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 39, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 43075, 
+            "ordering": 13, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 40, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 43467, 
+            "ordering": 14, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 41, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 46272, 
+            "ordering": 15, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 42, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 46523, 
+            "ordering": 16, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 43, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 47620, 
+            "ordering": 17, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 44, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 48490, 
+            "ordering": 18, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 45, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 48791, 
+            "ordering": 19, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 46, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 49059, 
+            "ordering": 20, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 47, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 50057, 
+            "ordering": 21, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 48, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 50529, 
+            "ordering": 22, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 49, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 50810, 
+            "ordering": 23, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 50, 
+        "model": "food.foodsearchresult", 
+        "fields": {
+            "food": 50909, 
+            "ordering": 24, 
+            "results": "green bean", 
+            "content_type": 17
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 small (1-3/4\" to 2-1/4\" dia, raw) yields", 
+            "carbohydrate": 17.289999999999999, 
+            "saturated_fat": 0.87, 
+            "protein": 1.98, 
+            "serving_id": 21054, 
+            "sodium": null, 
+            "vitamin_c": 13.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 1.52, 
+            "measurement_description": "small (1-3/4\" to 2-1/4\" dia, raw) yields", 
+            "number_of_units": 1.0, 
+            "fiber": 1.3999999999999999, 
+            "food": 5777, 
+            "potassium": 286.0, 
+            "fat": 3.8900000000000001, 
+            "metric_serving_amount": 110.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 1.7350000000000001, 
+            "calories": 110.0, 
+            "polyunsaturated_fat": 1.0760000000000001, 
+            "calcium": 2.0, 
+            "iron": 1.0, 
+            "cholesterol": 1.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 medium (2-1/4\" to 3\" dia, raw) yields", 
+            "carbohydrate": 23.109999999999999, 
+            "saturated_fat": 1.163, 
+            "protein": 2.6499999999999999, 
+            "serving_id": 21403, 
+            "sodium": null, 
+            "vitamin_c": 17.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 2.0299999999999998, 
+            "measurement_description": "medium (2-1/4\" to 3\" dia, raw) yields", 
+            "number_of_units": 1.0, 
+            "fiber": 1.8999999999999999, 
+            "food": 5777, 
+            "potassium": 382.0, 
+            "fat": 5.2000000000000002, 
+            "metric_serving_amount": 147.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 2.3180000000000001, 
+            "calories": 147.0, 
+            "polyunsaturated_fat": 1.4379999999999999, 
+            "calcium": 3.0, 
+            "iron": 2.0, 
+            "cholesterol": 1.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 large (3\" to 4-1/4\" dia, raw) yields", 
+            "carbohydrate": 34.579999999999998, 
+            "saturated_fat": 1.74, 
+            "protein": 3.96, 
+            "serving_id": 21785, 
+            "sodium": null, 
+            "vitamin_c": 26.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 3.04, 
+            "measurement_description": "large (3\" to 4-1/4\" dia, raw) yields", 
+            "number_of_units": 1.0, 
+            "fiber": 2.8999999999999999, 
+            "food": 5777, 
+            "potassium": 572.0, 
+            "fat": 7.79, 
+            "metric_serving_amount": 220.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 3.4689999999999999, 
+            "calories": 220.0, 
+            "polyunsaturated_fat": 2.1520000000000001, 
+            "calcium": 5.0, 
+            "iron": 3.0, 
+            "cholesterol": 2.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 long type (2-1/3\" dia, 4-3/4\" long, raw) yields", 
+            "carbohydrate": 38.200000000000003, 
+            "saturated_fat": 1.9219999999999999, 
+            "protein": 4.3700000000000001, 
+            "serving_id": 21017, 
+            "sodium": null, 
+            "vitamin_c": 29.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 3.3500000000000001, 
+            "measurement_description": "long type (2-1/3\" dia, 4-3/4\" long, raw) yields", 
+            "number_of_units": 1.0, 
+            "fiber": 3.2000000000000002, 
+            "food": 5777, 
+            "potassium": 632.0, 
+            "fat": 8.5999999999999996, 
+            "metric_serving_amount": 243.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 3.8319999999999999, 
+            "calories": 243.0, 
+            "polyunsaturated_fat": 2.3769999999999998, 
+            "calcium": 6.0, 
+            "iron": 3.0, 
+            "cholesterol": 2.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 cup", 
+            "carbohydrate": 33.009999999999998, 
+            "saturated_fat": 1.661, 
+            "protein": 3.7799999999999998, 
+            "serving_id": 22051, 
+            "sodium": null, 
+            "vitamin_c": 25.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 2.8999999999999999, 
+            "measurement_description": "cup", 
+            "number_of_units": 1.0, 
+            "fiber": 2.7000000000000002, 
+            "food": 5777, 
+            "potassium": 546.0, 
+            "fat": 7.4299999999999997, 
+            "metric_serving_amount": 210.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 3.3119999999999998, 
+            "calories": 210.0, 
+            "polyunsaturated_fat": 2.0539999999999998, 
+            "calcium": 5.0, 
+            "iron": 3.0, 
+            "cholesterol": 2.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 serving (105 g)", 
+            "carbohydrate": 16.510000000000002, 
+            "saturated_fat": 0.83099999999999996, 
+            "protein": 1.8899999999999999, 
+            "serving_id": 20947, 
+            "sodium": null, 
+            "vitamin_c": 12.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 1.45, 
+            "measurement_description": "Quantity not specified", 
+            "number_of_units": 1.0, 
+            "fiber": 1.3999999999999999, 
+            "food": 5777, 
+            "potassium": 273.0, 
+            "fat": 3.7200000000000002, 
+            "metric_serving_amount": 105.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 1.6559999999999999, 
+            "calories": 105.0, 
+            "polyunsaturated_fat": 1.0269999999999999, 
+            "calcium": 2.0, 
+            "iron": 1.0, 
+            "cholesterol": 1.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "100 g", 
+            "carbohydrate": 15.720000000000001, 
+            "saturated_fat": 0.79100000000000004, 
+            "protein": 1.8, 
+            "serving_id": 54457, 
+            "sodium": null, 
+            "vitamin_c": 12.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 1.3799999999999999, 
+            "measurement_description": "g", 
+            "number_of_units": 100.0, 
+            "fiber": 1.3, 
+            "food": 5777, 
+            "potassium": 260.0, 
+            "fat": 3.54, 
+            "metric_serving_amount": 100.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 1.577, 
+            "calories": 100.0, 
+            "polyunsaturated_fat": 0.97799999999999998, 
+            "calcium": 2.0, 
+            "iron": 1.0, 
+            "cholesterol": 1.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 oz", 
+            "carbohydrate": 4.46, 
+            "saturated_fat": 0.224, 
+            "protein": 0.51000000000000001, 
+            "serving_id": 183361, 
+            "sodium": null, 
+            "vitamin_c": 3.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 0.39000000000000001, 
+            "measurement_description": "oz", 
+            "number_of_units": 1.0, 
+            "fiber": 0.40000000000000002, 
+            "food": 5777, 
+            "potassium": 74.0, 
+            "fat": 1.0, 
+            "metric_serving_amount": 28.350000000000001, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.44700000000000001, 
+            "calories": 28.0, 
+            "polyunsaturated_fat": 0.27700000000000002, 
+            "calcium": 1.0, 
+            "iron": 0.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 cup", 
+            "carbohydrate": 0.14000000000000001, 
+            "saturated_fat": 116.605, 
+            "protein": 1.9299999999999999, 
+            "serving_id": 29478, 
+            "sodium": null, 
+            "vitamin_c": 0.0, 
+            "vitamin_a": 113.0, 
+            "sugar": 0.14000000000000001, 
+            "measurement_description": "cup", 
+            "number_of_units": 1.0, 
+            "fiber": 0.0, 
+            "food": 33814, 
+            "potassium": 54.0, 
+            "fat": 184.12, 
+            "metric_serving_amount": 227.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 47.718000000000004, 
+            "calories": 1628.0, 
+            "polyunsaturated_fat": 6.9080000000000004, 
+            "calcium": 5.0, 
+            "iron": 0.0, 
+            "cholesterol": 488.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 tbsp", 
+            "carbohydrate": 0.01, 
+            "saturated_fat": 7.2939999999999996, 
+            "protein": 0.12, 
+            "serving_id": 29479, 
+            "sodium": null, 
+            "vitamin_c": 0.0, 
+            "vitamin_a": 7.0, 
+            "sugar": 0.01, 
+            "measurement_description": "tbsp", 
+            "number_of_units": 1.0, 
+            "fiber": 0.0, 
+            "food": 33814, 
+            "potassium": 3.0, 
+            "fat": 11.52, 
+            "metric_serving_amount": 14.199999999999999, 
+            "content_type": 15, 
+            "monounsaturated_fat": 2.9849999999999999, 
+            "calories": 102.0, 
+            "polyunsaturated_fat": 0.432, 
+            "calcium": 0.0, 
+            "iron": 0.0, 
+            "cholesterol": 31.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 pat (1\" sq, 1/3\" high)", 
+            "carbohydrate": 0.0, 
+            "saturated_fat": 2.5680000000000001, 
+            "protein": 0.040000000000000001, 
+            "serving_id": 29480, 
+            "sodium": null, 
+            "vitamin_c": 0.0, 
+            "vitamin_a": 2.0, 
+            "sugar": 0.0, 
+            "measurement_description": "pat (1\" sq, 1/3\" high)", 
+            "number_of_units": 1.0, 
+            "fiber": 0.0, 
+            "food": 33814, 
+            "potassium": 1.0, 
+            "fat": 4.0599999999999996, 
+            "metric_serving_amount": 5.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 1.0509999999999999, 
+            "calories": 36.0, 
+            "polyunsaturated_fat": 0.152, 
+            "calcium": 0.0, 
+            "iron": 0.0, 
+            "cholesterol": 11.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 stick", 
+            "carbohydrate": 0.070000000000000007, 
+            "saturated_fat": 58.045999999999999, 
+            "protein": 0.95999999999999996, 
+            "serving_id": 29481, 
+            "sodium": null, 
+            "vitamin_c": 0.0, 
+            "vitamin_a": 56.0, 
+            "sugar": 0.070000000000000007, 
+            "measurement_description": "stick", 
+            "number_of_units": 1.0, 
+            "fiber": 0.0, 
+            "food": 33814, 
+            "potassium": 27.0, 
+            "fat": 91.650000000000006, 
+            "metric_serving_amount": 113.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 23.754000000000001, 
+            "calories": 810.0, 
+            "polyunsaturated_fat": 3.4390000000000001, 
+            "calcium": 3.0, 
+            "iron": 0.0, 
+            "cholesterol": 243.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 oz", 
+            "carbohydrate": 0.02, 
+            "saturated_fat": 14.563000000000001, 
+            "protein": 0.23999999999999999, 
+            "serving_id": 41950, 
+            "sodium": null, 
+            "vitamin_c": 0.0, 
+            "vitamin_a": 14.0, 
+            "sugar": 0.02, 
+            "measurement_description": "oz", 
+            "number_of_units": 1.0, 
+            "fiber": 0.0, 
+            "food": 33814, 
+            "potassium": 7.0, 
+            "fat": 22.989999999999998, 
+            "metric_serving_amount": 28.350000000000001, 
+            "content_type": 15, 
+            "monounsaturated_fat": 5.9589999999999996, 
+            "calories": 203.0, 
+            "polyunsaturated_fat": 0.86299999999999999, 
+            "calcium": 1.0, 
+            "iron": 0.0, 
+            "cholesterol": 61.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "100 g", 
+            "carbohydrate": 0.059999999999999998, 
+            "saturated_fat": 51.368000000000002, 
+            "protein": 0.84999999999999998, 
+            "serving_id": 56545, 
+            "sodium": null, 
+            "vitamin_c": 0.0, 
+            "vitamin_a": 50.0, 
+            "sugar": 0.059999999999999998, 
+            "measurement_description": "g", 
+            "number_of_units": 100.0, 
+            "fiber": 0.0, 
+            "food": 33814, 
+            "potassium": 24.0, 
+            "fat": 81.109999999999999, 
+            "metric_serving_amount": 100.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 21.021000000000001, 
+            "calories": 717.0, 
+            "polyunsaturated_fat": 3.0430000000000001, 
+            "calcium": 2.0, 
+            "iron": 0.0, 
+            "cholesterol": 215.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 cup, NFS", 
+            "carbohydrate": 12.07, 
+            "saturated_fat": 0.70699999999999996, 
+            "protein": 1.1200000000000001, 
+            "serving_id": 21028, 
+            "sodium": null, 
+            "vitamin_c": 9.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 5.0300000000000002, 
+            "measurement_description": "cup, NFS", 
+            "number_of_units": 1.0, 
+            "fiber": 4.4000000000000004, 
+            "food": 6037, 
+            "potassium": 343.0, 
+            "fat": 3.7400000000000002, 
+            "metric_serving_amount": 151.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 1.6519999999999999, 
+            "calories": 82.0, 
+            "polyunsaturated_fat": 1.1739999999999999, 
+            "calcium": 4.0, 
+            "iron": 3.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 cup sliced", 
+            "carbohydrate": 12.07, 
+            "saturated_fat": 0.70699999999999996, 
+            "protein": 1.1200000000000001, 
+            "serving_id": 22046, 
+            "sodium": null, 
+            "vitamin_c": 9.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 5.0300000000000002, 
+            "measurement_description": "cup, sliced", 
+            "number_of_units": 1.0, 
+            "fiber": 4.4000000000000004, 
+            "food": 6037, 
+            "potassium": 343.0, 
+            "fat": 3.7400000000000002, 
+            "metric_serving_amount": 151.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 1.6519999999999999, 
+            "calories": 82.0, 
+            "polyunsaturated_fat": 1.1739999999999999, 
+            "calcium": 4.0, 
+            "iron": 3.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 cup mashed", 
+            "carbohydrate": 18.620000000000001, 
+            "saturated_fat": 1.091, 
+            "protein": 1.72, 
+            "serving_id": 23159, 
+            "sodium": null, 
+            "vitamin_c": 14.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 7.7599999999999998, 
+            "measurement_description": "cup, mashed", 
+            "number_of_units": 1.0, 
+            "fiber": 6.7999999999999998, 
+            "food": 6037, 
+            "potassium": 529.0, 
+            "fat": 5.7800000000000002, 
+            "metric_serving_amount": 233.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 2.5489999999999999, 
+            "calories": 126.0, 
+            "polyunsaturated_fat": 1.8120000000000001, 
+            "calcium": 7.0, 
+            "iron": 4.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 small (5-3/4\" long or less)", 
+            "carbohydrate": 3.8399999999999999, 
+            "saturated_fat": 0.22500000000000001, 
+            "protein": 0.35999999999999999, 
+            "serving_id": 21432, 
+            "sodium": null, 
+            "vitamin_c": 3.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 1.6000000000000001, 
+            "measurement_description": "small (5-3/4\" long or less)", 
+            "number_of_units": 1.0, 
+            "fiber": 1.3999999999999999, 
+            "food": 6037, 
+            "potassium": 109.0, 
+            "fat": 1.1899999999999999, 
+            "metric_serving_amount": 48.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.52500000000000002, 
+            "calories": 26.0, 
+            "polyunsaturated_fat": 0.373, 
+            "calcium": 1.0, 
+            "iron": 1.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 medium (6\" to 7\" long)", 
+            "carbohydrate": 4.6299999999999999, 
+            "saturated_fat": 0.27200000000000002, 
+            "protein": 0.42999999999999999, 
+            "serving_id": 21734, 
+            "sodium": null, 
+            "vitamin_c": 3.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 1.9299999999999999, 
+            "measurement_description": "medium (6\" to 7\" long)", 
+            "number_of_units": 1.0, 
+            "fiber": 1.7, 
+            "food": 6037, 
+            "potassium": 132.0, 
+            "fat": 1.4399999999999999, 
+            "metric_serving_amount": 58.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.63500000000000001, 
+            "calories": 31.0, 
+            "polyunsaturated_fat": 0.45100000000000001, 
+            "calcium": 2.0, 
+            "iron": 1.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 large (7-1/4\" to 8-1/2\" long)", 
+            "carbohydrate": 5.4299999999999997, 
+            "saturated_fat": 0.318, 
+            "protein": 0.5, 
+            "serving_id": 22792, 
+            "sodium": null, 
+            "vitamin_c": 4.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 2.2599999999999998, 
+            "measurement_description": "large (7-1/4\" to 8-1/2\" long)", 
+            "number_of_units": 1.0, 
+            "fiber": 2.0, 
+            "food": 6037, 
+            "potassium": 154.0, 
+            "fat": 1.6899999999999999, 
+            "metric_serving_amount": 68.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.74399999999999999, 
+            "calories": 37.0, 
+            "polyunsaturated_fat": 0.52900000000000003, 
+            "calcium": 2.0, 
+            "iron": 1.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 21, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 slice", 
+            "carbohydrate": 0.22, 
+            "saturated_fat": 0.012999999999999999, 
+            "protein": 0.02, 
+            "serving_id": 23172, 
+            "sodium": null, 
+            "vitamin_c": 0.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 0.089999999999999997, 
+            "measurement_description": "slice", 
+            "number_of_units": 1.0, 
+            "fiber": 0.10000000000000001, 
+            "food": 6037, 
+            "potassium": 6.0, 
+            "fat": 0.070000000000000007, 
+            "metric_serving_amount": 2.7999999999999998, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.031, 
+            "calories": 2.0, 
+            "polyunsaturated_fat": 0.021999999999999999, 
+            "calcium": 0.0, 
+            "iron": 0.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 22, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 baby carrot", 
+            "carbohydrate": 0.45000000000000001, 
+            "saturated_fat": 0.025999999999999999, 
+            "protein": 0.040000000000000001, 
+            "serving_id": 21232, 
+            "sodium": null, 
+            "vitamin_c": 0.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 0.19, 
+            "measurement_description": "baby carrot", 
+            "number_of_units": 1.0, 
+            "fiber": 0.20000000000000001, 
+            "food": 6037, 
+            "potassium": 13.0, 
+            "fat": 0.14000000000000001, 
+            "metric_serving_amount": 5.5999999999999996, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.060999999999999999, 
+            "calories": 3.0, 
+            "polyunsaturated_fat": 0.043999999999999997, 
+            "calcium": 0.0, 
+            "iron": 0.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 serving (76 g)", 
+            "carbohydrate": 6.0700000000000003, 
+            "saturated_fat": 0.35599999999999998, 
+            "protein": 0.56000000000000005, 
+            "serving_id": 22793, 
+            "sodium": null, 
+            "vitamin_c": 4.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 2.5299999999999998, 
+            "measurement_description": "Quantity not specified", 
+            "number_of_units": 1.0, 
+            "fiber": 2.2000000000000002, 
+            "food": 6037, 
+            "potassium": 173.0, 
+            "fat": 1.8799999999999999, 
+            "metric_serving_amount": 76.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.83199999999999996, 
+            "calories": 41.0, 
+            "polyunsaturated_fat": 0.59099999999999997, 
+            "calcium": 2.0, 
+            "iron": 1.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 24, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 cup, baby", 
+            "carbohydrate": 12.300000000000001, 
+            "saturated_fat": 0.72099999999999997, 
+            "protein": 1.1399999999999999, 
+            "serving_id": 22773, 
+            "sodium": null, 
+            "vitamin_c": 9.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 5.1299999999999999, 
+            "measurement_description": "cup, baby carrots", 
+            "number_of_units": 1.0, 
+            "fiber": 4.5, 
+            "food": 6037, 
+            "potassium": 350.0, 
+            "fat": 3.8199999999999998, 
+            "metric_serving_amount": 154.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 1.6850000000000001, 
+            "calories": 83.0, 
+            "polyunsaturated_fat": 1.198, 
+            "calcium": 4.0, 
+            "iron": 3.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 25, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 cup, carrot balls", 
+            "carbohydrate": 13.34, 
+            "saturated_fat": 0.78200000000000003, 
+            "protein": 1.24, 
+            "serving_id": 21063, 
+            "sodium": null, 
+            "vitamin_c": 10.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 5.5599999999999996, 
+            "measurement_description": "cup, carrot balls", 
+            "number_of_units": 1.0, 
+            "fiber": 4.7999999999999998, 
+            "food": 6037, 
+            "potassium": 379.0, 
+            "fat": 4.1399999999999997, 
+            "metric_serving_amount": 167.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 1.827, 
+            "calories": 90.0, 
+            "polyunsaturated_fat": 1.2989999999999999, 
+            "calcium": 5.0, 
+            "iron": 3.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 26, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 carrot ball", 
+            "carbohydrate": 0.31, 
+            "saturated_fat": 0.017999999999999999, 
+            "protein": 0.029999999999999999, 
+            "serving_id": 21479, 
+            "sodium": null, 
+            "vitamin_c": 0.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 0.13, 
+            "measurement_description": "carrot ball", 
+            "number_of_units": 1.0, 
+            "fiber": 0.10000000000000001, 
+            "food": 6037, 
+            "potassium": 9.0, 
+            "fat": 0.10000000000000001, 
+            "metric_serving_amount": 3.8999999999999999, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.042999999999999997, 
+            "calories": 2.0, 
+            "polyunsaturated_fat": 0.029999999999999999, 
+            "calcium": 0.0, 
+            "iron": 0.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 27, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "100 g", 
+            "carbohydrate": 7.9900000000000002, 
+            "saturated_fat": 0.46800000000000003, 
+            "protein": 0.73999999999999999, 
+            "serving_id": 54717, 
+            "sodium": null, 
+            "vitamin_c": 6.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 3.3300000000000001, 
+            "measurement_description": "g", 
+            "number_of_units": 100.0, 
+            "fiber": 2.8999999999999999, 
+            "food": 6037, 
+            "potassium": 227.0, 
+            "fat": 2.48, 
+            "metric_serving_amount": 100.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 1.0940000000000001, 
+            "calories": 54.0, 
+            "polyunsaturated_fat": 0.77800000000000002, 
+            "calcium": 3.0, 
+            "iron": 2.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 28, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 oz", 
+            "carbohydrate": 2.27, 
+            "saturated_fat": 0.13300000000000001, 
+            "protein": 0.20999999999999999, 
+            "serving_id": 183572, 
+            "sodium": null, 
+            "vitamin_c": 2.0, 
+            "vitamin_a": 0.0, 
+            "sugar": 0.93999999999999995, 
+            "measurement_description": "oz", 
+            "number_of_units": 1.0, 
+            "fiber": 0.80000000000000004, 
+            "food": 6037, 
+            "potassium": 64.0, 
+            "fat": 0.69999999999999996, 
+            "metric_serving_amount": 28.350000000000001, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.31, 
+            "calories": 15.0, 
+            "polyunsaturated_fat": 0.22, 
+            "calcium": 1.0, 
+            "iron": 0.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 29, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 cup", 
+            "carbohydrate": 7.8399999999999999, 
+            "saturated_fat": 0.029000000000000001, 
+            "protein": 2.0, 
+            "serving_id": 33938, 
+            "sodium": null, 
+            "vitamin_c": 30.0, 
+            "vitamin_a": 15.0, 
+            "sugar": 1.54, 
+            "measurement_description": "cup", 
+            "number_of_units": 1.0, 
+            "fiber": 3.7000000000000002, 
+            "food": 36276, 
+            "potassium": 230.0, 
+            "fat": 0.13, 
+            "metric_serving_amount": 110.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.0060000000000000001, 
+            "calories": 34.0, 
+            "polyunsaturated_fat": 0.065000000000000002, 
+            "calcium": 4.0, 
+            "iron": 6.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 30, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "10 beans (4\" long)", 
+            "carbohydrate": 3.9199999999999999, 
+            "saturated_fat": 0.014, 
+            "protein": 1.0, 
+            "serving_id": 33939, 
+            "sodium": null, 
+            "vitamin_c": 15.0, 
+            "vitamin_a": 8.0, 
+            "sugar": 0.77000000000000002, 
+            "measurement_description": "beans (4\" long)", 
+            "number_of_units": 10.0, 
+            "fiber": 1.8999999999999999, 
+            "food": 36276, 
+            "potassium": 115.0, 
+            "fat": 0.070000000000000007, 
+            "metric_serving_amount": 55.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.0030000000000000001, 
+            "calories": 17.0, 
+            "polyunsaturated_fat": 0.032000000000000001, 
+            "calcium": 2.0, 
+            "iron": 3.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 31, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 oz", 
+            "carbohydrate": 2.02, 
+            "saturated_fat": 0.0070000000000000001, 
+            "protein": 0.52000000000000002, 
+            "serving_id": 44021, 
+            "sodium": null, 
+            "vitamin_c": 8.0, 
+            "vitamin_a": 4.0, 
+            "sugar": 0.40000000000000002, 
+            "measurement_description": "oz", 
+            "number_of_units": 1.0, 
+            "fiber": 1.0, 
+            "food": 36276, 
+            "potassium": 59.0, 
+            "fat": 0.029999999999999999, 
+            "metric_serving_amount": 28.350000000000001, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.001, 
+            "calories": 9.0, 
+            "polyunsaturated_fat": 0.017000000000000001, 
+            "calcium": 1.0, 
+            "iron": 2.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 32, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "1 lb", 
+            "carbohydrate": 32.340000000000003, 
+            "saturated_fat": 0.11799999999999999, 
+            "protein": 8.2599999999999998, 
+            "serving_id": 49454, 
+            "sodium": null, 
+            "vitamin_c": 123.0, 
+            "vitamin_a": 63.0, 
+            "sugar": 6.3499999999999996, 
+            "measurement_description": "lb", 
+            "number_of_units": 1.0, 
+            "fiber": 15.4, 
+            "food": 36276, 
+            "potassium": 948.0, 
+            "fat": 0.54000000000000004, 
+            "metric_serving_amount": 453.60000000000002, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.023, 
+            "calories": 141.0, 
+            "polyunsaturated_fat": 0.26800000000000002, 
+            "calcium": 17.0, 
+            "iron": 26.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }, 
+    {
+        "pk": 33, 
+        "model": "food.serving", 
+        "fields": {
+            "serving_description": "100 g", 
+            "carbohydrate": 7.1299999999999999, 
+            "saturated_fat": 0.025999999999999999, 
+            "protein": 1.8200000000000001, 
+            "serving_id": 59007, 
+            "sodium": null, 
+            "vitamin_c": 27.0, 
+            "vitamin_a": 14.0, 
+            "sugar": 1.3999999999999999, 
+            "measurement_description": "g", 
+            "number_of_units": 100.0, 
+            "fiber": 3.3999999999999999, 
+            "food": 36276, 
+            "potassium": 209.0, 
+            "fat": 0.12, 
+            "metric_serving_amount": 100.0, 
+            "content_type": 15, 
+            "monounsaturated_fat": 0.0050000000000000001, 
+            "calories": 31.0, 
+            "polyunsaturated_fat": 0.058999999999999997, 
+            "calcium": 4.0, 
+            "iron": 6.0, 
+            "cholesterol": 0.0, 
+            "metric_serving_unit": "g"
+        }
+    }
+]

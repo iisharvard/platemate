@@ -1,0 +1,14 @@
+\section{CONCLUSION}
+
+This paper presents PlateMate, which allows users to take photos of their meals and receive estimates of the meals' nutrition content.  PlateMate builds on a concept of remote food photography developed recently by the nutrition community.  While the original method relies on expert dietitians providing the estimates, PlateMate uses Amazon Mechanical Turk to make this approach more affordable and scalable.  
+
+Through careful decomposition of the process into small and verifiable steps, PlateMate achieves accuracy comparable to trained dietitians:  
+the results of our evaluation demonstrate that PlateMate overestimated caloric content by $+7.4\%$ on average, while the best of three trained dietitians overestimated by $+5.5\%$.  In our user study, which compared PlateMate to the currently most common practice of manual self-logging of meals, most participants found PlateMate easier and faster to use and at least as accurate.  Four dietitians were unable to differentiate between nutrition estimates produced by PlateMate and those manually logged by our study participants, further suggesting parity with the current methods.
+
+Overall, PlateMate is an attractive alternative to existing solutions because it reduces user effort compared to manual logging, achieves good accuracy, is affordable, and can be conceivably deployed to support a large number of users.
+
+We suggest ways in which the accuracy can be further improved and cost reduced by combining crowdsourcing with machine learning, computer vision, personalization and location information. 
+
+PlateMate is one of the first complex crowdsourcing systems to combine---in a real world application---several of the recently introduced design patterns for programming the crowds.  In the process of building PlateMate, we have developed the Management framework, a modular software framework inspired by the structure of human organizations.  The Manager abstraction conveniently supported hierarchical problem decomposition as well as modular development and debugging.  The choice of message passing as the main communication mechanism cleanly supports asynchronous just-in-time processing of sub-tasks.  PlateMate may serve as a useful case study for future developers of complex crowd-based applications.
+
+%The patterns and techniques used by PlateMate to approach expert-level accuracy with untrained workers could enable further work in both persuasive technologies and other crowdsourcing challenges.

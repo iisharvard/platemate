@@ -1,0 +1,155 @@
+{% extends "hit_base.html" %}
+{% load food_tags %}
+
+{% block instructions %}
+In each photo you see below, a box containing one food item will be highlighted.  To the right of each photo you will see the name of one food item underlined.  <b>Estimate how much of that item is in the highlighted portion of the photo.</b>  There are several ways to measure each item (by weight, volume, or other food-specific sizes) so first pick the measurement option that makes it easiest for you to accurately estimate the amount of food. We have provided a portion guide to help you.<br /><br />
+
+Make sure you only estimate the amount of the specific food listed, and not all foods in the highlighted portion. If you don't think the underlined item appears in the photo, measure the closest thing.
+{% endblock instructions %}
+
+{% block jobs %}
+  <div id="MAIN">
+  {% for job in hit.jobs.all %}
+  
+    <div id='{{ job.id }}_list' class='measure-item'>
+      <div class='left'>
+        {{ job.ingredient.box|annotate_photo }}
+        <br />
+        <table class='portion_guide' cellspacing=0> 
+            <tr> 
+                <td class='heading' colspan=3>PORTION GUIDE</td> 
+            </tr> 
+            <tr> 
+                <td class='serving_size'>1 teaspoon (tsp)</td> 
+                <td class='object'>single dice, finger tip</td> 
+            </tr>
+            <tr> 
+                <td class='serving_size'>1 tablespoon (Tbsp)</td> 
+                <td class='object'>thumb tip</td> 
+            </tr> 
+            <tr> 
+                <td class='serving_size'>2 tablespoons (Tbsp)</td> 
+                <td class='object'>ping pong ball or shot glass</td> 
+            </tr> 
+            <tr> 
+                <td class='serving_size'>1/4 cup</td> 
+                <td class='object'>large egg or golf ball</td> 
+            </tr>
+            <tr> 
+                <td class='serving_size'>1/2 cup</td> 
+                <td class='object'>tennis ball, computer mouse</td> 
+            </tr>
+            <tr> 
+                <td class='serving_size'>1 cup</td> 
+                <td class='object'>baseball or apple</td> 
+            </tr>   
+            <tr> 
+                <td class='serving_size'>1oz cheese / cream</td> 
+                <td class='object'>three dice</td> 
+            </tr> 
+            <tr> 
+                <td class='serving_size'>3oz meat</td> 
+                <td class='object'>deck of cards</td> 
+            </tr> 
+            <tr> 
+                <td class='serving_size'>3oz fish</td> 
+                <td class='object'>checkbook</td> 
+            </tr> 
+        </table> 
+        
+        
+        
+      </div>
+      <div class='right'>
+        <b>Step 1: Look at the picture.</b> Think about how much <span class='food_desc'>{{ job.ingredient.food.food_name }}</span> is inside the solid red box.  Ignore foods that belong to other boxes, which are marked with dashed lines, or other ingredients in the solid red box.<br /><br />
+        
+        <b>Step 2: Choose a measurement option.</b> This drop-down contains several ways of measuring <span class='food_desc'>{{ job.ingredient.food.food_name }}</span>.  Select the option that will allow you to most accurately estimate the amount in the highlighted portion of the photo.<br />
+        <select name='{{ job.id }}_serving' id='{{ job.id }}_serving' class="measurement-select">{{ job.ingredient.food|measurement_options }}</select>
+        <br /><span class='message' id="{{ job.id }}_desc_message">&nbsp;</span>
+        <br /><br />
+        
+        <b>Step 3: Estimate your measurement.</b> How much <span class='food_desc'>{{ job.ingredient.food.food_name }}</span> of the unit you selected is there in the highlighted portion of the photo? <b>Write your answer as a decimal, like 1.75</b>. Use the portion guide below the picture.<br />
+        <input type="text" name='{{ job.id }}_measurement' id='{{ job.id }}_measurement' size='20' class='amount-select' /> <span id="{{ job.id }}_serving_descr">&nbsp;</span> <span id="{{ job.id }}_total">&nbsp;</span>
+        <br /><span class='message' id="{{ job.id }}_cal_message">&nbsp;</span>
+        <br /><br />
+        <b>Step 4: Check your answer.</b> Make sure the number of calories looks reasonable. For reference, a snack or side dish is usually 50-300 calories, and a full meal is usually 400-1000 calories. Some foods, like salt or herbs, will have almost no calories. Others, like a large steak, will have many more.
+      </div>
+    </div>
+    <div class="break"><br /></div>
+    <hr /><br />
+  {% endfor %}
+  
+  <script type="text/javascript">
+  
+  
+  
+  
+  $(document).ready(function(){
+    recalc = function(e){
+      var id = "#" + this.id.substring(0,this.id.indexOf("_"));
+      
+      // Where outputs go
+      var calories = id + "_total";
+      var descr = id + "_serving_descr";
+      var cal_message = id + "_cal_message";
+      var desc_message = id + "_desc_message";
+      
+      // Inputs we need
+      var serving = $(id + "_serving option:selected")[0];
+      var amount = $(id + "_measurement")[0];
+      
+      // Update serving description
+      if (serving.value) {
+        var description = serving.text;
+        $(descr).html(" x " + serving.text);
+        $(descr).effect("highlight", {}, 1000);
+      } else {
+        var description = null;
+        $(descr).html("");
+      }
+      
+      // Update total calories
+      if (serving.value && amount.value) {
+        var total_calories = amount.value * serving.title;
+        $(calories).html(" = " + (amount.value * serving.title) + " calories.");
+        $(calories).effect("highlight", {}, 1000);
+      } else {
+        var total_calories = null;
+        $(calories).html("");
+      }
+      
+      // Send messages about calories
+      if (total_calories == null)
+        $(cal_message).html("");
+      else if (isNaN(total_calories))
+        $(cal_message).html("Please enter your answer as a decimal, like 4.25 or 1.00");
+      else if (total_calories > 1000)
+        $(cal_message).html("This is an unusually large number of calories. Are you sure you measured correctly? Keep this answer only if you think this is a very heavy food and there is a lot of it in the box.");
+      else if (total_calories < 5)
+        $(cal_message).html("This is an unusually small number of calories. Are you sure you measured correctly? Keep this answer only if you think this is a very light food or there is very little of it.");
+      else
+        $(cal_message).html("");
+        
+      contains = function(haystack,needle) { return haystack.indexOf(needle) != -1 }
+      description += " "
+      
+      // Send messages about serving choice
+      if (description == null)
+        $(desc_message).html("");
+      else if (contains(description," oz ") || contains(description," g ") || contains(description," lb "))
+        $(desc_message).html("Since judging weight from a picture is difficult, we recommend using other serving units (like cups, tbsp, etc.) whenever possible.");
+      else if (contains(description," serving ") || contains(description," order ") || contains(description," portion "))
+        $(desc_message).html("Since people will disagree about how much a 'serving' or 'order' is, please only choose options like this if no better choice is available.");
+      else
+        $(desc_message).html("");
+        
+        
+    }
+    
+
+    $(".measurement-select").change(recalc);
+    $(".amount-select").keyup(recalc);
+  });
+  </script>
+  </div>
+{% endblock jobs %}

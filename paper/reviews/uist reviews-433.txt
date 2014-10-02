@@ -1,0 +1,321 @@
+UIST 2011 Papers
+
+Reviews of submission #433: "PlateMate: Crowdsourcing Nutritional
+Analysis from Food Photographs"
+
+------------------------ Submission 433, Review 1 ------------------------
+
+Reviewer:           primary
+
+Overall Rating
+
+   3  (Borderline: could go either way.)
+
+Expertise
+
+   4  (Expert)
+
+Summary and contribution (entered before the rebuttal period, and uneditable thereafter)
+
+   The authors introduce the PlateMate application for crowdsourcing
+   nutritional information through meal photographs. The application
+   coordinates crowds to approximate expert nutritionist performance. It
+   also proposes a management-inspired pipelined workflow for crowdsourcing.
+
+Your own comments on the paper
+
+   In the space of systems papers, this one tackles an important,
+   well-defined need with social impact via a large-scale system -- but does
+   so without pushing the state of the art too deeply. The question is
+   whether PlateMate is more than the sum of its parts: have we learned
+   something generalizable from the exercise? I am inclined to offer a weak
+   'yes': while I would like to see the authors more clearly articulate
+   arguments of novelty in a rebuttal, the application of these techniques
+   in a large-scale system is worthwhile.
+
+   The PlateMate application is one proposed contribution, but it is
+   somewhat lessened by the Meal Snap's existence. The paper claims that
+   Meal Snap launched the same month as the UIST deadline, so I have to
+   believe that the authors came up with the idea beforehand. But, it would
+   be good to articulate PlateMate's contributions above and beyond Meal
+   Snap --- presumably, you could at least compare the user's involvement
+   and the HIT design (if they are MTurk tasks, MealSnap HITs should be
+   world-visible). I would have to believe that you have a more complex task
+   design framework: one which costs more, but is more accurate.
+
+   The management framework is an interesting idea, but it might need a bit
+   more development. It performs pipelined processing, and so can avoid
+   blocking operations. This is not an entirely new concept in human
+   computation (see Qurk's query executor) [1], though I am glad to see it
+   getting a little more exploration. The idea deserves fuller exploration
+   than the 3/4 page it gets. As it is, it's hard to know what to take away
+   from the section.
+
+   The task framework is impressively complex. I think it may be starting to
+   reach a ceiling where $1.40/meal might become prohibitively expensive to
+   end users (that's $40 month to record only dinner every day), though I
+   recognize that this is still probably cheaper than a dietition. I
+   understand why MTurk is a useful prototyping platform, but I can't help
+   wondering if the crowd of other PlateMate users might be a more
+   successful one. You could design the app so that you don't get your
+   calorie reports until you label someone else's photos. App users would
+   know what to care about, would know something about portion size, etc.
+
+   I liked the evaluation section, especially how even-handed the authors
+   were about the strengths and weaknesses of the approach.
+
+   Some details:
+   - You might get a lot less errors if the user could do some light-weight
+   tagging going into the process, like annotating the picture with "Arby's
+   hamburger"
+   - Tag phase: why are you attempting to combine HITs at the whole-picture
+   level rather than at the individual box level? It seems like you should
+   be able to recognize when individual boxes are identifying the same area
+   of the picture. Voting for one whole annotated image or another seems
+   like it might be wasting work.
+   - Identify phase: So slowing down the autocomplete process basically
+   prevents the lazy behavior? I wouldn't be surprised (see [2]), but please
+   explain a bit more thoroughly what's going on.
+
+   [1] Marcus, A., Wu, E., Karger, D.R., Madden, S., and Miller, R.
+   Crowdsourced Databases: Query Processing with People. CIDR 2011.
+   http://db.csail.mit.edu/pubs/mturk-cameraready.pdf
+   [2] Hullman, J., Adar, E., and Shah, P. The Impact of Social Information
+   on Visual Judgments. CHI 2011.
+
+The Meta Review
+
+   Note: 1AC = R1 in this writeup: UIST's new process involves the associate
+   chairs writing full reviews.
+
+   Reviewers all agreed that this work tackles an interesting problem, and
+   that the authors built an impressively complex system to do so. The
+   paper's main challenge was in communicating a clear, impactful research
+   contribution. (I believe that this contribution exists -- the reviews
+   suggest that it may not be coming through in the paper yet.)
+
+   I am slightly more in favor of this paper than the external reviewers ---
+   both of whom are experts in the subject matter of this paper --- but I
+   recognize and agree with their critiques. The paper as an artifact
+   struggles to articulate its novelty beyond the literature in nutrition
+   support and the literature in human computation.
+
+   I would encourage the authors to take a step back in the rebuttal and
+   clearly articulate this paper's novel, generalizable contributions. The
+   system is large and complex, and the paper covers a lot of ground. The
+   work ends up feeling a bit diffuse:
+    - R2: "I struggle in writing this review in trying to understand what
+   the contribution to UIST is."
+    - 1AC: "It does so without pushing the state of the art too deeply".
+    - R3: "There does not seem to be a strong technical contribution."
+
+   R3 has some worthwhile reflections on the diet and nutritional aspect of
+   this work, as well as some recommended citations. I recommend the authors
+   consider R3's suggestions as they move forward with this research.
+
+   1AC and R2 agreed that the management framework is interesting, if
+   underspecified. 1AC reflects "it's hard to know what to take away" and R2
+   says "I was not able to understand this in sufficient detail to consider
+   this as a significant contribution". I would encourage the authors to
+   push more on this concept, though see 1AC's reference on pipelined human
+   computation in Qurk.
+
+Final Decision
+
+
+------------------------ Submission 433, Review 4 ------------------------
+
+Reviewer:           secondary
+
+Overall Rating
+
+   5  (Definite accept: I would argue strongly for accepting this paper.)
+
+Expertise
+
+   4  (Expert)
+
+Summary and contribution (entered before the rebuttal period, and uneditable thereafter)
+
+   This paper describes the use of Amazon MTurk for estimating the caloric
+   and food content of plates of food for weight management applications. 
+   The research is well related to past work, and the methodology sound. 
+   The evaluation is strong, and done well, and the implication for
+   healthcare applications is interesting and with high potential.
+
+Your own comments on the paper
+
+
+The Secondary PC Review
+
+   I really enjoyed reading this paper, as the related work section and
+   introduction points out the major issues involved in estimating the
+   nutritional content of a plate of food, then the paper proceeds to show
+   how a decompositional approach to the problem can be applied to amazon
+   mturk to actually do as good as experts seems to be able to do.  
+
+   The methodology is well described and with enough details for someone
+   else to replicate.  Moreover, the evaluation is sound and seems to point
+   out the pros and cons of the approach, leaving room for improvements in
+   the future.  The discussion and future work section point to the
+   potential of the approach while acknowledging the difficult issues
+   remaining.  Overall, I could find no major faults in this paper.  
+
+   Here I disagree with the primary 1AC that this is incremental work from
+   past work.  Meal Snap has just been released, and the authors appears to
+   have independently invented this methodology either before or at the same
+   time, and showed how it is better than Meal Snap in the methodology and
+   evaluation.
+
+   The manager framework shows the authors' awareness of prior work in task
+   decomposition, and how they applied in this context, and the inclusion of
+   their methodology should push the field forward.
+
+   Moreover, when pushing on the boundary of new techniques, the cost
+   savings are not the major considerations.  For instance, I can't quite
+   imagine paying anyone at all to shorten my paragraphs (as in Solyent),
+   but it was very interesting development in the technology and framework
+   of thinking about this space.
+
+   I believe this paper is a very good example of an integration research
+   paper, which takes a number of techniques from the recent past and showed
+   how it can be applied in a novel application. I urge its inclusion in the
+   conference.
+
+------------------------ Submission 433, Review 2 ------------------------
+
+Reviewer:           external
+
+Overall Rating
+
+   2  (Probably reject: I would argue for rejecting this paper.)
+
+Expertise
+
+   4  (Expert)
+
+Summary and contribution (entered before the rebuttal period, and uneditable thereafter)
+
+   This paper describes an application of Amazon Mechanical Turk (AMT) to
+   estimate the number of calories in a plate of food via a picture.  It
+   describes two compelling studies that show the quality is comparable to
+   professional humans.  It also minimally describes a framework for how to
+   structure these kinds of activities.
+
+The Review (entered before the rebuttal period, and uneditable thereafter)
+
+   This paper is very well written, the application is interesting, the
+   description of the design strategies chosen is useful, and the studies
+   are convincing that the system works.  I enjoyed reading the paper, and
+   yet I struggle in writing this review in trying to understand what the
+   contribution to UIST is.  On the positive side, it is a potentially
+   useful case study showing what it takes to design an AMT solution to a
+   realistic task that works.  On the negative side, there are now numerous
+   such descriptions, and so I interpret the core contribution of this paper
+   to be that you can hire groups of amateurs to do work similar in quality
+   to experts.  This lesson has been taught many times inmany contexts, and
+   I am not convinced that we need to continue hearing it.
+
+   The paper also attempts to teach a broader lesson by introducing a
+   "Management framework" that combines the iterative workflows of TurKit
+   and the decomposition of CrowdFlow.  However, with only about a half page
+   (out of 10) devoted to this, I was not able to understand this in
+   sufficient detail to consider this as a significant contribution.
+
+   So, with some hesitation, I do not recommend this paper.  I think it has
+   potential as a CHI case study
+   (http://chi2012.acm.org/cfp-case-studies.shtml), or it might be
+   restructured as a short paper, whose length would, I think, better match
+   the contribution.
+
+Additional review comments entered after the start of rebuttal period
+
+
+------------------------ Submission 433, Review 3 ------------------------
+
+Reviewer:           external
+
+Overall Rating
+
+   3  (Borderline: could go either way.)
+
+Expertise
+
+   4  (Expert)
+
+Summary and contribution (entered before the rebuttal period, and uneditable thereafter)
+
+   The paper discusses an approach to using crowd-sourcing to analyze
+   digital images of meals and determine their nutritional value. The
+   authors suggest that for most weight-loss programs (regarding of their
+   motivation), tracking nutritional values of meals is a critical part of
+   the program, however, it is mundane and difficult, requires an
+   involvement of an expert, and is not easy to solve computationally. Their
+   solution, a particular architecture of crowd-sourcing model, allows
+   achieving accuracy comparable to that of an expert, while being much more
+   cost-effective. 
+
+The Review (entered before the rebuttal period, and uneditable thereafter)
+
+   Overall, the paper is well-written and is interesting to read. However,
+   there are several limitations that prevented me from giving it a higher
+   score. 
+
+   Mainly, I was unclear about the actual contribution of the paper: 
+
+   There does not seem to be a strong technical contribution; they don’t
+   describe any interesting system design. 
+
+   If the main contribution was in identifying new ways to support
+   individuals who need to monitor their diets, I would expect a much more
+   detailed assessment and analysis of user practices around diet and weight
+   management. There is an assumption being made that in these processes,
+   users would benefit from being able to track nutritional values of their
+   past meals. However, a very large part of diet management is not only
+   monitoring trends in the past but also making good choices in the future.
+   Practicing in quickly (and accurately) estimating nutritional value of
+   one’s own meals helps them to make more educated choices in the future.
+   When this estimating is completely outsourced to others, that does not
+   have any positive impact on individuals’ ability to make choices. This
+   renders the whole crowd-sourcing approach of questionable benefit, since
+   again, it does not help individuals to improve their choices, but only to
+   review trends in the past. Also, there many different reasons why
+   individuals engage in diet management, and their goals and motivations
+   are correspondingly different. So, I would recommend that the authors
+   invest more time in investigating what aspects of diet management need to
+   be supported and how. 
+
+   If the main contribution of the paper was to improve our understanding of
+   crowd-sourcing mechanisms and what makes them successful or not
+   successful, I would expect a much more thorough discussion on different
+   existing approaches and some sort of comparative analysis. This would
+   make sense because the main design the authors are offering here really
+   is more about the architecture of the HIT. 
+
+   As it is written now, the paper does not really provide sufficient depth
+   and novelty in either of these areas, however it certainly has a
+   potential to gain the necessary depth in the future. 
+
+   One additional comment: there are some references from the HCI community
+   that I expected to see and that are not in the paper. The two projects
+   that looked at how food photography can be used in diet management in
+   this community are included below. Neither one focused specifically on
+   using photographs to calculate nutritional value, but rather more
+   globally on using photographs to impact learning, reflection on the past,
+   and choices in the future. 
+
+   Smith, B. K., Frost, J., Albayrak, M., and Sudhakar, R. (2006)
+   Facilitating Narrative Medical Discussions of Type 1 Diabetes with
+   Computer Visualizations and Photography. Patient Education and
+   Counseling, 64(1- 3), 313-321.
+
+   Mamykina, L., Mynatt, E., Davidson, P., and Greenblatt, D. 2008. MAHI:
+   investigation of social scaffolding for reflective thinking in diabetes
+   management. In Proceeding of the Twenty-Sixth Annual SIGCHI Conference on
+   Human Factors in Computing Systems (Florence, Italy, April 05 - 10,
+   2008). CHI '08. ACM, New York, NY, 477-486.
+
+Additional review comments entered after the start of rebuttal period
+
+
+

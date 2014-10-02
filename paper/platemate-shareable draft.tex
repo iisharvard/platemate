@@ -1,0 +1,91 @@
+\documentclass{article}
+
+\usepackage{times}
+\usepackage{uist}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{subfigure}
+\usepackage{url}
+\usepackage{fancyhdr}
+
+\begin{document}
+
+% --- Copyright notice ---
+\conferenceinfo{UIST'11}{October 16-19, 2011, Santa Barbara, CA, USA}
+\CopyrightYear{2011}
+\crdata{978-1-4503-0716-1/11/10}
+
+% Uncomment the following line to hide the copyright notice
+ \toappear{}
+% ------------------------
+
+%\bibliographystyle{plain}
+
+\title{\vspace{2mm}PlateMate: Crowdsourcing Nutrition Analysis from Food Photographs}
+
+%%
+%% Note on formatting authors at different institutions, as shown below:
+%% Change width arg (currently 7cm) to parbox commands as needed to
+%% accommodate widest lines, taking care not to overflow the 17.8cm line width.
+%% Add or delete parboxes for additional authors at different institutions. 
+%% If additional authors won't fit in one row, you can add a "\\"  at the
+%% end of a parbox's closing "}" to have the next parbox start a new row.
+%% Be sure NOT to put any blank lines between parbox commands!
+%%
+
+\author{
+\parbox[t]{12cm}{\centering
+	     {\em Jon Noronha, Eric Hysen, Haoqi Zhang, Krzysztof Z. Gajos}\\
+	     Harvard School of Engineering and Applied Sciences\\
+	   	33 Oxford St.,
+	     Cambridge, MA 02138, USA\\
+	     \{noronha,hysen,hqz,kgajos\}@seas.harvard.edu}
+}
+
+\maketitle
+
+\input{macros}
+
+% header
+\thispagestyle{fancy}
+\pagestyle{fancy}
+\chead{DRAFT UNDER REVIEW - PLEASE DO NOT REDISTRIBUTE}
+\lhead{}
+\rhead{}
+% end of header
+
+
+\abstract
+PlateMate allows users to take photos of their meals and receive estimates of food intake and composition. Accurate awareness of this information is considered a prerequisite to successful change of eating habits, but current methods for food logging via self-reporting, expert observation, or algorithmic analysis are time-consuming, expensive, or inaccurate.  PlateMate crowdsources nutritional analysis from photographs using Amazon Mechanical Turk, automatically coordinating untrained workers to estimate a meal's calories, fat, carbohydrates, and protein.  We present the Management framework for crowdsourcing complex tasks, which supports PlateMate's decomposition of the nutrition analysis workflow. Two evaluations show that the PlateMate system is nearly as accurate as a trained dietitian and easier to use for most users than traditional self-reporting, while remaining robust for general use across a wide variety of meal types.
+
+\classification{H5.2 [Information interfaces and presentation]:
+User Interfaces. - Graphical user interfaces.}
+
+\terms{Design, Human Factors}
+
+\keywords{Human computation, Crowdsourcing, Mechanical Turk, Nutrition, Remote Food Photography}
+
+  % makes some lines with lots of white space, but 	
+  % tends to prevent words from sticking out in the margin
+\tolerance=4000 
+
+\interfootnotelinepenalty=10000
+
+\input{sections/intro}
+\input{sections/relatedwork}
+\input{sections/platemate}
+\input{sections/management}
+\input{sections/evaluation}
+\input{sections/discussion}
+\input{sections/conclusion}
+
+
+
+% bibliography --- please add new references to the platemate.bib
+\small % a little space saving device
+\bibliographystyle{unm}
+\bibliography{platemate,kzg}
+
+
+\end{document}
