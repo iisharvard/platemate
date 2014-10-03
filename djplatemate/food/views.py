@@ -9,7 +9,8 @@ from django import forms
 from datetime import date, datetime
 from django.db import transaction
 
-import food_db, random, os, Image
+import food_db, random, os
+from PIL import Image
 
 def login_required(f):
     def wrap(request, *args, **kwargs):
@@ -28,7 +29,7 @@ def food_search(request, query):
         "foods": Food.search(query),
     },
     mimetype="application/json")
-    
+
 def food_autocomplete(request):
     fdb = food_db.FoodDb()
     query = request.GET["term"]
@@ -37,11 +38,11 @@ def food_autocomplete(request):
         "foods": Food.search(query),
     },
     mimetype="application/json")
-    
+
 def show_pipeline(request, operation, photo=None):
     chief = Manager.objects.get(operation=operation,name='chief').downcast()
     outputs = chief.get_outputs()
-    
+
     # Only show managers doing hits
     outputs = filter(lambda o: o.manager.employees.count() == 0, outputs)
 
@@ -51,10 +52,10 @@ def show_pipeline(request, operation, photo=None):
         ingredient = Ingredient()
         step = output.step
         id = output.pk
-        
+
         def exists(obj,attr):
             return hasattr(obj,attr) and getattr(obj,attr)
-        
+
         if exists(output,'photo'):
             photo = output.photo
         if exists(output,'box_group'):
@@ -74,10 +75,10 @@ def show_pipeline(request, operation, photo=None):
             ingredient = output.ingredient
             box = ingredient.box
             photo = box.photo
-            
+
         return (photo.pk,box.pk,ingredient.pk,step)
 
-        
+
     return render_to_response('outputs.html', {
         "outputs": sorted(outputs,key=sortvalue),
         "path": settings.URL_PATH,
@@ -94,10 +95,10 @@ def fe_day(request, day):
         submissions = Submission.objects.filter(user = request.user, date = d)
         meal_types = ["Total", "Breakfast", "Lunch", "Dinner", "Snacks"]
 
-        meals_dict = {}    
+        meals_dict = {}
         for meal_type in meal_types:
             meals_dict[meal_type] = {"submissions": [], "calories": 0.0, "fat": 0.0, "carbohydrate": 0.0, "protein": 0.0}
-        
+
         for s in submissions:
             meals_dict[s.get_meal_display()]["submissions"].append(s)
             for box, ingredients in s.breakdown().items():
@@ -107,21 +108,21 @@ def fe_day(request, day):
                         meals_dict[s.get_meal_display()]["fat"] += ingredient.serving.fat * ingredient.amount
                         meals_dict[s.get_meal_display()]["carbohydrate"] += ingredient.serving.carbohydrate * ingredient.amount
                         meals_dict[s.get_meal_display()]["protein"] += ingredient.serving.protein * ingredient.amount
-                    
+
                         meals_dict["Total"]["calories"] += ingredient.serving.calories * ingredient.amount
                         meals_dict["Total"]["fat"] += ingredient.serving.fat * ingredient.amount
                         meals_dict["Total"]["carbohydrate"] += ingredient.serving.carbohydrate * ingredient.amount
                         meals_dict["Total"]["protein"] += ingredient.serving.protein * ingredient.amount
-        
+
         meals = [{
-            "meal": meal_type, 
-            "submissions": meals_dict[meal_type]["submissions"], 
-            "calories": meals_dict[meal_type]["calories"], 
-            "fat": meals_dict[meal_type]["fat"], 
-            "carbohydrate": meals_dict[meal_type]["carbohydrate"], 
-            "protein": meals_dict[meal_type]["protein"], 
+            "meal": meal_type,
+            "submissions": meals_dict[meal_type]["submissions"],
+            "calories": meals_dict[meal_type]["calories"],
+            "fat": meals_dict[meal_type]["fat"],
+            "carbohydrate": meals_dict[meal_type]["carbohydrate"],
+            "protein": meals_dict[meal_type]["protein"],
         } for meal_type in meal_types]
-        
+
         c = {
             "user": request.user,
             "meals": meals,
@@ -150,18 +151,18 @@ def edit_ingredient(request):
     elif "serving_id" in request.REQUEST and (ingredient.serving == None or request.REQUEST["serving_id"] != ingredient.serving.pk):
         ingredient.serving = get_object_or_404(Serving, pk=request.REQUEST["serving_id"])
         ingredient.save()
-        
+
     return render_to_response("fe/ingredient_row_editable.html", {
         "ingredient": ingredient,
         "path": settings.URL_PATH,
     })
-    
+
 @login_required
 def add_ingredient(request):
     submission = get_object_or_404(Submission, pk=request.REQUEST["submission_id"])
     if submission.user != request.user:
         return HttpResponseBadRequest("There was an error, please try again.")
-    
+
     new_ingredient = Ingredient(
         food = Food.get_food(request.REQUEST["food_id"]),
         amount = 0.0,
@@ -169,7 +170,7 @@ def add_ingredient(request):
     )
     new_ingredient.save()
     submission.measured_ingredients.add(new_ingredient)
-    
+
     return render_to_response("fe/ingredient_row_editable.html", {
         "ingredient": new_ingredient,
         "path": settings.URL_PATH,
@@ -192,14 +193,14 @@ def delete_submission(request):
     submission = get_object_or_404(Submission, pk=request.REQUEST["submission_id"])
     if submission.user != request.user:
         return HttpResponseBadRequest("There was an error, please try again.")
-    
+
     submission.hidden = True
     submission.save()
-    
+
     for ingredient in submission.measured_ingredients.all():
         ingredient.hidden = True
         ingredient.save()
-    
+
     return render_to_response("fe/submission.html", {
         "submission": submission,
         "path": settings.URL_PATH,
@@ -213,7 +214,7 @@ class SubmissionForm(forms.Form):
 # Only for use during our user evaluation.
 MANUAL_DAYS = {
     "platemate1": ["2011-04-11", "2011-04-12"], # Monday and Tuesday
-    "platemate2": ["2011-04-11", "2011-04-12"], # Monday and Tuesday 
+    "platemate2": ["2011-04-11", "2011-04-12"], # Monday and Tuesday
     "platemate3": ["2011-04-13", "2011-04-14"], # Wednesday and Thursday
     "platemate4": ["2011-04-13", "2011-04-14"], # Wednesday and Thursday
     "platemate5": ["2011-04-11", "2011-04-12"], # Monday and Tuesday
@@ -237,12 +238,12 @@ def fe_upload(request, day):
                 random.seed()
                 photo_name = str(random.randint(0,1000000)) + "_" + str(request.user.pk) + "_" + day + "_" + photo.name
                 photo_path = os.path.join(settings.STATIC_DOC_ROOT,'uploaded','raw',photo_name)
-                
+
                 destination = open(photo_path, 'wb+')
                 for chunk in photo.chunks():
                     destination.write(chunk)
                 destination.close()
-                
+
                 # Original image
                 original = Image.open(photo_path)
 
@@ -260,7 +261,7 @@ def fe_upload(request, day):
 
                 out_path = os.path.join(out_dir,photo_name)
                 smaller.save(out_path)
-                
+
                 p = Photo.factory(photo_url = '%s/static/uploaded/resized/%s' % (settings.URL_PATH,photo_name))
                 s = Submission(
                     photo = p,
