@@ -9,14 +9,14 @@ ADMINS = (
 )
 
 TURK_REAL = MTurkClient(
-    aws_access_key = 'AKIAIGZE7ZHZGKZQO6EA',
-    aws_secret_key = '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',
+    aws_access_key = 'AKIAI7I2N532HRHM3VCA',
+    aws_secret_key = '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',
     aws_mode       = 'real',
 )
 
 TURK_SANDBOX = MTurkClient(
-    aws_access_key = 'AKIAIGZE7ZHZGKZQO6EA',
-    aws_secret_key = '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',
+    aws_access_key = 'AKIAI7I2N532HRHM3VCA',
+    aws_secret_key = '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',
     aws_mode       = 'sandbox',
 )
 
@@ -96,7 +96,7 @@ try:
     from local_settings import *
 except ImportError:
     pass
-    
+
 LOGIN_REDIRECT_URL = URL_PATH + "/"
 LOGIN_URL = URL_PATH + "/login/"
 
