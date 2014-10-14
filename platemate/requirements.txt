@@ -1,0 +1,5 @@
+Django==1.2.5
+Pillow
+httpagentparser
+boto
+oauth
