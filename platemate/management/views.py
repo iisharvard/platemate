@@ -33,7 +33,9 @@ def show_stats(request, operation):
 def show_hit(request, hit_id):
     h = get_object_or_404(Hit, pk=hit_id)
     #template_name = h.jobs.all()[0].__class__.__name__ + ".html"
+
     template_name = '%s.html' % h.template
+    print 'template_name:', template_name
     useragent = httpagentparser.detect(request.META["HTTP_USER_AGENT"])
     
     try:

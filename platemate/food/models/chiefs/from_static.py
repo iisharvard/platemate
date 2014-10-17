@@ -43,6 +43,7 @@ class Manager(base.Manager):
             smaller.save(out_path)
 
             # Build a photo object
+            print "photoset:", self.photoset
             url = '%s/static/photos/%s/%s' % (settings.URL_PATH,self.photoset,filename)
             photos += [Photo.factory(photo_url=url)]
 
