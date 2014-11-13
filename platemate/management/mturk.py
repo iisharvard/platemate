@@ -97,7 +97,7 @@ class MTurkClient:
             results.setdefault(asst.AssignmentId,{})
             answers = asst.answers[0]
             for qfa in answers:
-                field, response = qfa.fields[0]
+                field, response = qfa.qid, qfa.fields[0]
                 results[asst.AssignmentId][field] = response
                 
             results[asst.AssignmentId]['worker_id'] = asst.WorkerId

@@ -29,10 +29,17 @@
   </script>
   </head>
   <body>
-    <div id="wrapper">  
-    
-      <form action='//www.mturk.com/mturk/externalSubmit' method='POST' name='hitForm'>
-        
+
+    <div id="wrapper"> 
+
+       {% if hit.manager.sandbox %}
+
+           <form action='//workersandbox.mturk.com/mturk/externalSubmit' method='POST' name='hitForm'>
+       {% else %}
+
+            <form action='//www.mturk.com/mturk/externalSubmit' method='POST' name='hitForm'>
+       {% endif %}
+       
         <input type='hidden' name='country' value='{{ country }}' />
         <input type='hidden' name='browser' value='{{ browser }}' />
         <input type='hidden' name='os' value='{{ os }}' />
