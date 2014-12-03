@@ -2,7 +2,8 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from models import *
-from urllib2 import urlopen
+#from urllib2 import urlopen
+import requests
 import httpagentparser
 import os, glob
 
@@ -42,9 +43,20 @@ def show_hit(request, hit_id):
         ip = request.META["HTTP_X_FORWARDED_FOR"]
     except KeyError:
         ip = '0.0.0.0'
-    country = urlopen("http://api.hostip.info/country.php?ip=%s" % ip).read()
+    try:
+        if False:
+            #country_response = requests.get("http://api.hostip.info/country.php?ip=%s" % ip, timeout=3)
+            country_response = requests.get("https://freegeoip.net/json/%s" % ip, timeout=4)
+            country = (country_response.json())['country_code']
+        else:
+            country = "GeoLocation Disabled"
+    except requests.Timeout:
+        print("ERROR: THE GEOLOCATION API TIMED OUT")
+        country = "Unknown" 
+        
     
     worker_id = request.GET.get("workerId", 'unknown')
+    #print("Worker: %s\t country: %s"%(worker_id,country))
     
     
     examples_search = os.path.join(settings.STATIC_DOC_ROOT,'examples',h.template,'*.png')

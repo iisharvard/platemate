@@ -3,3 +3,4 @@ Pillow
 httpagentparser
 boto
 oauth
+requests

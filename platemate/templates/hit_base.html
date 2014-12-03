@@ -27,6 +27,8 @@
     
         
   </script>
+
+
   </head>
   <body>
 
@@ -34,10 +36,10 @@
 
        {% if hit.manager.sandbox %}
 
-           <form action='//workersandbox.mturk.com/mturk/externalSubmit' method='POST' name='hitForm'>
+           <form action='//workersandbox.mturk.com/mturk/externalSubmit' method='POST' name='hitForm' >
        {% else %}
 
-            <form action='//www.mturk.com/mturk/externalSubmit' method='POST' name='hitForm'>
+            <form action='//www.mturk.com/mturk/externalSubmit' method='POST' name='hitForm' >
        {% endif %}
        
         <input type='hidden' name='country' value='{{ country }}' />
@@ -100,7 +102,18 @@
               
               
             {% else %}
-              <input type='submit' id='submitButton' value='Submit HIT'>
+
+              <script>
+			function validate_and_submit(){
+                                var validation_passed = true;
+				if (typeof VALIDATE_INPUT=='function')
+					validation_passed = VALIDATE_INPUT()
+				if(validation_passed)
+					document.hitForm.submit()
+					
+			}
+              </script>
+              <input type='button' id='submitButton' value='Submit HIT' onclick="validate_and_submit()">
             {% endif %}
         {% endif %}
       </form>

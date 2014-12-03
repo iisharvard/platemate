@@ -16,6 +16,20 @@ We need your help breaking up a picture into different foods. For each photo, <b
   var ids = {};
   var selections = {};
   var selects = {};
+  
+  function VALIDATE_INPUT()
+  {
+	for(key in selections)
+	{
+		if(! ( Object.keys(selections[key]).length > 0)) 
+		{
+			alert("You haven't tagged all images")
+			return false;
+		}
+	}
+	
+	return true;
+  }
   </script>
   <div id="MAIN_TAGGING">
   {% for job in hit.jobs.all %}

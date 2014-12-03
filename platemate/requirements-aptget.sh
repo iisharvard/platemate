@@ -1,1 +1,1 @@
-sudo apt-get install libjpeg-dev
+sudo apt-get install libjpeg-dev 
