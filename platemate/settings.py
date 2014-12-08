@@ -1,6 +1,6 @@
 # Django settings for platemate project.
 from management.mturk import MTurkClient
-
+from amt_keys import AWS_ACCESS_KEY, AWS_SECRET_KEY
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -9,14 +9,14 @@ ADMINS = (
 )
 
 TURK_REAL = MTurkClient(
-    aws_access_key = 'AKIAI7I2N532HRHM3VCA',
-    aws_secret_key = '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',
+    aws_access_key = AWS_ACCESS_KEY,
+    aws_secret_key = AWS_SECRET_KEY,
     aws_mode       = 'real',
 )
 
 TURK_SANDBOX = MTurkClient(
-    aws_access_key = 'AKIAI7I2N532HRHM3VCA',
-    aws_secret_key = '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',
+    aws_access_key = AWS_ACCESS_KEY,
+    aws_secret_key = AWS_SECRET_KEY,
     aws_mode       = 'sandbox',
 )
 
