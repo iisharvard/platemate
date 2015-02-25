@@ -151,30 +151,36 @@ def photo_summary(request, photo_id):
                     if i.food not in valid_ingredients:
                         valid_ingredients[i.food] = []
                     valid_ingredients[i.food].append(i)
-            print valid_ingredients
             ingredient_list = []
             for k, v in valid_ingredients.iteritems():
+                num_entry = len(v)*1.0
                 food_entry = {
-                    'description': k.food_description,
+                    'description': k.food_name,
                 }
-                food_entry['calories'] = sum([e.serving.calories * e.amount for e in v])
-                food_entry['fat'] = sum([e.serving.fat * e.amount for e in v])
-                food_entry['carbohydrate'] = sum([e.serving.carbohydrate * e.amount for e in v])
-                food_entry['protein'] = sum([e.serving.protein * e.amount for e in v])
+                food_entry['calories'] = round(sum([e.serving.calories * e.amount for e in v])/num_entry,1)
+                food_entry['fat'] = round(sum([e.serving.fat * e.amount for e in v])/num_entry, 1)
+                food_entry['carbohydrate'] = round(sum([e.serving.carbohydrate * e.amount for e in v])/num_entry,1)
+                food_entry['protein'] = round(sum([e.serving.protein * e.amount for e in v])/num_entry,1)
 
                 ingredient_list.append(food_entry)
 
             box['ingredients'] = ingredient_list
 
             ingredient_boxes.append(box)
-
-
+    total = {'calories':0, 'fat':0, 'carbohydrate':0, 'protein':0}
+    for b in ingredient_boxes:
+        for i in b['ingredients']:
+            print i
+            total['calories'] += i['calories']
+            total['fat'] += i['fat']
+            total['carbohydrate'] += i['carbohydrate']
+            total['protein'] += i['protein']
     c = {
-        'ingredient_boxes': ingredient_boxes
+        'ingredient_boxes': ingredient_boxes,
+        'total': total
     }
     return render_to_response("fe/food_summary.html", c)
-    # c.update(csrf)
-    # return render_to_response("fe/index.html",c)
+
 
 @login_required
 def edit_ingredient(request):
