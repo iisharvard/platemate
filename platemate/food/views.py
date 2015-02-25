@@ -178,7 +178,7 @@ def photo_summary(request, photo_id):
     c = {
         'ingredient_boxes': ingredient_boxes,
         'total': total,
-        'boxgroup': boxgroup[0]
+        'box_group': box_group[0]
     }
     return render_to_response("fe/food_summary.html", c)
 
