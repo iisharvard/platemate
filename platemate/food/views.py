@@ -136,6 +136,11 @@ def fe_day(request, day):
     except ValueError:
         return HttpResponseNotFound("Invalid date")
 
+def photo_summary(request, photo_id):
+    return 'hi'
+    # c.update(csrf)
+    # return render_to_response("fe/index.html",c)
+
 @login_required
 def edit_ingredient(request):
     # TODO: Actually check that the logged in user owns this ingredient
