@@ -152,18 +152,25 @@ def photo_summary(request, photo_id):
                         valid_ingredients[i.food] = []
                     valid_ingredients[i.food].append(i)
             print valid_ingredients
-            box['ingredients'] = valid_ingredients
+            ingredient_list = []
+            for k, v in valid_ingredients.iteritems():
+                food_entry = {
+                    'description': k.food_description,
+                }
+                food_entry['calories'] = sum([e.serving.calories * e.amount for e in v])
+                food_entry['fat'] = sum([e.serving.fat * e.amount for e in v])
+                food_entry['carbohydrate'] = sum([e.serving.carbohydrate * e.amount for e in v])
+                food_entry['protein'] = sum([e.serving.protein * e.amount for e in v])
+
+                ingredient_list.append(food_entry)
+
+            box['ingredients'] = ingredient_list
+
             ingredient_boxes.append(box)
-    print photo
-    meals = [{
-        'meal': meal,
-        'calories':None,
-        'fat':None,
-        'carbohydrate':None,
-        'protein':None,
-    }]
+
+
     c = {
-        'meals': meals
+        'ingredient_boxes': ingredient_boxes
     }
     return render_to_response("fe/food_summary.html", c)
     # c.update(csrf)
