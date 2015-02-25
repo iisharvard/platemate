@@ -1,0 +1,113 @@
+{% extends "fe/base.html" %}
+{% load food_tags %}
+
+{% block content %}
+
+<style type="text/css">
+td.hidden {
+  {% if debug %}
+    text-decoration: line-through;
+    color: #900;
+  {% else %}
+    display: none;  
+  {% endif %}
+}
+
+tr.user-added td, tr.user-added td a {  
+  {% if debug %}
+    color: #009900 !important;
+  {% endif %}
+}
+</style>
+
+<script type="text/javascript">
+function round_float(x,n){
+  if(!parseInt(n))
+  	var n=0;
+  if(!parseFloat(x))
+  	return false;
+  return Math.round(x*Math.pow(10,n))/Math.pow(10,n);
+}
+
+function sum(item, meal) {
+  var items;
+  if (meal != null && meal != "Total") {
+    items = $(".s-" + meal + " ." + item);
+  } else {
+    items = $("." + item);
+  }
+  var sum = 0;
+  for (var i = 0; i < items.length; i++) {
+    sum += parseFloat(items[i].innerHTML);
+  }
+  if (sum == 0) return 0;
+  else return round_float(sum, 1);
+}
+
+function updateTotals() {
+  var meals = ["Total", "Breakfast", "Lunch", "Dinner", "Snacks"];
+  var items = ["calories", "fat", "carbohydrate", "protein"];
+  
+  for (m in meals) {
+    for (i in items) {
+      $("#" + items[i] + "-" + meals[m]).text(sum(items[i], meals[m]));
+    }
+  }
+}
+</script>
+<div id="main">
+<img src="{{path}}/static/img/logo.png" height="75"/>
+<div id="main-content">
+<script type="text/javascript">
+  $(function() {
+  	updateTotals();
+  });
+</script>
+
+<table cellpadding=0 cellspacing=0>
+  {% for meal in meals %}
+    <tr class="meal-{{meal.meal}}">
+      <td valign="bottom" width="410" class="meal-name meal-header">{{ meal.meal }}</td>
+      <td valign="top" class="meal-totals meal-header">
+        <table cellpadding=2 cellspacing=0 border=0>
+          {% if meal.meal = "Total" %}
+          <tr>
+            <td class="food"></td>
+            <td class="nutrition-label">Cal</td>
+            <td class="nutrition-label">Fat(g)</td>
+            <td class="nutrition-label">Carbs(g)</td>
+            <td class="nutrition-label">Protein(g)</td>
+          </tr>
+          {% endif %}
+          <tr>
+            <td class="food"></td>
+            <td class="nutrition-label" id="calories-{{meal.meal}}">{{ meal.calories|floatformat }}</td>
+            <td class="nutrition-label" id="fat-{{meal.meal}}">{{ meal.fat|floatformat }}</td>
+            <td class="nutrition-label" id="carbohydrate-{{meal.meal}}">{{ meal.carbohydrate|floatformat }}</td>
+            <td class="nutrition-label" id="protein-{{meal.meal}}">{{ meal.protein|floatformat }}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    
+    {% if meal.meal != "Total" %}
+      {% for submission in meal.submissions %}
+        {% if not submission.hidden or debug %}
+          {{ submission|show_submission:debug }}
+        {% endif %}
+      {% empty %}
+        <tr>
+          <td colspan="2" class="submission"><em>No meals submitted.</em></td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="2" class="submission"><a href="#upload" onClick="$('#id_meal')[0].value = '{{meal.meal.0}}';$('#upload-area').effect('highlight',{},1000)" class="upload"><span class="upload-plus">+</span> <span class="upload-text">Upload New Photo</span></a></td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+</table>
+
+<a name="upload"></a>
+</div>
+</div>
+{% endblock content %}

@@ -137,7 +137,35 @@ def fe_day(request, day):
         return HttpResponseNotFound("Invalid date")
 
 def photo_summary(request, photo_id):
-    return 'hi'
+    photo = Photo.objects.filter(id = photo_id)[0]
+    box_group = BoxGroup.objects.filter(photo = photo)
+    boxes = Box.objects.filter(photo = photo)
+    ingredient_boxes =[]
+    for b in boxes:
+        box = {'id': b.id}
+        ingredients = Ingredient.objects.filter(box = b)
+        valid_ingredients = {}
+        if len(ingredients) > 0:
+            for i in ingredients:
+                if i.amount:
+                    if i.food not in valid_ingredients:
+                        valid_ingredients[i.food] = []
+                    valid_ingredients[i.food].append(i)
+            print valid_ingredients
+            box['ingredients'] = valid_ingredients
+            ingredient_boxes.append(box)
+    print photo
+    meals = [{
+        'meal': meal,
+        'calories':None,
+        'fat':None,
+        'carbohydrate':None,
+        'protein':None,
+    }]
+    c = {
+        'meals': meals
+    }
+    return render_to_response("fe/food_summary.html", c)
     # c.update(csrf)
     # return render_to_response("fe/index.html",c)
 
