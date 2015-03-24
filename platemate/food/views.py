@@ -45,7 +45,7 @@ def show_pipeline(request, operation, photo=None):
 
     # Only show managers doing hits
     outputs = filter(lambda o: o.manager.employees.count() == 0, outputs)
-
+        
     def sortvalue(output):
         photo = Photo()
         box = Box()
@@ -170,7 +170,6 @@ def photo_summary(request, photo_id):
     total = {'calories':0, 'fat':0, 'carbohydrate':0, 'protein':0}
     for b in ingredient_boxes:
         for i in b['ingredients']:
-            print i
             total['calories'] += i['calories']
             total['fat'] += i['fat']
             total['carbohydrate'] += i['carbohydrate']
