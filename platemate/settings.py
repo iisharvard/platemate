@@ -12,7 +12,7 @@ MTURK_ID = os.environ['MTURK_ID']
 MTURK_KEY = os.environ['MTURK_KEY']
 
 if MTURK_ID is None or MTURK_KEY is None:
-    throw "Your MTurk credentials are not present. Setup MTURK_ID and MTURK_KEY as environment variables"
+    raise "Your MTurk credentials are not present. Setup MTURK_ID and MTURK_KEY as environment variables"
 
 TURK_REAL = MTurkClient(
     aws_access_key = MTURK_ID,
