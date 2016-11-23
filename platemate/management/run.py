@@ -48,7 +48,7 @@ def run(chief_module,operation,args={}):
     def get_chief(chief_class,operation):
         return chief_class.objects.get(operation=operation,name='chief',**args)
 
-    @transaction.commit_on_success
+    @transaction.atomic
     def new_chief(chief_class,operation):
         chief = chief_class.factory(operation=operation,name='chief',**args)
         setup(chief)

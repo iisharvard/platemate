@@ -45,7 +45,7 @@ def show_pipeline(request, operation, photo=None):
 
     # Only show managers doing hits
     outputs = filter(lambda o: o.manager.employees.count() == 0, outputs)
-        
+
     def sortvalue(output):
         photo = Photo()
         box = Box()
@@ -272,7 +272,7 @@ MANUAL_DAYS = {
     "admin": ["2011-04-10", "2011-04-11"],
 }
 
-@transaction.commit_on_success
+@transaction.atomic
 @login_required
 def fe_upload(request, day):
     try:

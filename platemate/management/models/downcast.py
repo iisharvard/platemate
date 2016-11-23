@@ -17,7 +17,7 @@ class PolymorphicMetaclass(ModelBase):
             model = self.content_type.model_class()
             if (model == self.__class__):
                 return self
-            return model.objects.get(pk=self.pk)  
+            return model.objects.get(pk=self.pk)
 
         if issubclass(dct.get('__metaclass__', type), PolymorphicMetaclass):
           dct['content_type'] = models.ForeignKey(ContentType, editable=False, null=True)
@@ -33,7 +33,7 @@ class DowncastMetaclass(PolymorphicMetaclass):
 
 class DowncastManager(models.Manager):
     use_for_related_fields = True #changed from original
-    def get_query_set(self):
+    def get_queryset(self):
         return DowncastQuerySet(self.model)
 
 class DowncastQuerySet(QuerySet):

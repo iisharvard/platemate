@@ -63,7 +63,7 @@ class Supervisor(object):
         print "Created job %s" % job
         self.jobs.add(job)
     
-    @transaction.commit_on_success
+    @transaction.atomic
     def assemble_jobs(self):
         # Pop out batches of HITs
         while len(self.waiting_jobs) >= self.batch_size:
@@ -83,7 +83,7 @@ class Supervisor(object):
             job.delete()
         hit.delete()
     
-    @transaction.commit_on_success
+    @transaction.atomic
     def refresh_hits(self):
         log("Refreshing HITs for %s" % (self.__class__.__name__), TURK_CONTROL)
         for jobcount in range(self.batch_size):
@@ -198,7 +198,7 @@ class Supervisor(object):
             log('Rejected assignment %s because %s' % (asst.turk_id, asst.feedback), MANAGER_CONTROL)
         asst.save()
             
-    @transaction.commit_on_success
+    @transaction.atomic
     def check_hits(self):
         for hit in self.active_hits:
             self.get_responses(hit)
