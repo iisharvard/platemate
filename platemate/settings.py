@@ -100,6 +100,8 @@ try:
 except ImportError:
     pass
 
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
 LOGIN_REDIRECT_URL = URL_PATH + "/"
 LOGIN_URL = URL_PATH + "/login/"
 

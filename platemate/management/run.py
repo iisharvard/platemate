@@ -1,6 +1,8 @@
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 from django.conf import settings
+import django
+django.setup()
 
 from logger import *
 from time import sleep
