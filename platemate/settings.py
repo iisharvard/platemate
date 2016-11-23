@@ -61,10 +61,7 @@ MEDIA_ROOT = ''
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = ''
 
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+STATIC_URL = '/static/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 've%nw*o%0h*32nwqlsi^w5&b__t(9n-s2r8&_0byf$aivj+o*^'
