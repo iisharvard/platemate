@@ -94,6 +94,7 @@ INSTALLED_APPS = (
     'food',
     'django.contrib.auth',
     'django.contrib.sessions',
+    'sslserver'
 )
 
 try:
