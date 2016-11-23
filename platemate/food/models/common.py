@@ -6,7 +6,7 @@ from management.models import SmartModel, Manager
 from management.helpers import *
 import json
 from management.models.smart_model import OneOf, ManyOf
-from platemate.logger import *
+from logger import *
 from datetime import date
 
 PHOTO_WIDTH = 400

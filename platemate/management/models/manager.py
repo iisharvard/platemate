@@ -1,6 +1,6 @@
 from smart_model import SmartModel
 from django.db.models import *
-from platemate.logger import *
+from logger import *
 from supervisor import Supervisor
 
 class Input(SmartModel):

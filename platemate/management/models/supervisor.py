@@ -2,7 +2,7 @@ from management import qualifications
 from management.helpers import *
 from management.models.turk import *
 from django.db.models import Min
-from platemate.logger import *
+from logger import *
 from turk import Hit
 from django.conf import settings
 from django.db import transaction
