@@ -64,6 +64,9 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+/platemate/static/uploaded/raw
+/platemate/static/uploaded/resized
+
 
 ##########################################
 # end Python
