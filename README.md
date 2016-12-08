@@ -24,7 +24,8 @@ This should install:
 
 ## Create Database Tables
 From the platemate directory, run:
-    python manage.py syncdb --noinput
+    python manage.py migrate auth
+    python manage.py migrate
 
 ## Add an admin user
     python manage.py createsuperuser
