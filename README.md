@@ -11,7 +11,7 @@ PlateMate: crowdsourcing nutritional analyses from food photographs
 
 This should install:
 
-+ Django 1.2.5
++ Django 1.8.16
 + Pillow (latest)
 + Boto (latest)
 + httpagentparser (latest)
