@@ -4,3 +4,4 @@ httpagentparser
 boto
 oauth
 requests
+django-sslserver
