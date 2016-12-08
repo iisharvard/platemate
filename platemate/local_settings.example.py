@@ -22,3 +22,6 @@ DATABASES = {
 }
 
 PYTHONVAR = 'python'
+
+# Hostnames that users can connect to your site with.
+ALLOWED_HOSTS = [u'platemate.example.com']
