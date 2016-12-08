@@ -18,7 +18,9 @@ This should install:
 + oauth latest
 
 ## Modify Local Settings
-In the platemate directory modify `local_settings.example.py` to your paths and rename to `local_settings.py`. In the platemate directory, add your Amazon Mechanical Turk keys in `amt_keys.example.py` and save it as `amt_keys.py`
+
+* In the platemate directory modify `local_settings.example.py` to your paths and rename to `local_settings.py`.
+* Store your AWS access ID and secret key in the environment variables MTURK_ID and MTURK_KEY.
 
 ## Create Database Tables
 From the platemate directory, run:
