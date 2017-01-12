@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponse, Http404, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseRedirect
 from django.core.context_processors import csrf
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404, render
 from models.common import *
 from management.models import Manager
 #from django.contrib.auth.decorators import login_required
@@ -25,19 +25,19 @@ def login_required(f):
 def food_search(request, query):
     fdb = food_db.FoodDb()
     results = fdb.search(query)
-    return render_to_response("food_search.json", {
+    return render(request, "food_search.json", context={
         "foods": Food.search(query),
     },
-    mimetype="application/json")
+    content_type="application/json")
 
 def food_autocomplete(request):
     fdb = food_db.FoodDb()
     query = request.GET["term"]
     results = fdb.search(query)
-    return render_to_response("food_autocomplete.json", {
+    return render(request, "food_autocomplete.json", context={
         "foods": Food.search(query),
     },
-    mimetype="application/json")
+    content_type="application/json")
 
 def show_pipeline(request, operation, photo=None):
     chief = Manager.objects.get(operation=operation,name='chief').downcast()
@@ -79,7 +79,7 @@ def show_pipeline(request, operation, photo=None):
         return (photo.pk,box.pk,ingredient.pk,step)
 
 
-    return render_to_response('outputs.html', {
+    return render(request, 'outputs.html', context={
         "outputs": sorted(outputs,key=sortvalue),
         "path": settings.URL_PATH,
     })
@@ -132,7 +132,7 @@ def fe_day(request, day):
             "debug": "debug" in request.REQUEST,
         }
         c.update(csrf(request))
-        return render_to_response("fe/index.html", c)
+        return render(request, "fe/index.html", context=c)
     except ValueError:
         return HttpResponseNotFound("Invalid date")
 
@@ -179,7 +179,7 @@ def photo_summary(request, photo_id):
         'total': total,
         'box_group': box_group[0]
     }
-    return render_to_response("fe/food_summary.html", c)
+    return render(request, "fe/food_summary.html")
 
 
 @login_required
@@ -198,7 +198,7 @@ def edit_ingredient(request):
         ingredient.serving = get_object_or_404(Serving, pk=request.REQUEST["serving_id"])
         ingredient.save()
 
-    return render_to_response("fe/ingredient_row_editable.html", {
+    return render(request, "fe/ingredient_row_editable.html", context={
         "ingredient": ingredient,
         "path": settings.URL_PATH,
     })
@@ -217,7 +217,7 @@ def add_ingredient(request):
     new_ingredient.save()
     submission.measured_ingredients.add(new_ingredient)
 
-    return render_to_response("fe/ingredient_row_editable.html", {
+    return render(request, "fe/ingredient_row_editable.html", context={
         "ingredient": new_ingredient,
         "path": settings.URL_PATH,
         "full_row": True
@@ -229,7 +229,7 @@ def delete_ingredient(request):
     ingredient = get_object_or_404(Ingredient, pk=request.REQUEST["ingredient_id"])
     ingredient.hidden = True
     ingredient.save()
-    return render_to_response("fe/ingredient_row_editable.html", {
+    return render(request, "fe/ingredient_row_editable.html", context={
         "ingredient": ingredient,
         "path": settings.URL_PATH,
     })
@@ -247,7 +247,7 @@ def delete_submission(request):
         ingredient.hidden = True
         ingredient.save()
 
-    return render_to_response("fe/submission.html", {
+    return render(request, "fe/submission.html", context={
         "submission": submission,
         "path": settings.URL_PATH,
     })
