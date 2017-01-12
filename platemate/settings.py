@@ -26,7 +26,6 @@ TURK_SANDBOX = MTurkClient(
     aws_mode       = 'sandbox',
 )
 
-
 MANAGERS = ADMINS
 
 # Local time zone for this installation. Choices can be found here:
@@ -96,6 +95,39 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'sslserver'
 )
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'platemate.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers':['file'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+        'platemate': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    }
+}
 
 try:
     from local_settings import *
