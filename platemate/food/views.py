@@ -179,7 +179,7 @@ def photo_summary(request, photo_id):
         'total': total,
         'box_group': box_group[0]
     }
-    return render(request, "fe/food_summary.html")
+    return render(request, "fe/food_summary.html", context=c)
 
 
 @login_required
