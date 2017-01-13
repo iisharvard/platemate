@@ -1,6 +1,6 @@
 
 .idea
-db.sqlite3
+*.sqlite3
 
 platemate/local_settings.py
 platemate/static/uploaded/ground*
