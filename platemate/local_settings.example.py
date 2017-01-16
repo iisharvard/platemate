@@ -1,6 +1,8 @@
 BASE_PATH = r"/Users/eric/Dropbox/PlateMate/platemate/trunk/platemate"
 # BASE_PATH = r"D:\Code\platemate"
 
+DEBUG = True # Should be False for production
+
 TEMPLATE_DIRS = (
     BASE_PATH + "/templates",
 )

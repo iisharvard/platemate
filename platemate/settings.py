@@ -1,7 +1,12 @@
 # Django settings for platemate project.
 from management.mturk import MTurkClient
 import os
-DEBUG = True
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -129,11 +134,6 @@ LOGGING = {
         },
     }
 }
-
-try:
-    from local_settings import *
-except ImportError:
-    pass
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
