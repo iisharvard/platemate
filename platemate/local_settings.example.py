@@ -3,6 +3,10 @@ BASE_PATH = r"/Users/eric/Dropbox/PlateMate/platemate/trunk/platemate"
 
 DEBUG = True # Should be False for production
 
+ADMINS = (
+    # ('Your Name', 'your_email@domain.com'),
+)
+
 TEMPLATE_DIRS = (
     BASE_PATH + "/templates",
 )
