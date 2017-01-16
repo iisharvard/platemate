@@ -93,7 +93,8 @@ INSTALLED_APPS = (
     'food',
     'django.contrib.auth',
     'django.contrib.sessions',
-    'sslserver'
+    'sslserver',
+    'django_extensions'
 )
 
 LOGGING = {
