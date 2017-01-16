@@ -112,7 +112,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'platemate.log',
+            'filename': 'log/platemate.log',
             'formatter': 'verbose'
         },
     },
