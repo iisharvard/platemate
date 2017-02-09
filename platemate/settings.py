@@ -79,7 +79,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware'
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django_pdb.middleware.PdbMiddleware'
 )
 
 ROOT_URLCONF = 'urls'
@@ -95,7 +97,9 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.sessions',
     'sslserver',
-    'django_extensions'
+    'django_extensions',
+    'debug_toolbar',
+    'django_pdb'
 )
 
 LOGGING = {

@@ -12,6 +12,7 @@ from django.db import transaction
 #for api
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+import pdb;
 
 import food_db, random, os
 from PIL import Image
@@ -279,7 +280,45 @@ MANUAL_DAYS = {
 @csrf_exempt
 def api_photo_upload(request):
     try:
-        data = dict({"photo_id" : "uniq_id"})
+        time_string = datetime.now().isoformat()
+        photo = request.FILES['upload']
+        random.seed()
+        photo_name = str(random.randint(0,1000000)) + "_" + time_string + "_" + photo.name
+        photo_dir_name = os.path.join(settings.STATIC_DOC_ROOT,'api','photos', 'raw')
+        photo_path = os.path.join(settings.STATIC_DOC_ROOT, 'api', 'photos', 'raw', photo_name)
+
+        try:
+            os.makedirs(photo_dir_name)
+        except os.error:
+            pass
+
+        destination = open(photo_path, 'wb+')
+        for chunk in photo.chunks():
+            destination.write(chunk)
+        destination.close()
+
+        # Original image
+        original = Image.open(photo_path)
+
+        # Resize it to 400px wide (usually 300 high)
+        width, height = original.size
+        new_size = 400, int(height * 400.0 / width)
+        smaller = original.resize(new_size, Image.ANTIALIAS)
+        # Save it to photos directory
+        out_dir = os.path.join(settings.STATIC_DOC_ROOT,'api','photos','resized')
+        try:
+            os.makedirs(out_dir)
+        except os.error:
+            pass
+
+        p = Photo.factory(photo_url = '%s/static/api/photos/resized/%s' % (settings.URL_PATH, photo_name))
+
+        out_path = os.path.join(out_dir,photo_name)
+        smaller.save(out_path)
+
+
+        data = dict({"photo_id" : p.id})
+
         return JsonResponse(data)
     except ValueError:
         return HttpResponseBadRequest("There was an error, please try again.")
