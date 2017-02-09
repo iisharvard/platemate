@@ -9,6 +9,10 @@ from django import forms
 from datetime import date, datetime
 from django.db import transaction
 
+#for api
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+
 import food_db, random, os
 from PIL import Image
 
@@ -271,6 +275,14 @@ MANUAL_DAYS = {
     "platemate10": ["2011-04-16", "2011-04-17"], # Saturday and Sunday
     "admin": ["2011-04-10", "2011-04-11"],
 }
+
+@csrf_exempt
+def api_photo_upload(request):
+    try:
+        data = dict({"photo_id" : "uniq_id"})
+        return JsonResponse(data)
+    except ValueError:
+        return HttpResponseBadRequest("There was an error, please try again.")
 
 @transaction.atomic
 @login_required

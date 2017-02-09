@@ -30,4 +30,7 @@ urlpatterns = patterns('',
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
             {'document_root': settings.STATIC_DOC_ROOT}),
 #    (r'^admin/', include(admin.site.urls)),
+
+    #API 
+    (r'^api/upload_photo/$', 'food.views.api_photo_upload')
 )
