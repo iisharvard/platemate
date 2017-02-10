@@ -80,7 +80,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django_pdb.middleware.PdbMiddleware'
 )
 
@@ -98,7 +97,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'sslserver',
     'django_extensions',
-    'debug_toolbar',
     'django_pdb'
 )
 

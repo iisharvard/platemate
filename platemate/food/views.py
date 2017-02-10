@@ -279,6 +279,7 @@ MANUAL_DAYS = {
     "admin": ["2011-04-10", "2011-04-11"],
 }
 
+@transaction.atomic
 @csrf_exempt
 def api_photo_upload(request):
     try:
@@ -297,7 +298,7 @@ def api_photo_upload(request):
                 meal = 'B',
                 date = now,
                 user = None,
-                submitted = datetime.now(),
+                submitted = now,
                 manual = False
             )
             s.save()
@@ -306,7 +307,7 @@ def api_photo_upload(request):
 
             return JsonResponse(data)
         else:
-            return HttpResponseBadRequest("Missing or invalid api key, please try again.")
+            return HttpResponse('Unauthorized - Missing or invalid api key, please try again.', status=401)
     except ValueError:
         return HttpResponseBadRequest("There was an error, please try again.")
 
