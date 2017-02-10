@@ -287,7 +287,6 @@ def api_photo_upload(request):
         photo = request.FILES['upload']
         random.seed()
         photo_name = str(random.randint(0,1000000)) + "_" + time_string + "_" + photo.name
-
         saved_photo_url = photo_url_for_photo_upload(photo, 'api/photos', photo_name)
         p = Photo.factory(photo_url = saved_photo_url)
 
@@ -318,32 +317,9 @@ def fe_upload(request, day):
                 photo = request.FILES["photo"]
                 random.seed()
                 photo_name = str(random.randint(0,1000000)) + "_" + str(request.user.pk) + "_" + day + "_" + photo.name
-                photo_path = os.path.join(settings.STATIC_DOC_ROOT,'uploaded','raw',photo_name)
+                saved_photo_url = photo_url_for_photo_upload(photo, 'uploaded', photo_name)
+                p = Photo.factory(photo_url = saved_photo_url)
 
-                destination = open(photo_path, 'wb+')
-                for chunk in photo.chunks():
-                    destination.write(chunk)
-                destination.close()
-
-                # Original image
-                original = Image.open(photo_path)
-
-                # Resize it to 400px wide (usually 300 high)
-                width, height = original.size
-                new_size = 400, int(height * 400.0 / width)
-                smaller = original.resize(new_size, Image.ANTIALIAS)
-
-                # Save it to photos directory
-                out_dir = os.path.join(settings.STATIC_DOC_ROOT,'uploaded','resized')
-                try:
-                    os.makedirs(out_dir)
-                except os.error:
-                    pass
-
-                out_path = os.path.join(out_dir,photo_name)
-                smaller.save(out_path)
-
-                p = Photo.factory(photo_url = '%s/static/uploaded/resized/%s' % (settings.URL_PATH,photo_name))
                 s = Submission(
                     photo = p,
                     meal = request.POST["meal"],
