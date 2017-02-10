@@ -9,7 +9,7 @@ from django import forms
 from datetime import date, datetime
 from django.db import transaction
 
-from helpers import photo_url_for_processed_photo_upload, get_data_for_submission, create_or_get_api_user
+from helpers import photo_url_for_processed_photo_upload, get_data_for_submission, create_or_get_api_user, get_status_for_submission
 
 #for api
 from django.views.decorators.csrf import csrf_exempt
@@ -151,17 +151,15 @@ def api_submission_statuses(request):
             submission_ids = json_data['ids']
             print(str(submission_ids))
             response_json = {}
-            import pdb; pdb.set_trace()
             for submission_id in submission_ids:
                 status = 'NOT_FOUND'
                 data = {}
                 matching_submissions = Submission.objects.filter(id = submission_id) #TODO replace with photo object instead?
                 if len(matching_submissions) > 0:
-                    import pdb; pdb.set_trace()
-                    data = get_data_for_submission(matching_submissions[0])
-                    status = 'PENDING' #TODO: figure out how to get this value
+                    submission = matching_submissions[0]
+                    data = get_data_for_submission(submission)
+                    status = get_status_for_submission(submission)
                 response_json[submission_id] = {"status": status, "data": data}
-            import pdb; pdb.set_trace()
             return JsonResponse(response_json, safe=False)
         except ValueError:
             return HttpResponseBadRequest("There was an error, please try again.")

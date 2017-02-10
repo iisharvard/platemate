@@ -4,12 +4,12 @@ from PIL import Image
 from models.common import *
 
 def create_or_get_api_user():
-    api_user_name = "API_USER"
+    api_user_name = 'API_USER'
     api_user_exists = User.objects.filter(username=api_user_name).exists()
     if api_user_exists:
         return User.objects.get(username=api_user_name)
     else:
-        api_user = User(username = api_user_name)
+        api_user = User(username=api_user_name)
         api_user.save()
         return api_user
 
@@ -49,7 +49,6 @@ def photo_url_for_processed_photo_upload(photo, sub_dir, photo_name):
     return saved_photo_url
 
 def get_data_for_submission(submission):
-    import pdb; pdb.set_trace()
     photo = submission.photo
     box_group = BoxGroup.objects.filter(photo = photo)
     boxes = Box.objects.filter(photo = photo)
@@ -80,13 +79,20 @@ def get_data_for_submission(submission):
             box['ingredients'] = ingredient_list
 
             ingredient_boxes.append(box)
-    total = {'calories':0, 'fat':0, 'carbohydrate':0, 'protein':0}
+    data = {'calories':0, 'fat':0, 'carbohydrate':0, 'protein':0}
     for b in ingredient_boxes:
         for i in b['ingredients']:
-            total['calories'] += i['calories']
-            total['fat'] += i['fat']
-            total['carbohydrate'] += i['carbohydrate']
-            total['protein'] += i['protein']
+            data['calories'] += i['calories']
+            data['fat'] += i['fat']
+            data['carbohydrate'] += i['carbohydrate']
+            data['protein'] += i['protein']
+    return data
 
-    import pdb; pdb.set_trace()
-    return total
+def get_status_for_submission(submission):
+    is_completed = submission.check_completed()
+    if is_completed:
+        return 'COMPLETED'
+    elif submission.processed is not None:
+        return 'PROCESSING'
+    else:
+        return 'SUBMITTED'
