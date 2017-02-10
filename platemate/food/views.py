@@ -9,7 +9,7 @@ from django import forms
 from datetime import date, datetime
 from django.db import transaction
 
-from helpers import photo_url_for_photo_upload
+from helpers import photo_url_for_processed_photo_upload
 
 #for api
 from django.views.decorators.csrf import csrf_exempt
@@ -288,7 +288,8 @@ def api_photo_upload(request):
             photo = request.FILES['upload']
             random.seed()
             photo_name = str(random.randint(0,1000000)) + "_" + time_string + "_" + photo.name
-            saved_photo_url = photo_url_for_photo_upload(photo, 'api/photos', photo_name)
+            static_sub_dir = 'api/photos'
+            saved_photo_url = photo_url_for_processed_photo_upload(photo, static_sub_dir, photo_name)
             p = Photo.factory(photo_url = saved_photo_url)
 
             s = Submission(
@@ -320,7 +321,8 @@ def fe_upload(request, day):
                 photo = request.FILES["photo"]
                 random.seed()
                 photo_name = str(random.randint(0,1000000)) + "_" + str(request.user.pk) + "_" + day + "_" + photo.name
-                saved_photo_url = photo_url_for_photo_upload(photo, 'uploaded', photo_name)
+                static_sub_dir = 'uploaded'
+                saved_photo_url = photo_url_for_processed_photo_upload(photo, static_sub_dir, photo_name)
                 p = Photo.factory(photo_url = saved_photo_url)
 
                 s = Submission(
