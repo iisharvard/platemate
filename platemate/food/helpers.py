@@ -1,6 +1,17 @@
 import os, sys
 from django.conf import settings
 from PIL import Image
+from models.common import *
+
+def create_or_get_api_user():
+    api_user_name = "API_USER"
+    api_user_exists = User.objects.filter(username=api_user_name).exists()
+    if api_user_exists:
+        return User.objects.get(username=api_user_name)
+    else:
+        api_user = User(username = api_user_name)
+        api_user.save()
+        return api_user
 
 def photo_url_for_processed_photo_upload(photo, sub_dir, photo_name):
     photo_dir_name = os.path.join(settings.STATIC_DOC_ROOT, sub_dir)
@@ -36,3 +47,46 @@ def photo_url_for_processed_photo_upload(photo, sub_dir, photo_name):
 
     saved_photo_url = '%s/static/%s/resized/%s' % (settings.URL_PATH, sub_dir, photo_name)
     return saved_photo_url
+
+def get_data_for_submission(submission):
+    import pdb; pdb.set_trace()
+    photo = submission.photo
+    box_group = BoxGroup.objects.filter(photo = photo)
+    boxes = Box.objects.filter(photo = photo)
+    ingredient_boxes =[]
+    for b in boxes:
+        box = {'id': b.id}
+        ingredients = Ingredient.objects.filter(box = b)
+        valid_ingredients = {}
+        if len(ingredients) > 0:
+            for i in ingredients:
+                if i.amount:
+                    if i.food not in valid_ingredients:
+                        valid_ingredients[i.food] = []
+                    valid_ingredients[i.food].append(i)
+            ingredient_list = []
+            for k, v in valid_ingredients.iteritems():
+                num_entry = len(v)*1.0
+                food_entry = {
+                    'description': k.food_name,
+                }
+                food_entry['calories'] = round(sum([e.serving.calories * e.amount for e in v])/num_entry,1)
+                food_entry['fat'] = round(sum([e.serving.fat * e.amount for e in v])/num_entry, 1)
+                food_entry['carbohydrate'] = round(sum([e.serving.carbohydrate * e.amount for e in v])/num_entry,1)
+                food_entry['protein'] = round(sum([e.serving.protein * e.amount for e in v])/num_entry,1)
+
+                ingredient_list.append(food_entry)
+
+            box['ingredients'] = ingredient_list
+
+            ingredient_boxes.append(box)
+    total = {'calories':0, 'fat':0, 'carbohydrate':0, 'protein':0}
+    for b in ingredient_boxes:
+        for i in b['ingredients']:
+            total['calories'] += i['calories']
+            total['fat'] += i['fat']
+            total['carbohydrate'] += i['carbohydrate']
+            total['protein'] += i['protein']
+
+    import pdb; pdb.set_trace()
+    return total

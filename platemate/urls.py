@@ -32,5 +32,6 @@ urlpatterns = patterns('',
 #    (r'^admin/', include(admin.site.urls)),
 
     #API
-    (r'^api/upload_photo/?$', 'food.views.api_photo_upload')
+    (r'^api/upload_photo/?$', 'food.views.api_photo_upload'),
+    (r'^api/submission_statuses/?$', 'food.views.api_submission_statuses'),
 )

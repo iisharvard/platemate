@@ -9,7 +9,7 @@ from django import forms
 from datetime import date, datetime
 from django.db import transaction
 
-from helpers import photo_url_for_processed_photo_upload
+from helpers import photo_url_for_processed_photo_upload, get_data_for_submission, create_or_get_api_user
 
 #for api
 from django.views.decorators.csrf import csrf_exempt
@@ -142,6 +142,31 @@ def fe_day(request, day):
         return render(request, "fe/index.html", context=c)
     except ValueError:
         return HttpResponseNotFound("Invalid date")
+
+@csrf_exempt
+def api_submission_statuses(request):
+    if request.method == 'POST':
+        try:
+            json_data = json.loads(request.body)
+            submission_ids = json_data['ids']
+            print(str(submission_ids))
+            response_json = {}
+            import pdb; pdb.set_trace()
+            for submission_id in submission_ids:
+                status = 'NOT_FOUND'
+                data = {}
+                matching_submissions = Submission.objects.filter(id = submission_id) #TODO replace with photo object instead?
+                if len(matching_submissions) > 0:
+                    import pdb; pdb.set_trace()
+                    data = get_data_for_submission(matching_submissions[0])
+                    status = 'PENDING' #TODO: figure out how to get this value
+                response_json[submission_id] = {"status": status, "data": data}
+            import pdb; pdb.set_trace()
+            return JsonResponse(response_json, safe=False)
+        except ValueError:
+            return HttpResponseBadRequest("There was an error, please try again.")
+
+
 
 def photo_summary(request, photo_id):
     photo = Photo.objects.filter(id = photo_id)[0]
@@ -292,12 +317,13 @@ def api_photo_upload(request):
             static_sub_dir = 'api/photos'
             saved_photo_url = photo_url_for_processed_photo_upload(photo, static_sub_dir, photo_name)
             p = Photo.factory(photo_url = saved_photo_url)
+            u = create_or_get_api_user()
 
             s = Submission(
                 photo = p,
                 meal = 'B',
                 date = now,
-                user = None,
+                user = u,
                 submitted = now,
                 manual = False
             )
