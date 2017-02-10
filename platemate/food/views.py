@@ -282,27 +282,30 @@ MANUAL_DAYS = {
 @csrf_exempt
 def api_photo_upload(request):
     try:
-        now = datetime.now()
-        time_string = now.isoformat()
-        photo = request.FILES['upload']
-        random.seed()
-        photo_name = str(random.randint(0,1000000)) + "_" + time_string + "_" + photo.name
-        saved_photo_url = photo_url_for_photo_upload(photo, 'api/photos', photo_name)
-        p = Photo.factory(photo_url = saved_photo_url)
+        if('HTTP_X_API_KEY' in request.META and request.META['HTTP_X_API_KEY'] == settings.API_KEY):
+            now = datetime.now()
+            time_string = now.isoformat()
+            photo = request.FILES['upload']
+            random.seed()
+            photo_name = str(random.randint(0,1000000)) + "_" + time_string + "_" + photo.name
+            saved_photo_url = photo_url_for_photo_upload(photo, 'api/photos', photo_name)
+            p = Photo.factory(photo_url = saved_photo_url)
 
-        s = Submission(
-            photo = p,
-            meal = 'B',
-            date = now,
-            user = None,
-            submitted = datetime.now(),
-            manual = False
-        )
-        s.save()
+            s = Submission(
+                photo = p,
+                meal = 'B',
+                date = now,
+                user = None,
+                submitted = datetime.now(),
+                manual = False
+            )
+            s.save()
 
-        data = dict({"photo_id" : p.id})
+            data = dict({"photo_id" : p.id})
 
-        return JsonResponse(data)
+            return JsonResponse(data)
+        else:
+            return HttpResponseBadRequest("Missing or invalid api key, please try again.")
     except ValueError:
         return HttpResponseBadRequest("There was an error, please try again.")
 

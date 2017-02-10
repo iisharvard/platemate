@@ -3,7 +3,6 @@ from django.conf import settings
 from PIL import Image
 
 def photo_url_for_photo_upload(photo, sub_dir, photo_name):
-    print >>sys.stderr, "in save_photo_from_photo_upload"
     photo_dir_name = os.path.join(settings.STATIC_DOC_ROOT, sub_dir)
     photo_path = os.path.join(settings.STATIC_DOC_ROOT, sub_dir, 'raw', photo_name)
 
