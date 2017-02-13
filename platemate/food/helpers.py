@@ -2,9 +2,10 @@ import os, sys
 from django.conf import settings
 from PIL import Image
 from models.common import *
+import platemate_constants
 
 def create_or_get_api_user():
-    api_user_name = 'API_USER'
+    api_user_name = platemate_constants.API_USER_NAME
     api_user_exists = User.objects.filter(username=api_user_name).exists()
     if api_user_exists:
         return User.objects.get(username=api_user_name)
@@ -13,7 +14,7 @@ def create_or_get_api_user():
         api_user.save()
         return api_user
 
-def photo_url_for_processed_photo_upload(photo, sub_dir, photo_name):
+def process_photo_and_get_url(photo, sub_dir, photo_name):
     photo_dir_name = os.path.join(settings.STATIC_DOC_ROOT, sub_dir)
     photo_path = os.path.join(settings.STATIC_DOC_ROOT, sub_dir, 'raw', photo_name)
 

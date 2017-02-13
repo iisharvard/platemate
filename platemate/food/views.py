@@ -9,7 +9,7 @@ from django import forms
 from datetime import date, datetime
 from django.db import transaction
 
-from helpers import photo_url_for_processed_photo_upload, get_data_for_submission, create_or_get_api_user, get_status_for_submission
+from helpers import process_photo_and_get_url, get_data_for_submission, create_or_get_api_user, get_status_for_submission
 
 #for api
 from django.views.decorators.csrf import csrf_exempt
@@ -147,14 +147,14 @@ def fe_day(request, day):
 def api_submission_statuses(request):
     if request.method == 'POST':
         try:
+            import pdb; pdb.set_trace()
             json_data = json.loads(request.body)
             submission_ids = json_data['ids']
-            print(str(submission_ids))
             response_json = {}
             for submission_id in submission_ids:
                 status = 'NOT_FOUND'
                 data = {}
-                matching_submissions = Submission.objects.filter(id = submission_id) #TODO replace with photo object instead?
+                matching_submissions = Submission.objects.filter(id = submission_id)
                 if len(matching_submissions) > 0:
                     submission = matching_submissions[0]
                     data = get_data_for_submission(submission)
@@ -313,7 +313,7 @@ def api_photo_upload(request):
             random.seed()
             photo_name = str(random.randint(0,1000000)) + "_" + time_string + "_" + photo.name
             static_sub_dir = 'api/photos'
-            saved_photo_url = photo_url_for_processed_photo_upload(photo, static_sub_dir, photo_name)
+            saved_photo_url = process_photo_and_get_url(photo, static_sub_dir, photo_name)
             p = Photo.factory(photo_url = saved_photo_url)
             u = create_or_get_api_user()
 
@@ -347,7 +347,7 @@ def fe_upload(request, day):
                 random.seed()
                 photo_name = str(random.randint(0,1000000)) + "_" + str(request.user.pk) + "_" + day + "_" + photo.name
                 static_sub_dir = 'uploaded'
-                saved_photo_url = photo_url_for_processed_photo_upload(photo, static_sub_dir, photo_name)
+                saved_photo_url = process_photo_and_get_url(photo, static_sub_dir, photo_name)
                 p = Photo.factory(photo_url = saved_photo_url)
 
                 s = Submission(
