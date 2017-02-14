@@ -4,6 +4,9 @@ from PIL import Image
 from models.common import *
 import platemate_constants
 
+def is_authenticated_api_request(request):
+    return ('HTTP_X_API_KEY' in request.META and request.META['HTTP_X_API_KEY'] == settings.API_KEY)
+
 def create_or_get_api_user():
     api_user_name = platemate_constants.API_USER_NAME
     api_user_exists = User.objects.filter(username=api_user_name).exists()

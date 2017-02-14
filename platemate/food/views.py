@@ -9,7 +9,7 @@ from django import forms
 from datetime import date, datetime
 from django.db import transaction
 
-from helpers import process_photo_and_get_url, get_data_for_submission, create_or_get_api_user, get_status_for_submission
+from helpers import *
 
 #for api
 from django.views.decorators.csrf import csrf_exempt
@@ -145,25 +145,24 @@ def fe_day(request, day):
 
 @csrf_exempt
 def api_submission_statuses(request):
-    if request.method == 'POST':
-        try:
-            import pdb; pdb.set_trace()
-            json_data = json.loads(request.body)
-            submission_ids = json_data['ids']
-            response_json = {}
-            for submission_id in submission_ids:
-                status = 'NOT_FOUND'
-                data = {}
-                matching_submissions = Submission.objects.filter(id = submission_id)
-                if len(matching_submissions) > 0:
-                    submission = matching_submissions[0]
-                    data = get_data_for_submission(submission)
-                    status = get_status_for_submission(submission)
-                response_json[submission_id] = {"status": status, "data": data}
-            return JsonResponse(response_json, safe=False)
-        except ValueError:
-            return HttpResponseBadRequest("There was an error, please try again.")
-
+    if not is_authenticated_api_request(request):
+        return HttpResponse('Unauthorized - Missing or invalid api key, please try again.', status=401)
+    try:
+        json_data = json.loads(request.body)
+        submission_ids = json_data['ids']
+        response_json = {}
+        for submission_id in submission_ids:
+            status = 'NOT_FOUND'
+            data = {}
+            matching_submissions = Submission.objects.filter(id = submission_id)
+            if len(matching_submissions) > 0:
+                submission = matching_submissions[0]
+                data = get_data_for_submission(submission)
+                status = get_status_for_submission(submission)
+            response_json[submission_id] = {"status": status, "data": data}
+        return JsonResponse(response_json, safe=False)
+    except ValueError:
+        return HttpResponseBadRequest("There was an error, please try again.")
 
 
 def photo_summary(request, photo_id):
@@ -305,33 +304,32 @@ MANUAL_DAYS = {
 @transaction.atomic
 @csrf_exempt
 def api_photo_upload(request):
+    if not is_authenticated_api_request(request):
+        return HttpResponse('Unauthorized - Missing or invalid api key, please try again.', status=401)
     try:
-        if('HTTP_X_API_KEY' in request.META and request.META['HTTP_X_API_KEY'] == settings.API_KEY):
-            now = datetime.now()
-            time_string = now.isoformat()
-            photo = request.FILES['upload']
-            random.seed()
-            photo_name = str(random.randint(0,1000000)) + "_" + time_string + "_" + photo.name
-            static_sub_dir = 'api/photos'
-            saved_photo_url = process_photo_and_get_url(photo, static_sub_dir, photo_name)
-            p = Photo.factory(photo_url = saved_photo_url)
-            u = create_or_get_api_user()
+        now = datetime.now()
+        time_string = now.isoformat()
+        photo = request.FILES['upload']
+        random.seed()
+        photo_name = str(random.randint(0,1000000)) + "_" + time_string + "_" + photo.name
+        static_sub_dir = 'api/photos'
+        saved_photo_url = process_photo_and_get_url(photo, static_sub_dir, photo_name)
+        p = Photo.factory(photo_url = saved_photo_url)
+        u = create_or_get_api_user()
 
-            s = Submission(
-                photo = p,
-                meal = 'B',
-                date = now,
-                user = u,
-                submitted = now,
-                manual = False
-            )
-            s.save()
+        s = Submission(
+            photo = p,
+            meal = 'B',
+            date = now,
+            user = u,
+            submitted = now,
+            manual = False
+        )
+        s.save()
 
-            data = dict({"photo_id" : p.id})
+        data = dict({"photo_id" : p.id})
 
-            return JsonResponse(data)
-        else:
-            return HttpResponse('Unauthorized - Missing or invalid api key, please try again.', status=401)
+        return JsonResponse(data)
     except ValueError:
         return HttpResponseBadRequest("There was an error, please try again.")
 
