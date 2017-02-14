@@ -7,28 +7,26 @@ from django.core import serializers
 from logger import *
 import sys
 import traceback
-import inspect
+import StringIO
 
 # modified very slightly from http://code.google.com/p/django-polymorphic-models/
 
 class PolymorphicMetaclass(ModelBase):
     def __new__(cls, name, bases, dct):
         def save(self, *args, **kwargs):
-            test_logging = True
-            #try:
             if(not self.content_type):
-                log("self.content_type is false", CONTENT_TYPE_WARNING)
+                log_content_type_info("self.content_type is false")
+                stack_string_io = StringIO.StringIO()
+                traceback.print_stack(None, 20, stack_string_io)
+                stack_string = stack_string_io.getvalue()
+                stack_string_io.close()
+                log_content_type_info("Backtrace: %s" % stack_string)
                 attrs = str(self.__dict__)
                 log_string = "Before setting content type: %s : %s" % (self, attrs)
-                log(log_string, CONTENT_TYPE_WARNING)
-                #("model: %s" % model_as_string, CONTENT_TYPE_WARNING)
+                log_content_type_info(log_string)
                 found_content_type = ContentType.objects.get_for_model(self.__class__)
-                log("Found content_type: %s" % found_content_type.__dict__, CONTENT_TYPE_WARNING)
-                #raise RuntimeError('self.content_type is false')
+                log_content_type_info("Found content_type: %s" % found_content_type.__dict__)
                 self.content_type_id = found_content_type.id
-            #except Exception as e: #I think we have to raise excption to get backtrace?
-                log("Backtrace:", CONTENT_TYPE_WARNING)
-                traceback.print_stack()
             models.Model.save(self, *args, **kwargs)
         def downcast(self):
             model = self.content_type.model_class()
