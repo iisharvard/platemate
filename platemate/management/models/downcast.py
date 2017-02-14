@@ -3,16 +3,33 @@ from django.db.models.base import ModelBase
 from django.db.models.query import QuerySet
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
+from django.core import serializers
+from logger import *
+import sys
+import traceback
+import inspect
 
 # modified very slightly from http://code.google.com/p/django-polymorphic-models/
 
 class PolymorphicMetaclass(ModelBase):
     def __new__(cls, name, bases, dct):
         def save(self, *args, **kwargs):
+            test_logging = True
+            #try:
             if(not self.content_type):
-                self.content_type = ContentType.objects.get_for_model(self.__class__)
+                log("self.content_type is false", CONTENT_TYPE_WARNING)
+                attrs = str(self.__dict__)
+                log_string = "Before setting content type: %s : %s" % (self, attrs)
+                log(log_string, CONTENT_TYPE_WARNING)
+                #("model: %s" % model_as_string, CONTENT_TYPE_WARNING)
+                found_content_type = ContentType.objects.get_for_model(self.__class__)
+                log("Found content_type: %s" % found_content_type.__dict__, CONTENT_TYPE_WARNING)
+                #raise RuntimeError('self.content_type is false')
+                self.content_type_id = found_content_type.id
+            #except Exception as e: #I think we have to raise excption to get backtrace?
+                log("Backtrace:", CONTENT_TYPE_WARNING)
+                traceback.print_stack()
             models.Model.save(self, *args, **kwargs)
-
         def downcast(self):
             model = self.content_type.model_class()
             if (model == self.__class__):
