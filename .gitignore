@@ -64,8 +64,9 @@ docs/_build/
 
 /platemate/static/uploaded/raw
 /platemate/static/uploaded/resized
-
-
+/platemate/static/photos/test*
+/platemate/static/api/photos/raw
+/platemate/static/api/photos/resized
 ##########################################
 # end Python
 ##########################################
