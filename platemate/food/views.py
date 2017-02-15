@@ -152,13 +152,13 @@ def api_submission_statuses(request):
         submission_ids = json_data['ids']
         response_json = {}
         for submission_id in submission_ids:
-            status = 'NOT_FOUND'
-            data = {}
-            matching_submissions = Submission.objects.filter(id = submission_id)
-            if len(matching_submissions) > 0:
-                submission = matching_submissions[0]
+            try:
+                submission = Submission.objects.get(pk=submission_id)
                 data = get_data_for_submission(submission)
                 status = get_status_for_submission(submission)
+            except:
+                status = 'NOT_FOUND'
+                data = {}
             response_json[submission_id] = {"status": status, "data": data}
         return JsonResponse(response_json, safe=False)
     except ValueError:
