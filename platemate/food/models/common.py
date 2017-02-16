@@ -171,9 +171,6 @@ class BoxGroup(SmartModel):
     def submission(self):
         return self.photo.submission
 
-    def __str__(self):
-        return str([str(b) for b in self.boxes.all()])
-
     @staticmethod
     def from_json(json_str, photo=None):
         new_group = BoxGroup()
@@ -428,9 +425,6 @@ class IngredientList(SmartModel):
 
     def __eq__(self,other):
         return [i.food.pk for i in self.ingredients.all()] == [i.food.pk for i in other.ingredients.all()]
-
-    def __str__(self):
-        return str([str(i) for i in self.ingredients.all()])
 
     @staticmethod
     def from_json(json_str, box=None):
