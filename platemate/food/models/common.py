@@ -172,7 +172,8 @@ class BoxGroup(SmartModel):
         return self.photo.submission
 
     def __str__(self):
-        return str([str(b) for b in self.boxes.all()])
+        id_string = "None" if (self.id is None) else str(self.id)
+        return "Box Group object, id: %s" % id_string
 
     @staticmethod
     def from_json(json_str, photo=None):
@@ -430,7 +431,8 @@ class IngredientList(SmartModel):
         return [i.food.pk for i in self.ingredients.all()] == [i.food.pk for i in other.ingredients.all()]
 
     def __str__(self):
-        return str([str(i) for i in self.ingredients.all()])
+        id_string = "None" if (self.id is None) else str(self.id)
+        return "Ingredient List Object, id: %s" % id_string
 
     @staticmethod
     def from_json(json_str, box=None):
