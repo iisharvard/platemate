@@ -67,7 +67,11 @@ class Worker(SmartModel):
     country = CharField(max_length=100)
 
     def __str__(self):
-        return self.turk_id
+        try:
+            return self.turk_id
+        except:
+            return "<Worker object>"
+
 
 class Assignment(SmartModel):
     turk_id = CharField(max_length=100)
@@ -107,7 +111,10 @@ class Response(SmartModel):
     raw = TextField()
 
     def __str__(self):
-        return "%d from %s on %s: %s" % (self.pk, self.assignment, self.job, self.raw)
+        try:
+            return "%d from %s on %s: %s" % (self.pk, self.assignment, self.job, self.raw)
+        except:
+            return "<Response object>"
 
     @property
     def work_time(self):
