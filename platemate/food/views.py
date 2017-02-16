@@ -332,6 +332,8 @@ def api_photo_upload(request):
         return JsonResponse(data)
     except ValueError:
         return HttpResponseBadRequest("There was an error, please try again.")
+    except IOError:
+        return HttpResponse("There was an error saving data, please try again.", status=500)
 
 @transaction.atomic
 @login_required

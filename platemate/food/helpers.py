@@ -19,28 +19,30 @@ def create_or_get_api_user():
 
 def process_photo_and_get_url(photo, sub_dir, photo_name):
     photo_dir_name = os.path.join(settings.STATIC_DOC_ROOT, sub_dir)
-    photo_path = os.path.join(settings.STATIC_DOC_ROOT, sub_dir, 'raw', photo_name)
+    raw_dir = os.path.join(photo_dir_name, 'raw')
+
 
     try:
-        os.makedirs(photo_dir_name)
+        os.makedirs(raw_dir)
     except os.error:
         pass
 
-    destination = open(photo_path, 'wb+')
+    raw_photo_path = os.path.join(raw_dir, photo_name)
+    destination = open(raw_photo_path, 'wb+')
     for chunk in photo.chunks():
         destination.write(chunk)
     destination.close()
 
-    # Original image
-    original = Image.open(photo_path)
+    # Raw image
+    raw_photo = Image.open(raw_photo_path)
 
     # Resize it to 400px wide (usually 300 high)
-    width, height = original.size
+    width, height = raw_photo.size
     new_size = 400, int(height * 400.0 / width)
-    smaller = original.resize(new_size, Image.ANTIALIAS)
+    smaller = raw_photo.resize(new_size, Image.ANTIALIAS)
 
     # Save it to photos directory
-    out_dir = os.path.join(settings.STATIC_DOC_ROOT, sub_dir,'resized')
+    out_dir = os.path.join(photo_dir_name,'resized')
     try:
         os.makedirs(out_dir)
     except os.error:
