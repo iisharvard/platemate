@@ -89,7 +89,7 @@ class Submission(SmartModel):
             return False
 
     def announce_completed(self):
-        if(self.user.email is None):
+        if not self.user.email:
             pass
         else:
             self.user.email_user(
