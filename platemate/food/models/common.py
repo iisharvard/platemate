@@ -89,14 +89,17 @@ class Submission(SmartModel):
             return False
 
     def announce_completed(self):
-        self.user.email_user(
+        if(self.user.email is None):
+            pass
+        else:
+            self.user.email_user(
             subject = 'New nutrition estimates from PlateMate',
             message = """Hello,
 
-Your photograph from %s on %s has been analyzed, and our estimate of its nutritional breakdown is now available. To see it, check out http://iis2.seas.harvard.edu/platemate/ and log in. Feel free to respond to this email if you have any questions or concerns, and remember that you can edit the answers you get if they seem inaccurate or incomplete.
+    Your photograph from %s on %s has been analyzed, and our estimate of its nutritional breakdown is now available. To see it, check out http://iis2.seas.harvard.edu/platemate/ and log in. Feel free to respond to this email if you have any questions or concerns, and remember that you can edit the answers you get if they seem inaccurate or incomplete.
 
-Thanks,
-PlateMate""" % (self.get_meal_display(), self.date.strftime("%A")))
+    Thanks,
+    PlateMate""" % (self.get_meal_display(), self.date.strftime("%A")))
 
     def __str__(self):
         return self.get_meal_display() + " on " + str(self.date) + " for " + self.user.username
