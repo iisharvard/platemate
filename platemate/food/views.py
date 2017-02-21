@@ -327,7 +327,7 @@ def api_photo_upload(request):
         )
         s.save()
 
-        data = dict({"photo_id" : p.id})
+        data = dict({"submission_id" : s.id})
 
         return JsonResponse(data)
     except ValueError:
