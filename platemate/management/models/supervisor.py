@@ -105,8 +105,7 @@ class Supervisor(object):
             settings['qualifications'] = []
             
         settings['max_assignments'] = self.duplication
-        # HACK settings['reward'] *= len(jobs)
-        settings['reward'] *= 2*len(jobs)
+        settings['reward'] *= len(jobs)
         settings['duration'] *= len(jobs)
 
         # Build HIT object, associate jobs with it
@@ -219,5 +218,3 @@ class Supervisor(object):
         for hit in self.completed_hits:
             for job in hit.jobs.all():
                 yield job
-                
-                
