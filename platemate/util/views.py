@@ -1,8 +1,5 @@
 from django.conf import settings
-from django.http import HttpResponse, Http404, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseRedirect
-from django.core.context_processors import csrf
-from django.shortcuts import get_object_or_404, render
-
+from django.http import HttpResponse
 from decimal import Decimal
 from boto.mturk.price import Price
 
@@ -16,4 +13,4 @@ def turk_balance(request):
         else:
             return HttpResponse("OK: %s" % balance, status=200)
     except:
-        return HttpResponse("Balance check failed.", status=404)
+        return HttpResponse("Balance check failed.", status=503)
