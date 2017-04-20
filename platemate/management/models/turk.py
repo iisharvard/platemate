@@ -91,17 +91,24 @@ class Assignment(SmartModel):
     # Returns True if all responses are valid
     @property
     def valid(self):
-        for r in self.responses.all():
+        responses = self.responses.all()
+        if not responses:
+            return False
+        for r in responses:
             if not r.valid:
                 return r.valid
         return True
 
     @property
     def feedback(self):
-        for r in self.responses.all():
-            if r.valid is False:
-                return r.feedback
-        return self.responses.all()[0].feedback
+        responses = self.responses.all()
+        if not responses:
+            return "No response found."
+        else:
+            for r in responses:
+                if r.valid is False:
+                    return r.feedback
+            return responses[0].feedack
 
 class Response(SmartModel):
     assignment = ForeignKey('Assignment',related_name='responses')
