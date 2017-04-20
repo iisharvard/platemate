@@ -103,7 +103,7 @@ class Assignment(SmartModel):
     def feedback(self):
         responses = self.responses.all()
         if not responses:
-            return "No response found."
+            return "You didn't provide any response."
         else:
             for r in responses:
                 if r.valid is False:
