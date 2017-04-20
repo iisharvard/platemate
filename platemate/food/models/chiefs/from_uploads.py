@@ -1,7 +1,7 @@
 from food.models.common import *
 import management.models as base
 from food.models import tag, identify, measure
-from platemate.logger import *
+from logger import *
 from django.conf import settings
 import os, glob, random
 from PIL import Image
