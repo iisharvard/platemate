@@ -108,7 +108,7 @@ class Assignment(SmartModel):
             for r in responses:
                 if r.valid is False:
                     return r.feedback
-            return responses[0].feedack
+            return responses[0].feedback
 
 class Response(SmartModel):
     assignment = ForeignKey('Assignment',related_name='responses')
