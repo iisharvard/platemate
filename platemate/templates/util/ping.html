@@ -9,13 +9,11 @@
       NOT
      {% endif %}
       running. <br>
-    - {% if not platemate_processor_running %}
-      Output: {{ouput}} <br><br>
-
-      Log in to server and run
+    {% if not platemate_processor_running %}
+     Log into server and run
         'systemctl status platemate-processor.service' to learn more.
-
-      {% endif %} <br>
+      <br>
+      {% endif %}
     - Everything is
     {% if not everything_ok %}
       NOT
