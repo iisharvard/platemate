@@ -19,15 +19,16 @@ def turk_balance(request):
 
 def ping(request):
     template = get_template('util/ping.html')
-    platemate_processor_running = False
+    processor_up = False
     try:
-        platemate_processor_status_output = subprocess.check_output('systemctl status platemate-processor.service', shell=True)
-        platemate_processor_running = "Active: active (running)" in platemate_processor_status_output
+        status_check_output = subprocess.check_output('systemctl status platemate-processor.service', shell=True)
+        processor_up = "Active: active (running)" in status_check_output
     except:
-        platemate_processor_running = False
-    everything_ok = platemate_processor_running #other things can be added later
+        processor_up = False
+    everything_ok = processor_up #other things can be added later
     context = {
-        'platemate_processor_running' : platemate_processor_running,
+        'processor_up' : processor_up,
         'everything_ok' : everything_ok
     }
-    return HttpResponse(template.render(context, request))
+    status = 200 if everything_ok else 503
+    return HttpResponse(template.render(context, request), status=status)
