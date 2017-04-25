@@ -37,4 +37,5 @@ urlpatterns = patterns('',
 
     # Util
     (r'^util/turk_balance/?$', 'util.views.turk_balance'),
+    (r'^util/ping/?$', 'util.views.ping'),
 )

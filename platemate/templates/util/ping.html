@@ -1,0 +1,23 @@
+<html>
+  <head>
+  </head>
+  <body>
+    Platemate <br>
+    - App is running. <br>
+    - Platemate processor is
+      {% if not processor_up %}
+        NOT
+      {% endif %}
+      running. <br>
+    {% if not processor_up %}
+     Log into server and run
+        'systemctl status platemate-processor.service' to learn more.
+      <br>
+    {% endif %}
+    - Everything is
+      {% if not everything_ok %}
+        NOT
+      {% endif %}
+     okay.
+   </body>
+</html>
