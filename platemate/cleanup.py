@@ -1,7 +1,8 @@
-import os, sys
-from django.core.management import setup_environ
-import settings
-setup_environ(settings)
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
+from django.conf import settings
+
+import sys
 from django.db import connection
 from management.models import *
 from logger import *
@@ -18,9 +19,9 @@ PYTHONVAR = getattr(settings,'PYTHONVAR','python')
 def cmd(c):
     print c
     os.system(c)
-    
+
 def drop_db():
-    
+
     try:
         cmd("rm food/fixtures/initial_data.json")
         cmd(PYTHONVAR + " manage.py dumpdata food.Food food.FoodSearchResults food.FoodSearchResult food.Serving auth.User  --indent 4 --format=json --natural > food/fixtures/initial_data.json")
@@ -34,36 +35,36 @@ def drop_db():
             cmd(PYTHONVAR + ' manage.py sqlclear %s | python manage.py dbshell' % ' '.join(APPS))
     except OSError as e:
         print e
-            
-            
+
+
 if operation == 'hitpurge':
     TURK.cleanup()
     drop_db()
     cmd(PYTHONVAR + ' manage.py syncdb --noinput')
-    
+
 elif operation == 'sync':
     cmd(PYTHONVAR + ' manage.py syncdb --noinput')
-    
+
 elif operation == 'drop':
     # Clear out HITS
     hits = Hit.objects.filter(turk_mode='sandbox' if use_sandbox else 'real')
     for hit in hits:
         log('Deleted hit %s' % hit.turk_id,TURK_CONTROL)
         TURK.delete_hit(hit.turk_id)
-        
+
     # Drop tables
     drop_db()
-        
+
     # Then run syncdb
     cmd(PYTHONVAR + ' manage.py syncdb --noinput')
-    
+
 elif operation == 'flush':
     # Clear out HITs
     hits = Hit.objects.all()
     for hit in hits:
         log('Deleted hit %s' % hit.turk_id,TURK_CONTROL)
         TURK.delete_hit(hit.turk_id)
-    
+
     # Flush
     cmd(PYTHONVAR + ' manage.py flush --noinput')
 else:
@@ -72,7 +73,7 @@ else:
         for employee in manager.employees.all():
             hits += all_hits(employee)
         return hits
-            
+
     chief = Manager.objects.get(name='chief',operation=operation,sandbox=use_sandbox)
     for hit in all_hits(chief):
         log('Deleted hit %s' % hit.turk_id,TURK_CONTROL)

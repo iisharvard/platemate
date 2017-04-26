@@ -1,6 +1,7 @@
-from django.core.management import setup_environ
-import settings
-setup_environ(settings)
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
+from django.conf import settings
+
 from django.db import connection
 from django.contrib.auth.models import User
 from management.models import *

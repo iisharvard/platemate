@@ -1,7 +1,7 @@
 from food.models.common import *
 import management.models as base
 from food.models import tag, identify, measure
-from platemate.logger import *
+from logger import *
 from django.conf import settings
 import os, glob, random
 from PIL import Image
@@ -50,5 +50,5 @@ class Manager(base.Manager):
             submission.save()
             if submission.check_completed() and not submission.manual and not submission.hidden:
                 log('Submission %s completed!' % submission,MANAGER_CONTROL)
-                submission.announce_completed()
-
+                #Disable submission announcement because email not set up for generic url and ssl
+                #submission.announce_completed()
