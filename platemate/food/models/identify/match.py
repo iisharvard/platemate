@@ -49,7 +49,7 @@ class Manager(base.Manager):
     max_wait = 5 * MINUTE
         
     # Payment
-    reward = .06
+    reward = .13
     duplication = 2
     
     # Advertising

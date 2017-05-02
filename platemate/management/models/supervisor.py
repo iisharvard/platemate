@@ -85,7 +85,7 @@ class Supervisor(object):
     
     @transaction.atomic
     def refresh_hits(self):
-        log("Refreshing HITs for %s" % (self.__class__.__name__), TURK_CONTROL)
+        log(u"Refreshing HITs for %s" % (self.__class__.__name__), TURK_CONTROL)
         for jobcount in range(self.batch_size):
             dummy = Job()
             jobs = [dummy] * (jobcount + 1)
@@ -105,8 +105,7 @@ class Supervisor(object):
             settings['qualifications'] = []
             
         settings['max_assignments'] = self.duplication
-        # HACK settings['reward'] *= len(jobs)
-        settings['reward'] *= 2*len(jobs)
+        settings['reward'] *= len(jobs)
         settings['duration'] *= len(jobs)
 
         # Build HIT object, associate jobs with it
@@ -125,7 +124,7 @@ class Supervisor(object):
         hit.save()
 
         if announce:
-            log("""Created HIT %d with %d jobs and %d assignments
+            log(u"""Created HIT %d with %d jobs and %d assignments
                 External URL: %s
                 Turk ID: %s
                 Turk URL: %s
@@ -163,7 +162,7 @@ class Supervisor(object):
             asst.worker = worker
             asst.save()
             
-            log('Recording assignment %s on HIT %s from worker %s...' % (asst.turk_id, hit.turk_id, worker.turk_id), MANAGER_CONTROL)
+            log(u'Recording assignment %s on HIT %s from worker %s...' % (asst.turk_id, hit.turk_id, worker.turk_id), MANAGER_CONTROL)
         
             responses = {}
             for key, value in answers.items():
@@ -171,7 +170,7 @@ class Supervisor(object):
                 job = hit.jobs.get(pk = job_id)
                 responses[job_id] = responses.get(job_id,self.Response(assignment=asst,job=job))
                 setattr(responses[job_id],field,value)
-                log("  %s_%s = [%s]" % (job_id, field, value), MANAGER_CONTROL)
+                log(u"  %s_%s = []" % (job_id, field), MANAGER_CONTROL)
             
             for response in responses.values():
                 self.validate_response(response)
@@ -190,12 +189,12 @@ class Supervisor(object):
         if asst.valid:
             self.turk.approve(asst.turk_id,asst.feedback)
             asst.approved = True
-            log('Approved assignment %s ' % asst.turk_id, MANAGER_CONTROL)
+            log(u'Approved assignment %s ' % asst.turk_id, MANAGER_CONTROL)
         else:
             self.turk.reject(asst.turk_id,asst.feedback)
             self.turk.extend_hit(asst.hit.turk_id, 1)
             asst.approved = False
-            log('Rejected assignment %s because %s' % (asst.turk_id, asst.feedback), MANAGER_CONTROL)
+            log(u'Rejected assignment %s because %s' % (asst.turk_id, asst.feedback), MANAGER_CONTROL)
         asst.save()
             
     @transaction.atomic
@@ -219,5 +218,3 @@ class Supervisor(object):
         for hit in self.completed_hits:
             for job in hit.jobs.all():
                 yield job
-                
-                
