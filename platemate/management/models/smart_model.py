@@ -40,9 +40,9 @@ class SmartMetaclass(DowncastMetaclass):
                 
                 # Wrap the key functions in a transaction
                 if 'work' in attrs:
-                    attrs['work'] = transaction.commit_on_success(attrs['work'])
+                    attrs['work'] = transaction.atomic(attrs['work'])
                 if 'setup' in attrs:
-                    attrs['setup'] = transaction.commit_on_success(attrs['setup'])
+                    attrs['setup'] = transaction.atomic(attrs['setup'])
                                 
             if name == 'Job':
                 attrs['template'] = '%s/%s' % (category,base_name)

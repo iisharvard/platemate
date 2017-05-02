@@ -6,7 +6,7 @@ from management.models import SmartModel, Manager
 from management.helpers import *
 import json
 from management.models.smart_model import OneOf, ManyOf
-from platemate.logger import *
+from logger import *
 from datetime import date
 
 PHOTO_WIDTH = 400
@@ -26,22 +26,22 @@ class Submission(SmartModel):
     meal = CharField(max_length=1, choices=MEAL_CHOICES)
     date = DateField()
     photo = OneOf('Photo')
-    
+
     # Turk answers
     manager = ForeignKey(Manager,related_name='submissions',null=True)
     tagged_boxes = OneOf('BoxGroup', null=True)
     identified_ingredients = ManyOf('Ingredient',related_name='identified_for_submissions')
     measured_ingredients = ManyOf('Ingredient',related_name='measured_for_submissions')
-    
+
     # User answers
     manual = BooleanField(default=False)
-    
+
     # Status
     submitted = DateTimeField(null=True)
     processed = DateTimeField(null=True)
     completed = DateTimeField(null=True)
     hidden = BooleanField(default=False)
-    
+
     def breakdown(self):
         boxes = {None: []}
         if self.tagged_boxes:
@@ -50,32 +50,35 @@ class Submission(SmartModel):
         for ingredient in self.measured_ingredients.all():
             boxes[ingredient.box] += [ingredient]
         return boxes
-    
+
     def manual_ingredients(self):
         ingredients = []
         for ingredient in self.measured_ingredients.all():
             if not ingredient.box:
                 ingredients.append(ingredient)
         return ingredients
-    
+
     def mark_processed(self):
         self.processed = datetime.now()
         self.save()
-        
+
     def check_completed(self):
         if self.completed is not None:
             return True
-        
+
+        if self.tagged_boxes is None:
+            return False
+
         # Have all the tagged boxes been measured?
-        
+
         matched_boxes = set([i.box for i in self.identified_ingredients.all()])
         tagged_boxes = self.tagged_boxes.boxes.all()
-        
+
         if len(matched_boxes) != len(tagged_boxes):
             return False
-        
+
         # Have all the measured boxes been identified?
-        
+
         num_identified = self.identified_ingredients.count()
         num_measured = self.measured_ingredients.count()
         if num_measured == num_identified:
@@ -84,30 +87,33 @@ class Submission(SmartModel):
             return True
         else:
             return False
-            
+
     def announce_completed(self):
-        self.user.email_user(
+        if not self.user.email:
+            pass
+        else:
+            self.user.email_user(
             subject = 'New nutrition estimates from PlateMate',
             message = """Hello,
-                    
-Your photograph from %s on %s has been analyzed, and our estimate of its nutritional breakdown is now available. To see it, check out http://iis2.seas.harvard.edu/platemate/ and log in. Feel free to respond to this email if you have any questions or concerns, and remember that you can edit the answers you get if they seem inaccurate or incomplete.
-                    
-Thanks,
-PlateMate""" % (self.get_meal_display(), self.date.strftime("%A")))
-    
+
+    Your photograph from %s on %s has been analyzed, and our estimate of its nutritional breakdown is now available. To see it, check out http://iis2.seas.harvard.edu/platemate/ and log in. Feel free to respond to this email if you have any questions or concerns, and remember that you can edit the answers you get if they seem inaccurate or incomplete.
+
+    Thanks,
+    PlateMate""" % (self.get_meal_display(), self.date.strftime("%A")))
+
     def __str__(self):
         return self.get_meal_display() + " on " + str(self.date) + " for " + self.user.username
 
 class Photo(SmartModel):
     photo_url = URLField(verbose_name="Photo URL")
-    
+
     def __str__(self):
         return self.photo_url
-    
+
     @property
     def submission(self):
         return Submission.objects.get(photo=self)
-    
+
     @staticmethod
     def from_string(url):
         p = Photo()
@@ -125,52 +131,56 @@ class Box(SmartModel):
 
     def __eq__(self,other):
         return self.x == other.x and self.y == other.y and self.width == other.width and self.height == other.height
-    
+
     # True if SELF is completely inside OTHER
     def inside(self,other):
         left = self.x >= other.x
         right = self.x + self.width <= other.x + other.width
         top = self.y >= other.y
         bottom = self.y + self.width <= other.y + other.width
-        
+
         return (left and right and top and bottom)
-    
+
     @property
     def group(self):
         return self.groups.all()[0]
-    
+
     @property
     def area(self):
         return self.width * self.height
-        
+
     @property
     def hypotenuse(self):
            return math.sqrt(self.width**2 + self.height**2)
-           
+
     @staticmethod
     def distance(box1,box2):
         x1, y1 = box1.center
         x2, y2 = box2.center
         return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
-           
+
     @property
     def center(self):
         return (self.x + self.width / 2, self.y + self.height / 2)
-    
+
     def __str__(self):
         return '(%d, %d) %d x %d' % (self.x, self.y, self.width, self.height)
-    
+
 class BoxGroup(SmartModel):
     boxes = ManyOf(Box,related_name='groups')
     photo = OneOf(Photo)
-    
+
     @property
     def submission(self):
         return self.photo.submission
-    
+
     def __str__(self):
-        return str([str(b) for b in self.boxes.all()])
-    
+        try:
+            return str([str(b) for b in self.boxes.all()])
+        except:
+            return "<Box group object>"
+
+
     @staticmethod
     def from_json(json_str, photo=None):
         new_group = BoxGroup()
@@ -187,24 +197,24 @@ class BoxGroup(SmartModel):
         new_group.photo = photo
         new_group.save()
         return new_group
-        
+
     @staticmethod
     def similarity(bg1,bg2):
         num_boxes = bg1.boxes.count()
         if bg2.boxes.count() != num_boxes:
             return 0.0
-            
+
         # No boxes in both
         if num_boxes == 0:
             return 1.0
-            
+
         boxes1 = list(bg1.boxes.all())
         boxes2 = list(bg2.boxes.all())
-        
+
         def distance_pct(box1,box2):
             #print 'distance',Box.distance(box1,box2) / float(PHOTO_DIAGONAL),box1.center,box2.center
             return Box.distance(box1,box2) / float(PHOTO_DIAGONAL)
-        
+
         def area_pct(box1,box2):
             if box1.area > box2.area:
                 bigger = box1
@@ -215,8 +225,8 @@ class BoxGroup(SmartModel):
 
             #print 'area',float(smaller.area) / bigger.area,smaller.area,bigger.area,
             return float(smaller.area) / bigger.area
-        
-         
+
+
         score = 1
         for box1 in boxes1:
             closest_box = max(boxes2, key=lambda box: -distance_pct(box1,box))
@@ -224,18 +234,18 @@ class BoxGroup(SmartModel):
             area_score = area_pct(box1,closest_box)
             combined_score = distance_score**2 * math.sqrt(area_score)
             #log('score = %.3f = %.3f sqrt(area) * %.3f distance' % (combined_score, math.sqrt(area_score), distance_score),FOOD_CONTROL)
-            
+
             score *= combined_score
-            
+
         return score**(1.0/num_boxes)
-        
+
 
 """
 The food models are a little weird, so here's a quick rundown of how they work:
-    * Food, Serving, FoodSearchResults, and FoodSearchResult represent our 
+    * Food, Serving, FoodSearchResults, and FoodSearchResult represent our
       local cache of the food database.  No instance of these models is ever
       HIT-specific.
-      - Food contains all the data in the food db for one food.  It is 
+      - Food contains all the data in the food db for one food.  It is
         primary-keyed to the FatSecret food_id, so only one instance should
         exist for any different food item.
       - Serving contains the types of servings for each Food.
@@ -256,10 +266,10 @@ class Food(SmartModel):
     food_id = IntegerField(primary_key = True) # matches food_id from FatSecret
     food_name = CharField(max_length="500") # matches food_name from FatSecret
     food_description = CharField(max_length="500") #matches food_description from FatSecret
-    
+
     def __str__(self):
         return self.food_name
-    
+
     @staticmethod
     def search(query):
         try:
@@ -289,7 +299,7 @@ class Food(SmartModel):
             food.add_serving_data(fdb)
             food.save()
         return food
-    
+
     @staticmethod
     def from_search_result(result):
         try:
@@ -305,7 +315,7 @@ class Food(SmartModel):
                 food.food_name = result["brand_name"] + " " + food.food_name
             food.save()
             return food
-        
+
     def servings(self):
         return Serving.objects.filter(food=self)
 
@@ -325,11 +335,11 @@ class Food(SmartModel):
                 serving_description = s["serving_description"],
                 serving_id = s["serving_id"],
             )
-            
+
             for nutrient in ["calories","carbohydrate","fat","fiber","protein","saturated_fat","sugar","calcium","cholesterol","iron","monounsaturated_fat","polyunsaturated_fat","potassium","vitamin_a","vitamin_c"]:
                 if nutrient in s:
                     setattr(new_serving,nutrient,s[nutrient])
-                
+
             new_serving.save()
 
 class Serving(SmartModel):
@@ -340,7 +350,7 @@ class Serving(SmartModel):
     number_of_units = FloatField(null=True)
     serving_description = CharField(max_length="200")
     serving_id = IntegerField()
-    
+
     calories = FloatField(null=True)
     carbohydrate = FloatField(null=True)
     fiber = FloatField(null=True)
@@ -348,34 +358,34 @@ class Serving(SmartModel):
     fat = FloatField(null=True)
     sugar = FloatField(null=True)
     saturated_fat = FloatField(null=True)
-    sodium = FloatField(null=True)   
-    
-    
+    sodium = FloatField(null=True)
+
+
     calcium = FloatField(null=True)
-    cholesterol = FloatField(null=True)    
+    cholesterol = FloatField(null=True)
     iron = FloatField(null=True)
     monounsaturated_fat = FloatField(null=True)
     polyunsaturated_fat = FloatField(null=True)
     potassium = FloatField(null=True)
     vitamin_a = FloatField(null=True)
     vitamin_c = FloatField(null=True)
-    
+
     def __str__(self):
         return '%s of %s (%d cal)' % (self.serving_description, self.food.food_name, self.calories)
-        
-        
-        #self.food.food_name + ': ' + self.measurement_description + ' (' + str(self.calories) + ' cal)'    
+
+
+        #self.food.food_name + ': ' + self.measurement_description + ' (' + str(self.calories) + ' cal)'
 
 class FoodSearchResults(SmartModel):
     search_term = CharField(max_length="200", primary_key = True)
     search_results = ManyToManyField(Food, through='FoodSearchResult')
-    
+
     def __str__(self):
         return self.search_term + "(" + str(len(self.search_results.all())) + " results)"
-    
+
     def get_results(self):
         return [r.food for r in FoodSearchResult.objects.filter(results=self).order_by('ordering')]
-    
+
     @staticmethod
     def from_db_results(query, results):
         results_item = FoodSearchResults(search_term = query)
@@ -390,7 +400,7 @@ class FoodSearchResult(SmartModel):
     food = ForeignKey(Food)
     results = ForeignKey(FoodSearchResults)
     ordering = IntegerField()
-    
+
     def __str__(self):
         return self.food.food_name + "(" + str(self.ordering) + ")"
 
@@ -401,18 +411,18 @@ class Ingredient(SmartModel):
     box = OneOf(Box)
     from_turk = BooleanField(default=True) # False when user added
     hidden = BooleanField(default=False) # True when user deleted
-    
+
     @property
     def submission(self):
         return self.box.photo.submission
-    
+
     @property
     def calories(self):
         return self.serving.calories * self.amount
-    
+
     def list_others(self):
         return [i for i in self.list.all()[0].ingredients.all() if i != self]
-    
+
     def __str__(self):
         if self.serving and self.amount:
             return '%.2f * %s of %s = %d cal' % (self.amount, self.serving.serving_description, self.food, self.calories)
@@ -422,17 +432,20 @@ class Ingredient(SmartModel):
 class IngredientList(SmartModel):
     ingredients = ManyOf(Ingredient,related_name='list')
     box = OneOf(Box)
-    
+
     def __eq__(self,other):
         return [i.food.pk for i in self.ingredients.all()] == [i.food.pk for i in other.ingredients.all()]
-    
+
     def __str__(self):
-        return str([str(i) for i in self.ingredients.all()])
-    
+        try:
+            return str([str(b) for b in self.boxes.all()])
+        except:
+            return "<Ingredient List Object>"
+
     @staticmethod
     def from_json(json_str, box=None):
         new_list = IngredientList()
-        new_list.save()     
+        new_list.save()
         json_obj = json.loads(json_str)
         for id, name in json_obj.items():
             food = Food.get_food(id)

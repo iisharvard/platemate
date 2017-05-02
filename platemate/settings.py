@@ -1,12 +1,13 @@
 # Django settings for platemate project.
 from management.mturk import MTurkClient
 import os
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
-)
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
+TEMPLATE_DEBUG = DEBUG
 
 MTURK_ID = os.environ['MTURK_ID']
 MTURK_KEY = os.environ['MTURK_KEY']
@@ -25,7 +26,6 @@ TURK_SANDBOX = MTurkClient(
     aws_secret_key = MTURK_KEY,
     aws_mode       = 'sandbox',
 )
-
 
 MANAGERS = ADMINS
 
@@ -61,10 +61,7 @@ MEDIA_ROOT = ''
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = ''
 
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+STATIC_URL = '/static/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 've%nw*o%0h*32nwqlsi^w5&b__t(9n-s2r8&_0byf$aivj+o*^'
@@ -82,9 +79,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django_pdb.middleware.PdbMiddleware'
 )
 
-ROOT_URLCONF = 'platemate.urls'
+ROOT_URLCONF = 'urls'
 
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
@@ -96,12 +95,45 @@ INSTALLED_APPS = (
     'food',
     'django.contrib.auth',
     'django.contrib.sessions',
+    'sslserver',
+    'django_extensions',
+    'django_pdb'
 )
 
-try:
-    from local_settings import *
-except ImportError:
-    pass
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'log/platemate.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers':['file'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+        'platemate': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    }
+}
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 LOGIN_REDIRECT_URL = URL_PATH + "/"
 LOGIN_URL = URL_PATH + "/login/"

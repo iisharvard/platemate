@@ -71,7 +71,7 @@ class Manager(base.Manager):
     max_wait = 5 * MINUTE
         
     # Payment
-    reward = .05
+    reward = .13
     duplication = 2
     
     # Advertising
@@ -94,4 +94,3 @@ class Manager(base.Manager):
             for job in hit.jobs.all():
                 answers = job.valid_responses
                 self.finish(box_groups = [answer.box_group for answer in answers], from_job=job)
-        

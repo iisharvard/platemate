@@ -1,13 +1,20 @@
 from django.conf import settings
 from django.http import HttpResponse, Http404, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseRedirect
 from django.core.context_processors import csrf
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404, render
 from models.common import *
 from management.models import Manager
 #from django.contrib.auth.decorators import login_required
 from django import forms
 from datetime import date, datetime
 from django.db import transaction
+
+from helpers import *
+
+#for api
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+
 
 import food_db, random, os
 from PIL import Image
@@ -25,19 +32,19 @@ def login_required(f):
 def food_search(request, query):
     fdb = food_db.FoodDb()
     results = fdb.search(query)
-    return render_to_response("food_search.json", {
+    return render(request, "food_search.json", context={
         "foods": Food.search(query),
     },
-    mimetype="application/json")
+    content_type="application/json")
 
 def food_autocomplete(request):
     fdb = food_db.FoodDb()
     query = request.GET["term"]
     results = fdb.search(query)
-    return render_to_response("food_autocomplete.json", {
+    return render(request, "food_autocomplete.json", context={
         "foods": Food.search(query),
     },
-    mimetype="application/json")
+    content_type="application/json")
 
 def show_pipeline(request, operation, photo=None):
     chief = Manager.objects.get(operation=operation,name='chief').downcast()
@@ -45,7 +52,7 @@ def show_pipeline(request, operation, photo=None):
 
     # Only show managers doing hits
     outputs = filter(lambda o: o.manager.employees.count() == 0, outputs)
-        
+
     def sortvalue(output):
         photo = Photo()
         box = Box()
@@ -79,7 +86,7 @@ def show_pipeline(request, operation, photo=None):
         return (photo.pk,box.pk,ingredient.pk,step)
 
 
-    return render_to_response('outputs.html', {
+    return render(request, 'outputs.html', context={
         "outputs": sorted(outputs,key=sortvalue),
         "path": settings.URL_PATH,
     })
@@ -132,9 +139,31 @@ def fe_day(request, day):
             "debug": "debug" in request.REQUEST,
         }
         c.update(csrf(request))
-        return render_to_response("fe/index.html", c)
+        return render(request, "fe/index.html", context=c)
     except ValueError:
         return HttpResponseNotFound("Invalid date")
+
+@csrf_exempt
+def api_submission_statuses(request):
+    if not is_authenticated_api_request(request):
+        return HttpResponse('Unauthorized - Missing or invalid api key, please try again.', status=401)
+    try:
+        json_data = json.loads(request.body)
+        submission_ids = json_data['ids']
+        response_json = {}
+        for submission_id in submission_ids:
+            try:
+                submission = Submission.objects.get(pk=submission_id)
+                data = get_data_for_submission(submission)
+                status = get_status_for_submission(submission)
+            except:
+                status = 'NOT_FOUND'
+                data = {}
+            response_json[submission_id] = {"status": status, "data": data}
+        return JsonResponse(response_json, safe=False)
+    except ValueError:
+        return HttpResponseBadRequest("There was an error, please try again.")
+
 
 def photo_summary(request, photo_id):
     photo = Photo.objects.filter(id = photo_id)[0]
@@ -179,7 +208,7 @@ def photo_summary(request, photo_id):
         'total': total,
         'box_group': box_group[0]
     }
-    return render_to_response("fe/food_summary.html", c)
+    return render(request, "fe/food_summary.html", context=c)
 
 
 @login_required
@@ -198,7 +227,7 @@ def edit_ingredient(request):
         ingredient.serving = get_object_or_404(Serving, pk=request.REQUEST["serving_id"])
         ingredient.save()
 
-    return render_to_response("fe/ingredient_row_editable.html", {
+    return render(request, "fe/ingredient_row_editable.html", context={
         "ingredient": ingredient,
         "path": settings.URL_PATH,
     })
@@ -217,7 +246,7 @@ def add_ingredient(request):
     new_ingredient.save()
     submission.measured_ingredients.add(new_ingredient)
 
-    return render_to_response("fe/ingredient_row_editable.html", {
+    return render(request, "fe/ingredient_row_editable.html", context={
         "ingredient": new_ingredient,
         "path": settings.URL_PATH,
         "full_row": True
@@ -229,7 +258,7 @@ def delete_ingredient(request):
     ingredient = get_object_or_404(Ingredient, pk=request.REQUEST["ingredient_id"])
     ingredient.hidden = True
     ingredient.save()
-    return render_to_response("fe/ingredient_row_editable.html", {
+    return render(request, "fe/ingredient_row_editable.html", context={
         "ingredient": ingredient,
         "path": settings.URL_PATH,
     })
@@ -247,7 +276,7 @@ def delete_submission(request):
         ingredient.hidden = True
         ingredient.save()
 
-    return render_to_response("fe/submission.html", {
+    return render(request, "fe/submission.html", context={
         "submission": submission,
         "path": settings.URL_PATH,
     })
@@ -272,7 +301,41 @@ MANUAL_DAYS = {
     "admin": ["2011-04-10", "2011-04-11"],
 }
 
-@transaction.commit_on_success
+@transaction.atomic
+@csrf_exempt
+def api_photo_upload(request):
+    if not is_authenticated_api_request(request):
+        return HttpResponse('Unauthorized - Missing or invalid api key, please try again.', status=401)
+    try:
+        now = datetime.now()
+        time_string = now.isoformat()
+        photo = request.FILES['upload']
+        random.seed()
+        photo_name = str(random.randint(0,1000000)) + "_" + time_string + "_" + photo.name
+        static_sub_dir = 'api/photos'
+        saved_photo_url = process_photo_and_get_url(photo, static_sub_dir, photo_name)
+        p = Photo.factory(photo_url = saved_photo_url)
+        u = create_or_get_api_user()
+
+        s = Submission(
+            photo = p,
+            meal = 'B',
+            date = now,
+            user = u,
+            submitted = now,
+            manual = False
+        )
+        s.save()
+
+        data = dict({"submission_id" : s.id})
+
+        return JsonResponse(data)
+    except ValueError:
+        return HttpResponseBadRequest("There was an error, please try again.")
+    except IOError:
+        return HttpResponse("There was an error saving data, please try again.", status=500)
+
+@transaction.atomic
 @login_required
 def fe_upload(request, day):
     try:
@@ -283,32 +346,10 @@ def fe_upload(request, day):
                 photo = request.FILES["photo"]
                 random.seed()
                 photo_name = str(random.randint(0,1000000)) + "_" + str(request.user.pk) + "_" + day + "_" + photo.name
-                photo_path = os.path.join(settings.STATIC_DOC_ROOT,'uploaded','raw',photo_name)
+                static_sub_dir = 'uploaded'
+                saved_photo_url = process_photo_and_get_url(photo, static_sub_dir, photo_name)
+                p = Photo.factory(photo_url = saved_photo_url)
 
-                destination = open(photo_path, 'wb+')
-                for chunk in photo.chunks():
-                    destination.write(chunk)
-                destination.close()
-
-                # Original image
-                original = Image.open(photo_path)
-
-                # Resize it to 400px wide (usually 300 high)
-                width, height = original.size
-                new_size = 400, int(height * 400.0 / width)
-                smaller = original.resize(new_size, Image.ANTIALIAS)
-
-                # Save it to photos directory
-                out_dir = os.path.join(settings.STATIC_DOC_ROOT,'uploaded','resized')
-                try:
-                    os.makedirs(out_dir)
-                except os.error:
-                    pass
-
-                out_path = os.path.join(out_dir,photo_name)
-                smaller.save(out_path)
-
-                p = Photo.factory(photo_url = '%s/static/uploaded/resized/%s' % (settings.URL_PATH,photo_name))
                 s = Submission(
                     photo = p,
                     meal = request.POST["meal"],

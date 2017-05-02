@@ -1,12 +1,10 @@
 
 .idea
-db.sqlite3
+*.sqlite3
 
 platemate/local_settings.py
 platemate/static/uploaded/ground*
 platemate/static/photos/ground*
-
-platemate/amt_keys.py
 
 *.PRIVATE
 
@@ -64,7 +62,11 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-
+/platemate/static/uploaded/raw
+/platemate/static/uploaded/resized
+/platemate/static/photos/test*
+/platemate/static/api/photos/raw
+/platemate/static/api/photos/resized
 ##########################################
 # end Python
 ##########################################

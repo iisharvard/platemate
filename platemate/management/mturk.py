@@ -95,7 +95,7 @@ class MTurkClient:
         assignments = self.c.get_assignments(hit_id, status=None, page_size=100)
         for asst in assignments:
             results.setdefault(asst.AssignmentId,{})
-            answers = asst.answers[0]
+            answers = asst.answers[0] if len(asst.answers) > 0 else []
             for qfa in answers:
                 field, response = qfa.qid, qfa.fields[0]
                 results[asst.AssignmentId][field] = response
@@ -149,4 +149,3 @@ class MTurkClient:
     # --------------------
     def balance(self):
         return self.c.get_account_balance()[0]
-        
