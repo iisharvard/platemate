@@ -1,7 +1,7 @@
 {% extends "hit_base.html" %}
 
 {% block instructions %}
-We need your help breaking up a picture into different foods. For each photo, <b>draw boxes around each item on the plate</b>. After each box, <b>click the "Add" button</b>. You'll see every item you've selected to the right of the photo, and can remove items if you want to draw them again.  
+We need your help breaking up a picture into different foods. For each photo, <b>draw boxes around each item on the plate</b>. After each box, <b>click the "Add" button</b>. You'll see every item you've selected to the right of the photo, and can remove items if you want to draw them again. If the photo does not contain food, please skip this hit.  
 <ul>
     <li>One item might have many ingredients
     <li><b>Example:</b> if you see a sandwich and a side salad, draw two boxes.
@@ -16,24 +16,24 @@ We need your help breaking up a picture into different foods. For each photo, <b
   var ids = {};
   var selections = {};
   var selects = {};
-  
+
   function VALIDATE_INPUT()
   {
 	for(key in selections)
 	{
-		if(! ( Object.keys(selections[key]).length > 0)) 
+		if(! ( Object.keys(selections[key]).length > 0))
 		{
 			alert("You haven't tagged all images")
 			return false;
 		}
 	}
-	
+
 	return true;
   }
   </script>
   <div id="MAIN_TAGGING">
   {% for job in hit.jobs.all %}
-    
+
     <table cellpadding=0 cellspacing=0 border=0>
       <tr>
         <td valign='top'>
@@ -47,13 +47,13 @@ We need your help breaking up a picture into different foods. For each photo, <b
         </td>
       </tr>
     </table>
-    
+
     <br /><hr class='break' /><br />
-    
+
     <script type="text/javascript">
     ids['{{ job.id }}'] = 0;
     selections['{{ job.id }}'] = {};
-    
+
     selects['{{ job.id }}'] = $('img#{{ job.id }}_photo').imgAreaSelect({
       handles: true,
       instance: true
@@ -74,7 +74,7 @@ We need your help breaking up a picture into different foods. For each photo, <b
       $("#{{ job.id }}_box_group_json")[0].value = encodeURIComponent(JSON.stringify(selections['{{ job.id }}']));
       ids['{{ job.id }}']++;
     });
-    
+
     </script>
   {% endfor %}
   </div>

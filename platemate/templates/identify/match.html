@@ -7,6 +7,7 @@ In each photo you see below, a box containing one food item will be highlighted.
 Start by searching for one food that matches the item. This will work for most cases, but some complicated foods with many parts aren't in our database. In this case, match each of the parts.For example, to find "pepperoni pizza with olives", you might have to search "cheese pizza", then "pepperoni", then "sliced black olives".
 <br /><br />
 <b>Be as specific as you can without guessing</b>. "Chicken breast" is better than "chicken", and "fried chicken breast" is even better. Keep the list short, but don't leave anything out!. If you aren't sure what the best match is, take your best guess. <b>DO NOT list all possible alternatives, just the best one.</b>
+If a photo does not contain food, please skip this HIT. 
 {% endblock instructions %}
 
 {% block jobs %}
@@ -50,7 +51,7 @@ Start by searching for one food that matches the item. This will work for most c
                   $("#" + elId).data('jobId', jobId);
                   $("#" + elId).data('foodId', foodId);
                   $("#" + elId).data('foodName', foodName);
-                  
+
                   $(".food_del").click(function(e) {
                     $(e.target).parent().hide();
                     var jobId = $(e.target).data('jobId');
@@ -63,14 +64,14 @@ Start by searching for one food that matches the item. This will work for most c
                     }
                     return false;
                   });
-                  
+
                 }
                 return false;
               });
             }
           });
         }});
-        
+
         $(".foodsearch").keyup(function(e) {
           var id = e.target.id.substring(0, e.target.id.indexOf("_"));
           if (e.target.value.length <= 1) {
@@ -78,7 +79,7 @@ Start by searching for one food that matches the item. This will work for most c
             $("#" + id + "_loading").hide();
           }
         });
-      
+
     });
   </script>
 
@@ -105,11 +106,11 @@ Start by searching for one food that matches the item. This will work for most c
         <br /><b>DO NOT list many possible foods</b>, just your best guess for each one.
         <br /><b>DO NOT choose more than FOUR items.</b> If there are more, pick the four biggest.
         <div class="break"><br /></div>
-        
-      </div>      
+
+      </div>
       <div class="left">
         <b>Search the database below:</b>&nbsp;&nbsp;&nbsp;<img src="{{path}}/static/img/loading.gif" style="display: none" id="{{ job.id }}_loading" /><br />
-        <input class="foodsearch" id="{{ job.id }}_search" type="text" size="50" /> 
+        <input class="foodsearch" id="{{ job.id }}_search" type="text" size="50" />
         <br />Type keywords with spaces, like "fried chicken breast"
         <div id="{{ job.id }}_results" class="food_results">&nbsp;</div>
       </div>
