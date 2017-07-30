@@ -7,6 +7,7 @@ In each photo you see below, a box containing one food item will be highlighted.
 <b>Be specific!</b> Describe the food as clearly as possible, with as many details as possible. For example, "fried chicken drumstick" is much better than "chicken". Think about how the food is cooked ("boiled","diced","raw"), what part of an animal or plant it is, what variety it is ("iceberg lettuce","white rice","chocolate chip cookie"). You can also list multiple possibilities ("butter or margarine") if you are uncertain.
 <br /><br />
 <b>Focus on what you can see</b>. Don't worry about invisible parts, like salt or oil. Instead, focus on capturing the main items visible in the box. Some foods only contain one part, but others can easily be decomposed.
+If a photo does not contain food, please skip this HIT.
 {% endblock instructions %}
 
 
@@ -26,11 +27,11 @@ In each photo you see below, a box containing one food item will be highlighted.
         <br />This is another Turker's description of the food. If you think it is wrong, fix it. If you think it is right, improve it by adding more detail.
         {% endif %}
         <br /><input type="text" name="{{job.id}}_desc" class="food_desc" value="{{job.desc}}" />
-      
+
         <br /><br />
-        <b>Step 3: What is it made of?</b> Is it as a combination of other foods? 
-        <br />a) For simple foods like "brown rice" or "ketchup", you can repeat the answer above. 
-        <br />b) For complicated foods like "caesar salad", list all the visible pieces, like "lettuce, chicken, croutons, dressing." 
+        <b>Step 3: What is it made of?</b> Is it as a combination of other foods?
+        <br />a) For simple foods like "brown rice" or "ketchup", you can repeat the answer above.
+        <br />b) For complicated foods like "caesar salad", list all the visible pieces, like "lettuce, chicken, croutons, dressing."
         <br />c) <i>Think of this as explaining what the food is to someone who has never had it by breaking it down into simpler pieces.</i>.
         <br />d) List each part <b>on a new line</b>.
         <br />
