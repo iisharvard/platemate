@@ -92,6 +92,7 @@ class MTurkClient:
     def hit_results(self,hit_id,type=None): # type in ['Submitted','Approved','Rejected',None]
         results = {}
     
+        try:
         assignments = self.c.get_assignments(hit_id, status=None, page_size=100)
         for asst in assignments:
             results.setdefault(asst.AssignmentId,{})
@@ -104,7 +105,9 @@ class MTurkClient:
                        
             results[asst.AssignmentId]['accept_time'] = datetime.strptime(asst.AcceptTime,"%Y-%m-%dT%H:%M:%SZ")
             results[asst.AssignmentId]['submit_time'] = datetime.strptime(asst.SubmitTime,"%Y-%m-%dT%H:%M:%SZ")
-                
+        except:
+            log(u'Error getting assignments for HIT %s. Does this hit exist on Amazon?' % (hit_id), MANAGER_CONTROL)
+        finally:
         return results
         
     # URL of a HIT on MTurk
