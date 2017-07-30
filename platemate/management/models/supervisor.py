@@ -192,7 +192,7 @@ class Supervisor(object):
             log(u'Approved assignment %s ' % asst.turk_id, MANAGER_CONTROL)
         else:
             self.turk.reject(asst.turk_id,asst.feedback)
-            self.turk.extend_hit(asst.hit.turk_id, 1)
+            #self.turk.extend_hit(asst.hit.turk_id, 1) Commented out because generally hits are rejected because of bad photo data, don't want hit to advance.
             asst.approved = False
             log(u'Rejected assignment %s because %s' % (asst.turk_id, asst.feedback), MANAGER_CONTROL)
         asst.save()
