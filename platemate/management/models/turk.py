@@ -9,19 +9,17 @@ class Hit(SmartModel):
     turk_group = CharField(max_length=30)
     turk_mode = CharField(max_length=10)
 
-    manager = ForeignKey('Manager',related_name='hits',null=True)
+    manager = ForeignKey('Manager', related_name='hits', null=True)
     creation_time = DateTimeField(auto_now_add=True)
     completed = BooleanField(default=False)
 
-
     @property
     def forbidden_workers(self):
-        return Worker.objects.filter(forbidden_jobs__pk__in = self.jobs.all())
+        return Worker.objects.filter(forbidden_jobs__pk__in=self.jobs.all())
 
     @property
     def template(self):
         return self.jobs.all()[0].template
-
 
     @property
     def external_url(self):
@@ -30,7 +28,7 @@ class Hit(SmartModel):
     @property
     def turk_url(self):
         host = 'workersandbox.mturk.com' if self.turk_mode == 'sandbox' else 'worker.mturk.com'
-        return "https://%s/mturk/preview?groupId=%s" % (host,self.turk_group)
+        return "https://%s/mturk/preview?groupId=%s" % (host, self.turk_group)
 
     @property
     def approved_assignments(self):
@@ -45,11 +43,11 @@ class Hit(SmartModel):
         return self.assignments.filter(approved=None)
 
 class Job(SmartModel):
-    hit = ForeignKey('Hit',related_name='jobs',null=True,blank=True)
-    manager = ForeignKey('Manager',related_name='jobs',null=True)
-    forbidden_workers = ManyToManyField('Worker',related_name='forbidden_jobs')
+    hit = ForeignKey('Hit', related_name='jobs', null=True, blank=True)
+    manager = ForeignKey('Manager', related_name='jobs', null=True)
+    forbidden_workers = ManyToManyField('Worker', related_name='forbidden_jobs')
     creation_time = DateTimeField(auto_now_add=True)
-    from_input = ForeignKey('Input',related_name='to_jobs',null=True)
+    from_input = ForeignKey('Input', related_name='to_jobs', null=True)
 
     @property
     def valid_responses(self):
@@ -72,12 +70,11 @@ class Worker(SmartModel):
         except:
             return "<Worker object>"
 
-
 class Assignment(SmartModel):
     turk_id = CharField(max_length=100)
-    worker = ForeignKey(Worker,null=True)
+    worker = ForeignKey(Worker, null=True)
     approved = NullBooleanField()
-    hit = ForeignKey('Hit',related_name='assignments')
+    hit = ForeignKey('Hit', related_name='assignments')
     comment = TextField()
     accept_time = DateTimeField(null=True)
     submit_time = DateTimeField(null=True)
@@ -111,10 +108,10 @@ class Assignment(SmartModel):
             return responses[0].feedback
 
 class Response(SmartModel):
-    assignment = ForeignKey('Assignment',related_name='responses')
-    job = ForeignKey(Job,related_name='responses')
+    assignment = ForeignKey('Assignment', related_name='responses')
+    job = ForeignKey(Job, related_name='responses')
     valid = NullBooleanField()
-    feedback = CharField(max_length=500,default='Thank you!')
+    feedback = CharField(max_length=500, default='Thank you!')
     raw = TextField()
 
     def __str__(self):

@@ -21,11 +21,10 @@ fh.setFormatter(formatter)
 fh.setLevel(logging.INFO)
 content_type_logger.addHandler(fh)
 
-def log(message,level):
+def log(message, level):
     if level >= LOGGING_LEVEL:
         print message
         sys.stdout.flush()
-
 
 def log_content_type_info(message):
     content_type_logger.info(message)

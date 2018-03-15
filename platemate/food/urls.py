@@ -1,6 +1,7 @@
 from django.conf.urls import *
 
-urlpatterns = patterns('food.views',
+urlpatterns = patterns(
+    'food.views',
     # Hits
     (r'^search/(?P<query>[\w\S\s]+)/$', 'food_search'),
 

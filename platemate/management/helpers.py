@@ -2,7 +2,6 @@ import pprint, sys, random, os, re, inspect
 from datetime import datetime
 import math
 
-
 # Timing
 
 SECOND = 1
@@ -17,27 +16,27 @@ def with_probability(p):
     r = random.random()
     return r < p
 
-def argmax(elts,func):
+def argmax(elts, func):
     #return sorted(elts, key=func)[0]
-    return max(elts,key=func)
+    return max(elts, key=func)
 
-def argmin(elts,func):
+def argmin(elts, func):
     return min(elts, key=func)
 
 def counts(elts):
     counts = {}
     for elt in elts:
-        counts.setdefault(elt,0)
+        counts.setdefault(elt, 0)
         counts[elt] += 1
     return counts
-    
+
 def mode(elts):
     c = counts(elts)
-    return argmax(elts,lambda elt: c[elt])
-    
+    return argmax(elts, lambda elt: c[elt])
+
 def mean(elts):
     return (sum(elts) + 0.0)/len(elts)
-    
+
 def median(elts):
     if len(elts) % 2:
         return elts[len(elts) / 2]
@@ -48,10 +47,10 @@ def median(elts):
 
 def var_dump(obj):
     pprint.pprint(vars(obj))
-    
+
 # Modules
 
-def get_models(module,base):
+def get_models(module, base):
     return [(name, cls) for name, cls in inspect.getmembers(module) if inspect.isclass(cls) and issubclass(cls, base)]
 
 def get_modules(dir):
@@ -59,6 +58,6 @@ def get_modules(dir):
         for file in files:
             name, ext = os.path.splitext(file)
             if ext == '.py' and name != '__init__':
-                path = os.path.relpath(os.path.join(root,name),dir)
-                mod_name = path.replace(os.sep,'.')
+                path = os.path.relpath(os.path.join(root, name), dir)
+                mod_name = path.replace(os.sep, '.')
                 yield mod_name

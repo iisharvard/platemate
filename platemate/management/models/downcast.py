@@ -42,9 +42,9 @@ class PolymorphicMetaclass(ModelBase):
             return model.objects.get(pk=self.pk)
 
         if issubclass(dct.get('__metaclass__', type), PolymorphicMetaclass):
-          dct['content_type'] = models.ForeignKey(ContentType, editable=False, null=True)
-          dct['save'] = save
-          dct['downcast'] = downcast
+            dct['content_type'] = models.ForeignKey(ContentType, editable=False, null=True)
+            dct['save'] = save
+            dct['downcast'] = downcast
 
         return super(PolymorphicMetaclass, cls).__new__(cls, name, bases, dct)
 
@@ -64,9 +64,9 @@ class DowncastQuerySet(QuerySet):
             result = super(DowncastQuerySet, self).__getitem__(k)
         except IndexError:
             raise ObjectDoesNotExist
-        if isinstance(result, models.Model) :
+        if isinstance(result, models.Model):
             return result.downcast()
-        else :
+        else:
             return result
     def __iter__(self):
         for item in super(DowncastQuerySet, self).__iter__():

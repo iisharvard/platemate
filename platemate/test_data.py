@@ -149,13 +149,13 @@ box = boxes1.boxes.all()[0]
 box.desc = "Mashed Potatoes"
 box.save()
 
-i = Ingredient(food = Food.get_food(5777))
+i = Ingredient(food=Food.get_food(5777))
 i.serving = i.food.servings()[7]
 i.amount = 4.0
 i.box = box
 i.save()
 
-i_butter = Ingredient(food = Food.get_food(33814))
+i_butter = Ingredient(food=Food.get_food(33814))
 i_butter.serving = i_butter.food.servings()[1]
 i_butter.amount = 1
 i_butter.box = box
@@ -169,42 +169,41 @@ list1.ingredients.add(i)
 list1.ingredients.add(i_butter)
 
 s = Submission(
-    tagged_boxes = boxes1,
-    user = User.objects.get(username='admin'),
-    meal = 'D',
-    photo = p,
-    date = datetime.strptime("2011-03-31", "%Y-%m-%d").date(),
-    identified_ingredients = list1,
-    submitted = datetime.now(),
-    processed = datetime.now(),
-    completed = datetime.now(),
+    tagged_boxes=boxes1,
+    user=User.objects.get(username='admin'),
+    meal='D',
+    photo=p,
+    date=datetime.strptime("2011-03-31", "%Y-%m-%d").date(),
+    identified_ingredients=list1,
+    submitted=datetime.now(),
+    processed=datetime.now(),
+    completed=datetime.now(),
 )
 s.save()
 s.measured_ingredients.add(i)
 s.measured_ingredients.add(i_butter)
-
 
 photo8 = Photo.from_string("http://www.platebrain.com/pictures/pilot/pilot8.jpg")
 boxes8 = BoxGroup.from_json('{"0":{"x1":165,"y1":1,"x2":332,"y2":128,"width":167,"height":127},"1":{"x1":227,"y1":90,"x2":370,"y2":261,"width":143,"height":171},"2":{"x1":146,"y1":150,"x2":256,"y2":297,"width":110,"height":147},"3":{"x1":105,"y1":207,"x2":204,"y2":298,"width":99,"height":91},"4":{"x1":81,"y1":4,"x2":214,"y2":199,"width":133,"height":195}}', photo8)
 box8 = boxes8.boxes.all()[0]
 
 carrots_f = Food.get_food(6037)
-carrots_i = Ingredient(food = carrots_f, serving = carrots_f.servings()[1], amount = 0.5, box = box8)
+carrots_i = Ingredient(food=carrots_f, serving=carrots_f.servings()[1], amount=0.5, box=box8)
 carrots_i.save()
-carrots_l = IngredientList(box = box8)
+carrots_l = IngredientList(box=box8)
 carrots_l.save()
 carrots_l.ingredients.add(carrots_i)
 
 s2 = Submission(
-    photo = photo8,
-    tagged_boxes = boxes8,
-    user = User.objects.get(username='admin'),
-    meal = 'L',
-    date = datetime.strptime("2011-03-31", "%Y-%m-%d").date(),
-    identified_ingredients = carrots_l,
-    submitted = datetime.now(),
-    processed = datetime.now(),
-    completed = datetime.now(),
+    photo=photo8,
+    tagged_boxes=boxes8,
+    user=User.objects.get(username='admin'),
+    meal='L',
+    date=datetime.strptime("2011-03-31", "%Y-%m-%d").date(),
+    identified_ingredients=carrots_l,
+    submitted=datetime.now(),
+    processed=datetime.now(),
+    completed=datetime.now(),
 )
 s2.save()
 s2.measured_ingredients.add(carrots_i)

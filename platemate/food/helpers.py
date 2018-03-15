@@ -21,7 +21,6 @@ def process_photo_and_get_url(photo, sub_dir, photo_name):
     photo_dir_name = os.path.join(settings.STATIC_DOC_ROOT, sub_dir)
     raw_dir = os.path.join(photo_dir_name, 'raw')
 
-
     try:
         os.makedirs(raw_dir)
     except os.error:
@@ -42,13 +41,13 @@ def process_photo_and_get_url(photo, sub_dir, photo_name):
     smaller = raw_photo.resize(new_size, Image.ANTIALIAS)
 
     # Save it to photos directory
-    out_dir = os.path.join(photo_dir_name,'resized')
+    out_dir = os.path.join(photo_dir_name, 'resized')
     try:
         os.makedirs(out_dir)
     except os.error:
         pass
 
-    out_path = os.path.join(out_dir,photo_name)
+    out_path = os.path.join(out_dir, photo_name)
     smaller.save(out_path)
 
     saved_photo_url = '%s/static/%s/resized/%s' % (settings.URL_PATH, sub_dir, photo_name)
@@ -56,12 +55,12 @@ def process_photo_and_get_url(photo, sub_dir, photo_name):
 
 def get_data_for_submission(submission):
     photo = submission.photo
-    box_group = BoxGroup.objects.filter(photo = photo)
-    boxes = Box.objects.filter(photo = photo)
-    ingredient_boxes =[]
+    box_group = BoxGroup.objects.filter(photo=photo)
+    boxes = Box.objects.filter(photo=photo)
+    ingredient_boxes = []
     for b in boxes:
         box = {'id': b.id}
-        ingredients = Ingredient.objects.filter(box = b)
+        ingredients = Ingredient.objects.filter(box=b)
         valid_ingredients = {}
         if len(ingredients) > 0:
             for i in ingredients:
@@ -71,14 +70,14 @@ def get_data_for_submission(submission):
                     valid_ingredients[i.food].append(i)
             ingredient_list = []
             for k, v in valid_ingredients.iteritems():
-                num_entry = len(v)*1.0
+                num_entry = len(v) * 1.0
                 food_entry = {
                     'description': k.food_name,
                 }
-                food_entry['calories'] = round(sum([e.serving.calories * e.amount for e in v])/num_entry,1)
-                food_entry['fat'] = round(sum([e.serving.fat * e.amount for e in v])/num_entry, 1)
-                food_entry['carbohydrate'] = round(sum([e.serving.carbohydrate * e.amount for e in v])/num_entry,1)
-                food_entry['protein'] = round(sum([e.serving.protein * e.amount for e in v])/num_entry,1)
+                food_entry['calories'] = round(sum([e.serving.calories * e.amount for e in v]) / num_entry, 1)
+                food_entry['fat'] = round(sum([e.serving.fat * e.amount for e in v]) / num_entry, 1)
+                food_entry['carbohydrate'] = round(sum([e.serving.carbohydrate * e.amount for e in v]) / num_entry, 1)
+                food_entry['protein'] = round(sum([e.serving.protein * e.amount for e in v]) / num_entry, 1)
 
                 ingredient_list.append(food_entry)
 

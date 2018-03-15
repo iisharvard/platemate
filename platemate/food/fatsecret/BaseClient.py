@@ -10,32 +10,32 @@ except ImportError:
     import simplejson as json
 
 class FatSecretClient(object):
-    SERVER       = 'platform.fatsecret.com'
-    PORT         = 80
-    SIGNER       = oauth.OAuthSignatureMethod_HMAC_SHA1()
-    HTTP_METHOD  = 'GET'
+    SERVER = 'platform.fatsecret.com'
+    PORT = 80
+    SIGNER = oauth.OAuthSignatureMethod_HMAC_SHA1()
+    HTTP_METHOD = 'GET'
     HTTP_HEADERS = {}
     HTTP_HEADERS_POST = {"Content-type": "application/x-www-form-urlencoded", }
-    HTTP_HEADERS_GET  = {}
-    HTTP_URL     = 'http://platform.fatsecret.com/rest/server.api'
-    HTTP_RELURL  = 'rest/server.api'
-    
+    HTTP_HEADERS_GET = {}
+    HTTP_URL = 'http://platform.fatsecret.com/rest/server.api'
+    HTTP_RELURL = 'rest/server.api'
+
     OAUTH_REQTOK_URL = 'http://www.fatsecret.com/oauth/request_token'
     OAUTH_UAUTH_URL = 'http://www.fatsecret.com/oauth/authorize'
-    OAUTH_ACCESS_URL = 'http://www.fatsecret.com/oauth/access_token'    
+    OAUTH_ACCESS_URL = 'http://www.fatsecret.com/oauth/access_token'
 
     class _MethodProxy(object):
         def __init__(self, client, path):
             self.__client, self.__path = client, path
         def __getattr__(self, name):
-            return FatSecretClient._MethodProxy(self.__client, self.__path+'.'+name)
+            return FatSecretClient._MethodProxy(self.__client, self.__path + '.' + name)
         def __call__(self, *args, **kwargs):
             return self.request(self.__path, *args, **kwargs)
 
     def __getattr__(self, name):
         return self.__dict__.get(name, FatSecretClient._MethodProxy(self, name))
 
-    def authorize(self, key = None):
+    def authorize(self, key=None):
         if not self.loadToken(key):
             token = self.getRequestToken()
             verifier = self.getUserAuthentication(token)
@@ -49,22 +49,25 @@ class FatSecretClient(object):
         return 'oob'
 
     def getRequestToken(self):
-        result = self._auth_request(OAUTH_CALLBACK=self.getRequestTokenCallback(),
-                                    HTTP_METHOD='GET', 
-                                    HTTP_URL=self.OAUTH_REQTOK_URL)
-        return self.token 
-   
+        result = self._auth_request(
+            OAUTH_CALLBACK=self.getRequestTokenCallback(),
+            HTTP_METHOD='GET',
+            HTTP_URL=self.OAUTH_REQTOK_URL
+        )
+        return self.token
+
     def getUserAuthentication(self, token):
         import webbrowser
         webbrowser.open('%s?%s'%(self.OAUTH_UAUTH_URL, token))
         return raw_input('Enter verification code: ')
-                
-    def authorizeRequestToken(self, verifier):
-        result = self._auth_request(HTTP_METHOD='GET',
-                                    VERIFIER=verifier,
-                                    HTTP_URL=self.OAUTH_ACCESS_URL)
-        return self.token 
 
+    def authorizeRequestToken(self, verifier):
+        result = self._auth_request(
+            HTTP_METHOD='GET',
+            VERIFIER=verifier,
+            HTTP_URL=self.OAUTH_ACCESS_URL
+        )
+        return self.token
 
     AUTH_NONE = 0
     AUTH_SIGNED = 1
@@ -116,7 +119,6 @@ class FatSecretClient(object):
         self.datastore = None
         self._adjustAuthLevel()
 
-
     def setDatastore(self, datastore):
         self.datastore = datastore
         return self
@@ -130,13 +132,13 @@ class FatSecretClient(object):
             if token:
                 self.setToken(token)
                 return token
-        return None 
+        return None
 
-    def saveToken(self, key, token = None):
+    def saveToken(self, key, token=None):
         if key and self.datastore:
             token = token or self.token
             self.datastore.putToken(key, token)
-        return self       
+        return self
 
     def connect(self):
         self.connection = httplib.HTTPConnection('%s:%d'%(self.SERVER, self.PORT))
@@ -169,14 +171,13 @@ class FatSecretClient(object):
         else:
             self._authLevel = FatSecretClient.AUTH_NONE
 
-    def getMethods(self, current_auth = None):
+    def getMethods(self, current_auth=None):
         current_auth = current_auth or self.getCurrentAuthLevel()
-        return [method for method, required_auth in self.__methods__.iteritems() 
-                if required_auth <= current_auth] 
-            
+        return [method for method, required_auth in self.__methods__.iteritems()
+                if required_auth <= current_auth]
+
     def getCurrentAuthLevel(self):
         return self._authLevel
-
 
     def _rpath(self, result, *args):
         args = list(args)
@@ -192,23 +193,23 @@ class FatSecretClient(object):
         else:
             return None
 
-
     def _auth_request(self, **parameters):
-        http_method  = parameters.pop('HTTP_METHOD', self.HTTP_METHOD)
-        http_url     = parameters.pop('HTTP_URL', self.HTTP_URL)
-        http_headers = parameters.pop('HTTP_HEADERS', self.HTTP_HEADERS) 
-        callback     = parameters.pop('OAUTH_CALLBACK', None) 
-        verifier     = parameters.pop('VERIFIER', None)
+        http_method = parameters.pop('HTTP_METHOD', self.HTTP_METHOD)
+        http_url = parameters.pop('HTTP_URL', self.HTTP_URL)
+        http_headers = parameters.pop('HTTP_HEADERS', self.HTTP_HEADERS)
+        callback = parameters.pop('OAUTH_CALLBACK', None)
+        verifier = parameters.pop('VERIFIER', None)
 
         # Generate OAuth Request
         req = FSRequest.from_consumer_and_token(
             self.application,
-            token = self.token,
-            verifier = verifier,
-            callback = callback,
-            http_method = http_method,
-            http_url = http_url,
-            parameters = parameters)
+            token=self.token,
+            verifier=verifier,
+            callback=callback,
+            http_method=http_method,
+            http_url=http_url,
+            parameters=parameters
+        )
 
         # Sign It
         req.sign_request(self.SIGNER, self.application, self.token)
@@ -229,15 +230,17 @@ class FatSecretClient(object):
         follow_redirects = 3
         arrived = False
         while not arrived and follow_redirects:
-            self.connection.request(req.http_method,
-                                    http_url,
-                                    postdata, 
-                                    headers)
+            self.connection.request(
+                req.http_method,
+                http_url,
+                postdata,
+                headers
+            )
             resp = self.connection.getresponse()
             if resp.status in [301, 307]:
                 resp.read()
                 http_url = resp.getheader('Location', http_url)
-                follow_redirects -= 1 
+                follow_redirects -= 1
             else:
                 # All other codes either we're good or we failed...
                 arrived = True
@@ -251,7 +254,6 @@ class FatSecretClient(object):
             raise
 
         return result
- 
 
     def request(self, method, **parameters):
         #assert method in self.getMethods()
@@ -263,16 +265,17 @@ class FatSecretClient(object):
         else:
             req = FSRequest.from_consumer_and_token(
                 self.application,
-                token = self.token,
-                http_method = self.HTTP_METHOD,
-                http_url = self.HTTP_URL,
-                parameters = parameters)
-              
+                token=self.token,
+                http_method=self.HTTP_METHOD,
+                http_url=self.HTTP_URL,
+                parameters=parameters
+            )
+
             req.sign_request(self.SIGNER, self.application, self.token)
 
         # Generate httplib arguments
         headers = req.to_header()
-        headers.update(getattr(self, 'HTTP_HEADERS_%s'%self.HTTP_METHOD))
+        headers.update(getattr(self, 'HTTP_HEADERS_%s' % self.HTTP_METHOD))
         if self.HTTP_METHOD in ['POST']:
             http_url = req.http_url
             postdata = req.to_postdata()
@@ -280,25 +283,30 @@ class FatSecretClient(object):
             http_url = req.to_url()
             postdata = None
 
-
         # Make the request
-        self.connection.request(req.http_method,
-                                http_url,
-                                postdata, 
-                                headers)
+        self.connection.request(
+            req.http_method,
+            http_url,
+            postdata,
+            headers
+        )
         resp = self.connection.getresponse()
-    
+
         # Post-process the result
         result = json.load(resp)
         _rp = self._rpath
         if 'error' in result:
             raise BuildError(result)
         if _rp(result, 'profile', 'auth_token') and _rp(result, 'profile', 'auth_secret'):
-            self.setToken(FSToken(_rp(result, 'profile', 'auth_token').encode('utf8'),
-                                  _rp(result, 'profile', 'auth_secret').encode('utf8'))) 
+            self.setToken(
+                FSToken(
+                    _rp(result, 'profile', 'auth_token').encode('utf8'),
+                    _rp(result, 'profile', 'auth_secret').encode('utf8')
+                )
+            )
 
         return result
-    
+
 class FatSecretApplication(oauth.OAuthConsumer):
     def __init__(self):
         assert self.key != None

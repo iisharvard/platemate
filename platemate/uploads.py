@@ -7,7 +7,7 @@ operation = sys.argv[1]
 mode = sys.argv[-1]
 
 run(
-    chief_module   = chiefs.from_uploads,
-    args           = {'sandbox': (mode != 'real')},
-    operation      = operation,
+    chief_module=chiefs.from_uploads,
+    args={'sandbox': (mode != 'real')},
+    operation=operation
 )

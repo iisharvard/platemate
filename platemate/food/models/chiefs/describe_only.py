@@ -12,15 +12,8 @@ class Output(base.Output):
 
 class Manager(base.Manager):
 
-    
-
     def setup(self):
-        self.hire(identify.describe,'describe')
-        
-        
-        
-        
-        
+        self.hire(identify.describe, 'describe')
+
     def work(self):
         pass
-        
