@@ -16,15 +16,15 @@ if MTURK_ID is None or MTURK_KEY is None:
     raise "Your MTurk credentials are not present. Setup MTURK_ID and MTURK_KEY as environment variables"
 
 TURK_REAL = MTurkClient(
-    aws_access_key = MTURK_ID,
-    aws_secret_key = MTURK_KEY,
-    aws_mode       = 'real',
+    aws_access_key=MTURK_ID,
+    aws_secret_key=MTURK_KEY,
+    aws_mode='real',
 )
 
 TURK_SANDBOX = MTurkClient(
-    aws_access_key = MTURK_ID,
-    aws_secret_key = MTURK_KEY,
-    aws_mode       = 'sandbox',
+    aws_access_key=MTURK_ID,
+    aws_secret_key=MTURK_KEY,
+    aws_mode='sandbox',
 )
 
 MANAGERS = ADMINS
@@ -70,7 +70,7 @@ SECRET_KEY = 've%nw*o%0h*32nwqlsi^w5&b__t(9n-s2r8&_0byf$aivj+o*^'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (

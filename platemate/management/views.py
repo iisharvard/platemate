@@ -19,17 +19,13 @@ def show_stats(request, operation):
     work_times = {}
 
     for r in Response.objects.filter(job__manager__operation=operation):
-        all_times.setdefault(r.step,[])
+        all_times.setdefault(r.step, [])
         all_times[r.step] += [r.work_time]
 
     for step, times in all_times.items():
-        work_times[step] = "Median: %.2f, Mean: %.2f" % (median(times),mean(times))
+        work_times[step] = "Median: %.2f, Mean: %.2f" % (median(times), mean(times))
 
     return render(request, 'dictionary.html', context={"dict": work_times})
-
-
-
-
 
 def show_hit(request, hit_id):
     h = get_object_or_404(Hit, pk=hit_id)
@@ -54,17 +50,14 @@ def show_hit(request, hit_id):
         print("ERROR: THE GEOLOCATION API TIMED OUT")
         country = "Unknown"
 
-
     worker_id = request.GET.get("workerId", 'unknown')
     #print("Worker: %s\t country: %s"%(worker_id,country))
 
-
-    examples_search = os.path.join(settings.STATIC_DOC_ROOT,'examples',h.template,'*.png')
+    examples_search = os.path.join(settings.STATIC_DOC_ROOT, 'examples', h.template, '*.png')
     examples = []
     for example_path in glob.glob(examples_search):
         filename = os.path.basename(example_path)
-        examples.append('%s/static/examples/%s/%s' % (settings.URL_PATH,h.template,filename))
-
+        examples.append('%s/static/examples/%s/%s' % (settings.URL_PATH, h.template, filename))
 
     return render(request, template_name, context={
         "hit": h,
@@ -82,13 +75,16 @@ def show_hit(request, hit_id):
 
 def show_responses(request, operation):
     responses = Response.objects.filter(job__manager__operation=operation).order_by('job__manager__pk')
-    return render(request, 'responses.html', context={
-        "responses": responses,
-        "path": settings.URL_PATH,
-    })
+    return render(
+        request,
+        'responses.html',
+        context={
+            "responses": responses,
+            "path": settings.URL_PATH,
+        }
+    )
 
-
-def hit_list(request,operation=None):
+def hit_list(request, operation=None):
     if not operation:
         hits = Hit.objects.all()
     else:

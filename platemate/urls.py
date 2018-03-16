@@ -4,7 +4,8 @@ from django.conf import settings
 #from django.contrib import admin
 #admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     # Hits
     (r'^hit/', include('management.urls')),
     (r'^food/', include('food.urls')),
@@ -27,9 +28,12 @@ urlpatterns = patterns('',
     # Experiment summary
     (r'^summary/(?P<photo_id>\w*)/$', 'food.views.photo_summary'),
     # Static Content
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-            {'document_root': settings.STATIC_DOC_ROOT}),
-#    (r'^admin/', include(admin.site.urls)),
+    (
+        r'^static/(?P<path>.*)$',
+        'django.views.static.serve',
+        {'document_root': settings.STATIC_DOC_ROOT}
+    ),
+    #(r'^admin/', include(admin.site.urls)),
 
     # API
     (r'^api/upload_photo/?$', 'food.views.api_photo_upload'),

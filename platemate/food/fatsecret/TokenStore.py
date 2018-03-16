@@ -19,8 +19,7 @@ try:
     import shelve
     class TokenShelf(TokenSimpleCache):
         def __init__(self, filename='tokens.dat'):
-            self.cache = shelve.open(filename, writeback = False)
-    
+            self.cache = shelve.open(filename, writeback=False)
+
 except:
     pass
-

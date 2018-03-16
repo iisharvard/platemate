@@ -25,7 +25,7 @@ def annotate_photo(value):
         photo_url = value.photo.photo_url
     else:
         return ''
-    
+
     #photo_url = arg.photo_url
     ret = "<div class='container'><img class='mainphoto' src='" + photo_url + "' />"
     for box in boxes:
@@ -35,8 +35,8 @@ def annotate_photo(value):
         ret += "<span class='box-border other' style='top: " + str(box.y) + "px; left: " + str(box.x) + "px; width: " + str(box.width) + "px; height: " + str(box.height) + "px;'></span>"
     ret += "</div>"
     return mark_safe(ret)
-    
-@register.filter    
+
+@register.filter
 def mult(value, arg):
     "Multiplies the arg and the value"
     return float(value) * float(arg)
@@ -50,9 +50,9 @@ def sub(value, arg):
 def div(value, arg):
     "Divides the value by the arg"
     return float(value) / float(arg)
-    
+
 @register.filter
-def measurement_options(f, selected = None):
+def measurement_options(f, selected=None):
     "Displays the measurement types of Servings for a Food as options for a select"
     food = Food.get_food(f.pk)
     servings = food.servings()
@@ -65,9 +65,9 @@ def measurement_options(f, selected = None):
     return mark_safe(ret)
 
 @register.filter
-def show_submission(submission, debug = False):
+def show_submission(submission, debug=False):
     return render_to_string('../templates/fe/submission.html', {'submission': submission, 'path': settings.URL_PATH, 'debug': debug})
-    
+
 @register.filter
 def should_show(submission, debug):
     return debug or (submission.completed and not submission.manual)
@@ -75,55 +75,54 @@ def should_show(submission, debug):
 @register.filter
 def show_ingredient_row(ingredient, do_indent):
     return render_to_string('../templates/fe/ingredient_row.html', {
-        'ingredient': ingredient, 
+        'ingredient': ingredient,
         'path': settings.URL_PATH,
         'do_indent': do_indent > 0,
     })
 
 @register.filter
 def format_list(list):
-    return render_to_string('list.html',{'list': list})
-    
+    return render_to_string('list.html', {'list': list})
+
 @register.filter
 def format_dict(dict):
-    return render_to_string('dictionary.html',{'dict': dict})
-        
+    return render_to_string('dictionary.html', {'dict': dict})
+
 @register.filter
 def format_model(model):
 
     name_of = lambda x: x.__class__.__name__.lower()
     display_of = lambda x: render_to_string('common/%s.html' % name_of(x), {name_of(x): x, 'other': model})
     d = {}
-    
+
     for field, type in model._fields:
 
-        if isinstance(type,ManyOf):
-            values = getattr(model,field).all()
+        if isinstance(type, ManyOf):
+            values = getattr(model, field).all()
             displays = [display_of(value) for value in values]
             d[field] = format_list(displays)
-            
-        elif isinstance(type,OneOf):
-            value = getattr(model,field)
+
+        elif isinstance(type, OneOf):
+            value = getattr(model, field)
             if value:
                 d[field] = display_of(value)
             else:
                 d[field] = '(empty)'
-            
-        elif isinstance(type,TextField):
-            value = getattr(model,field)
+
+        elif isinstance(type, TextField):
+            value = getattr(model, field)
             d[field] = defaultfilters.linebreaksbr(value)
-            
+
         else:
-            value = getattr(model,field)
+            value = getattr(model, field)
             d[field] = str(value)
-            
+
     return format_dict(d)
 
-@register.filter    
+@register.filter
 def display_job(job):
     return format_model(job)
-    
-    
+
 @register.filter
 def display_response(response):
     return format_model(response)

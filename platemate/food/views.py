@@ -15,39 +15,45 @@ from helpers import *
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
-
 import food_db, random, os
 from PIL import Image
 
 def login_required(f):
     def wrap(request, *args, **kwargs):
         if not request.user.is_authenticated():
-            return HttpResponseRedirect("%s/login/?next=%s/" % (settings.URL_PATH,settings.URL_PATH))
+            return HttpResponseRedirect("%s/login/?next=%s/" % (settings.URL_PATH, settings.URL_PATH))
         return f(request, *args, **kwargs)
-    wrap.__doc__= f.__doc__
-    wrap.__name__= f.__name__
+    wrap.__doc__ = f.__doc__
+    wrap.__name__ = f.__name__
     return wrap
-
 
 def food_search(request, query):
     fdb = food_db.FoodDb()
     results = fdb.search(query)
-    return render(request, "food_search.json", context={
-        "foods": Food.search(query),
-    },
-    content_type="application/json")
+    return render(
+        request,
+        "food_search.json",
+        context={
+            "foods": Food.search(query),
+        },
+        content_type="application/json"
+    )
 
 def food_autocomplete(request):
     fdb = food_db.FoodDb()
     query = request.GET["term"]
     results = fdb.search(query)
-    return render(request, "food_autocomplete.json", context={
-        "foods": Food.search(query),
-    },
-    content_type="application/json")
+    return render(
+        request,
+        "food_autocomplete.json",
+        context={
+            "foods": Food.search(query),
+        },
+        content_type="application/json"
+    )
 
 def show_pipeline(request, operation, photo=None):
-    chief = Manager.objects.get(operation=operation,name='chief').downcast()
+    chief = Manager.objects.get(operation=operation, name='chief').downcast()
     outputs = chief.get_outputs()
 
     # Only show managers doing hits
@@ -60,36 +66,39 @@ def show_pipeline(request, operation, photo=None):
         step = output.step
         id = output.pk
 
-        def exists(obj,attr):
-            return hasattr(obj,attr) and getattr(obj,attr)
+        def exists(obj, attr):
+            return hasattr(obj, attr) and getattr(obj, attr)
 
-        if exists(output,'photo'):
+        if exists(output, 'photo'):
             photo = output.photo
-        if exists(output,'box_group'):
+        if exists(output, 'box_group'):
             photo = output.box_group.photo
-        if exists(output,'box_groups'):
+        if exists(output, 'box_groups'):
             photo = output.box_groups.all()[0].photo
-        if exists(output,'box'):
+        if exists(output, 'box'):
             box = output.box
             photo = box.photo
-        if exists(output,'ingredient_list'):
+        if exists(output, 'ingredient_list'):
             box = output.ingredient_list.ingredients.all()[0].box
             photo = box.photo
-        if exists(output,'ingredient_lists'):
+        if exists(output, 'ingredient_lists'):
             box = output.ingredient_lists.all()[0].ingredients.all()[0].box
             photo = box.photo
-        if exists(output,'ingredient'):
+        if exists(output, 'ingredient'):
             ingredient = output.ingredient
             box = ingredient.box
             photo = box.photo
 
-        return (photo.pk,box.pk,ingredient.pk,step)
+        return (photo.pk, box.pk, ingredient.pk, step)
 
-
-    return render(request, 'outputs.html', context={
-        "outputs": sorted(outputs,key=sortvalue),
-        "path": settings.URL_PATH,
-    })
+    return render(
+        request,
+        'outputs.html',
+        context={
+            "outputs": sorted(outputs, key=sortvalue),
+            "path": settings.URL_PATH,
+        }
+    )
 
 @login_required
 def fe_main(request):
@@ -99,7 +108,7 @@ def fe_main(request):
 def fe_day(request, day):
     try:
         d = datetime.strptime(day, "%Y-%m-%d").date()
-        submissions = Submission.objects.filter(user = request.user, date = d)
+        submissions = Submission.objects.filter(user=request.user, date=d)
         meal_types = ["Total", "Breakfast", "Lunch", "Dinner", "Snacks"]
 
         meals_dict = {}
@@ -135,7 +144,7 @@ def fe_day(request, day):
             "meals": meals,
             "day": d,
             "path": settings.URL_PATH,
-            "form": SubmissionForm(initial = {"date": d}),
+            "form": SubmissionForm(initial={"date": d}),
             "debug": "debug" in request.REQUEST,
         }
         c.update(csrf(request))
@@ -164,15 +173,14 @@ def api_submission_statuses(request):
     except ValueError:
         return HttpResponseBadRequest("There was an error, please try again.")
 
-
 def photo_summary(request, photo_id):
-    photo = Photo.objects.filter(id = photo_id)[0]
-    box_group = BoxGroup.objects.filter(photo = photo)
-    boxes = Box.objects.filter(photo = photo)
-    ingredient_boxes =[]
+    photo = Photo.objects.filter(id=photo_id)[0]
+    box_group = BoxGroup.objects.filter(photo=photo)
+    boxes = Box.objects.filter(photo=photo)
+    ingredient_boxes = []
     for b in boxes:
         box = {'id': b.id}
-        ingredients = Ingredient.objects.filter(box = b)
+        ingredients = Ingredient.objects.filter(box=b)
         valid_ingredients = {}
         if len(ingredients) > 0:
             for i in ingredients:
@@ -182,14 +190,14 @@ def photo_summary(request, photo_id):
                     valid_ingredients[i.food].append(i)
             ingredient_list = []
             for k, v in valid_ingredients.iteritems():
-                num_entry = len(v)*1.0
+                num_entry = len(v) * 1.0
                 food_entry = {
                     'description': k.food_name,
                 }
-                food_entry['calories'] = round(sum([e.serving.calories * e.amount for e in v])/num_entry,1)
-                food_entry['fat'] = round(sum([e.serving.fat * e.amount for e in v])/num_entry, 1)
-                food_entry['carbohydrate'] = round(sum([e.serving.carbohydrate * e.amount for e in v])/num_entry,1)
-                food_entry['protein'] = round(sum([e.serving.protein * e.amount for e in v])/num_entry,1)
+                food_entry['calories'] = round(sum([e.serving.calories * e.amount for e in v]) / num_entry, 1)
+                food_entry['fat'] = round(sum([e.serving.fat * e.amount for e in v]) / num_entry, 1)
+                food_entry['carbohydrate'] = round(sum([e.serving.carbohydrate * e.amount for e in v]) / num_entry, 1)
+                food_entry['protein'] = round(sum([e.serving.protein * e.amount for e in v]) / num_entry, 1)
 
                 ingredient_list.append(food_entry)
 
@@ -209,7 +217,6 @@ def photo_summary(request, photo_id):
         'box_group': box_group[0]
     }
     return render(request, "fe/food_summary.html", context=c)
-
 
 @login_required
 def edit_ingredient(request):
@@ -239,9 +246,9 @@ def add_ingredient(request):
         return HttpResponseBadRequest("There was an error, please try again.")
 
     new_ingredient = Ingredient(
-        food = Food.get_food(request.REQUEST["food_id"]),
-        amount = 0.0,
-        from_turk = False,
+        food=Food.get_food(request.REQUEST["food_id"]),
+        amount=0.0,
+        from_turk=False,
     )
     new_ingredient.save()
     submission.measured_ingredients.add(new_ingredient)
@@ -311,19 +318,19 @@ def api_photo_upload(request):
         time_string = now.isoformat()
         photo = request.FILES['upload']
         random.seed()
-        photo_name = str(random.randint(0,1000000)) + "_" + time_string + "_" + photo.name
+        photo_name = str(random.randint(0, 1000000)) + "_" + time_string + "_" + photo.name
         static_sub_dir = 'api/photos'
         saved_photo_url = process_photo_and_get_url(photo, static_sub_dir, photo_name)
-        p = Photo.factory(photo_url = saved_photo_url)
+        p = Photo.factory(photo_url=saved_photo_url)
         u = create_or_get_api_user()
 
         s = Submission(
-            photo = p,
-            meal = 'B',
-            date = now,
-            user = u,
-            submitted = now,
-            manual = False
+            photo=p,
+            meal='B',
+            date=now,
+            user=u,
+            submitted=now,
+            manual=False
         )
         s.save()
 
@@ -345,18 +352,18 @@ def fe_upload(request, day):
             if form.is_valid():
                 photo = request.FILES["photo"]
                 random.seed()
-                photo_name = str(random.randint(0,1000000)) + "_" + str(request.user.pk) + "_" + day + "_" + photo.name
+                photo_name = str(random.randint(0, 1000000)) + "_" + str(request.user.pk) + "_" + day + "_" + photo.name
                 static_sub_dir = 'uploaded'
                 saved_photo_url = process_photo_and_get_url(photo, static_sub_dir, photo_name)
-                p = Photo.factory(photo_url = saved_photo_url)
+                p = Photo.factory(photo_url=saved_photo_url)
 
                 s = Submission(
-                    photo = p,
-                    meal = request.POST["meal"],
-                    date = d,
-                    user = request.user,
-                    submitted = datetime.now(),
-                    manual = request.user.username in MANUAL_DAYS and day in MANUAL_DAYS[request.user.username]
+                    photo=p,
+                    meal=request.POST["meal"],
+                    date=d,
+                    user=request.user,
+                    submitted=datetime.now(),
+                    manual=request.user.username in MANUAL_DAYS and day in MANUAL_DAYS[request.user.username]
                 )
                 s.save()
                 return HttpResponseRedirect(settings.URL_PATH + '/day/' + day + '/')

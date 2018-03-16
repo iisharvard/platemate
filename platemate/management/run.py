@@ -9,25 +9,23 @@ from time import sleep
 from django.db import transaction
 from helpers import *
 
-
-CHECK_FREQ   = 15.0
+CHECK_FREQ = 15.0
 REFRESH_FREQ = 300.0
 
-def run(chief_module,operation,args={}):
+def run(chief_module, operation, args={}):
 
     # Recursively setup all the managers
     def setup(manager):
-        log('Preparing %s' % manager,LOOP_CONTROL)
+        log('Preparing %s' % manager, LOOP_CONTROL)
         manager.setup()
         manager.save()
         for employee in manager.employees.all():
             employee.sandbox = manager.sandbox
             setup(employee)
 
-
     # Recursively work all the managers
     def work(manager):
-        log('Working %s' % manager,LOOP_CONTROL)
+        log('Working %s' % manager, LOOP_CONTROL)
 
         # Get responses
         manager.check_hits()
@@ -47,28 +45,27 @@ def run(chief_module,operation,args={}):
         for employee in manager.employees.all():
             work(employee)
 
-    def get_chief(chief_class,operation):
-        return chief_class.objects.get(operation=operation,name='chief',**args)
+    def get_chief(chief_class, operation):
+        return chief_class.objects.get(operation=operation, name='chief', **args)
 
     @transaction.atomic
-    def new_chief(chief_class,operation):
-        chief = chief_class.factory(operation=operation,name='chief',**args)
+    def new_chief(chief_class, operation):
+        chief = chief_class.factory(operation=operation, name='chief', **args)
         setup(chief)
         chief.save()
         return chief
-
 
     chief_class = chief_module.Manager
 
     # Try to resume an existing operation
     try:
-        chief = get_chief(chief_class,operation)
+        chief = get_chief(chief_class, operation)
         log('Resuming', LOOP_SETUP)
 
     # If it's not there, start from scratch
     except chief_class.DoesNotExist:
         log('Starting from scratch', LOOP_SETUP)
-        chief = new_chief(chief_class,operation)
+        chief = new_chief(chief_class, operation)
 
     # Main loop
     while True:

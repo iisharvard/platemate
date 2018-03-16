@@ -14,12 +14,12 @@ class Manager(base.Manager):
     photoset = CharField(max_length=100)
 
     def setup(self):
-        self.hire(tag.draw_maybe_vote,'tag')
-        self.hire(identify.describe_match_maybe_vote,'identify')
-        self.hire(measure.estimate,'measure')
+        self.hire(tag.draw_maybe_vote, 'tag')
+        self.hire(identify.describe_match_maybe_vote, 'identify')
+        self.hire(measure.estimate, 'measure')
 
         # Loop over each photo in the folder
-        photo_search = os.path.join(settings.STATIC_DOC_ROOT,'uploaded',self.photoset,'*.jpg')
+        photo_search = os.path.join(settings.STATIC_DOC_ROOT, 'uploaded', self.photoset, '*.jpg')
         photos = []
         for path in glob.glob(photo_search):
 
@@ -33,24 +33,23 @@ class Manager(base.Manager):
             smaller = original.resize(new_size, Image.ANTIALIAS)
 
             # Save it to photos directory
-            out_dir = os.path.join(settings.STATIC_DOC_ROOT,'photos',self.photoset)
+            out_dir = os.path.join(settings.STATIC_DOC_ROOT, 'photos', self.photoset)
             try:
                 os.makedirs(out_dir)
             except os.error:
                 pass
 
-            out_path = os.path.join(out_dir,filename)
+            out_path = os.path.join(out_dir, filename)
             smaller.save(out_path)
 
             # Build a photo object
             print "photoset:", self.photoset
-            url = '%s/static/photos/%s/%s' % (settings.URL_PATH,self.photoset,filename)
+            url = '%s/static/photos/%s/%s' % (settings.URL_PATH, self.photoset, filename)
             photos += [Photo.factory(photo_url=url)]
 
         random.shuffle(photos)
         for photo in photos:
             self.employee('tag').assign(photo=photo)
-
 
     def work(self):
         for output in self.employee('tag').finished:
@@ -59,7 +58,7 @@ class Manager(base.Manager):
 
         for output in self.employee('identify').finished:
             for ingredient in output.ingredient_list.ingredients.all():
-                self.employee('measure').assign(ingredient = ingredient)
+                self.employee('measure').assign(ingredient=ingredient)
 
         for output in self.employee('measure').finished:
-            self.finish(ingredient = output.ingredient)
+            self.finish(ingredient=output.ingredient)
