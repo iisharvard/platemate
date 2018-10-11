@@ -1,0 +1,12 @@
+{% load food_tags %}
+<td class="food{% if ingredient.hidden %}-hidden hidden{% endif %}">
+  {% if do_indent %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}
+  {% if not ingredient.hidden %}<a href="#" onClick="update_ingredient({'ingredient_id': {{ ingredient.id }}});return false">{% endif %}
+    <span class="food-name">{{ ingredient.food.food_name }}</span>
+    <span class="serving-descr">({{ ingredient.amount|default:0|floatformat:2 }} {% if ingredient.serving %}{{ ingredient.serving.measurement_description }}{% endif %})</span>
+  {% if not ingredient.hidden %}</a>{% endif %}
+</td>
+<td class="calories{% if ingredient.hidden %}-hidden hidden{% endif %}">{{ ingredient.serving.calories|default:0|mult:ingredient.amount|floatformat }}</td>
+<td class="fat{% if ingredient.hidden %}-hidden hidden{% endif %}">{{ ingredient.serving.fat|default:0|mult:ingredient.amount|floatformat }}</td>
+<td class="carbohydrate{% if ingredient.hidden %}-hidden hidden{% endif %}">{{ ingredient.serving.carbohydrate|default:0|mult:ingredient.amount|floatformat }}</td>
+<td class="protein{% if ingredient.hidden %}-hidden hidden{% endif %}">{{ ingredient.serving.protein|default:0|mult:ingredient.amount|floatformat }}</td>

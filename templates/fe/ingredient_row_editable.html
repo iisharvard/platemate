@@ -1,0 +1,38 @@
+{% load food_tags %}
+{% if full_row %}<tr id="i_{{ingredient.id}}">{% endif %}
+<td class="food"><input type="text" name='{{ ingredient.id }}_food' id='{{ ingredient.id }}_food' value="{{ ingredient.food.food_name }}" size="20" />
+  <input type="text" name='{{ ingredient.id }}_amount' id='{{ ingredient.id }}_amount' value="{{ ingredient.amount|default:0|floatformat:2 }}" size="10" />
+  <a href="#" onClick="delete_ingredient({{ingredient.id}}); return false;"><img src="{{path}}/static/img/delete.png" border=0 alt="Delete" /></a>
+  <select name='{{ ingredient.id }}_serving' id='{{ ingredient.id }}_serving' class="measurement-select">
+  {% if ingredient.serving %}
+    {{ ingredient.food|measurement_options:ingredient.serving.pk }}
+  {% else %}
+    {{ ingredient.food|measurement_options }}
+  {% endif %}</select></td>
+<td valign="top" class="calories">{{ ingredient.serving.calories|default:0|mult:ingredient.amount|floatformat }}</td>
+<td valign="top" class="fat">{{ ingredient.serving.fat|default:0|mult:ingredient.amount|floatformat }}</td>
+<td valign="top" class="carbohydrate">{{ ingredient.serving.carbohydrate|default:0|mult:ingredient.amount|floatformat }}</td>
+<td valign="top" class="protein">{{ ingredient.serving.protein|default:0|mult:ingredient.amount|floatformat }}</td>
+  
+<script type="text/javascript">
+$(function() {
+  $("#{{ ingredient.id }}_food").autocomplete({
+    source: "{{path}}/food/autocomplete/",
+    minLength: 2,
+    select: function(event, ui){
+      var foodId = ui.item.value;
+      var foodName = ui.item.label;
+      update_ingredient({"ingredient_id": {{ ingredient.id }}, "food_id": foodId});
+      return false;
+    }
+  });
+  $("#{{ ingredient.id }}_amount").change(function() {
+    update_ingredient({"ingredient_id": {{ ingredient.id }}, "amount": this.value});
+  });
+  $("#{{ ingredient.id }}_serving").change(function() {
+    update_ingredient({"ingredient_id": {{ ingredient.id }}, "serving_id": this.value});
+  });
+  
+});
+</script>
+{% if full_row %}</tr>{% endif %}

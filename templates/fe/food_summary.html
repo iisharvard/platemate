@@ -1,0 +1,128 @@
+{% extends "fe/base.html" %}
+{% load food_tags %}
+
+{% block content %}
+
+<style type="text/css">
+td.hidden {
+  {% if debug %}
+    text-decoration: line-through;
+    color: #900;
+  {% else %}
+    display: none;
+  {% endif %}
+}
+
+tr.user-added td, tr.user-added td a {
+  {% if debug %}
+    color: #009900 !important;
+  {% endif %}
+}
+</style>
+
+<script type="text/javascript">
+function round_float(x,n){
+  if(!parseInt(n))
+  	var n=0;
+  if(!parseFloat(x))
+  	return false;
+  return Math.round(x*Math.pow(10,n))/Math.pow(10,n);
+}
+
+function sum(item, meal) {
+  var items;
+  if (meal != null && meal != "Total") {
+    items = $(".s-" + meal + " ." + item);
+  } else {
+    items = $("." + item);
+  }
+  var sum = 0;
+  for (var i = 0; i < items.length; i++) {
+    sum += parseFloat(items[i].innerHTML);
+  }
+  if (sum == 0) return 0;
+  else return round_float(sum, 1);
+}
+
+function updateTotals() {
+  var meals = ["Total", "Breakfast", "Lunch", "Dinner", "Snacks"];
+  var items = ["calories", "fat", "carbohydrate", "protein"];
+
+  for (m in meals) {
+    for (i in items) {
+      $("#" + items[i] + "-" + meals[m]).text(sum(items[i], meals[m]));
+    }
+  }
+}
+</script>
+<div id="main">
+<img src="{{path}}/static/img/logo.png" height="75"/>
+<div id="main-content">
+<script type="text/javascript">
+  $(function() {
+  	updateTotals();
+  });
+</script>
+
+
+<table cellpadding=0 cellspacing=0>
+  <tr>
+    <td valign="bottom" width="410" class=""> 
+      <div>
+	{{ box_group|annotate_photo }}
+      </div>
+    </td>
+    <td valign="top">
+      <table>
+        <tr>
+    <td valign="top" class="meal-totals meal-header">
+      <table cellpadding=2 cellspacing=0 border=0>
+        <tr>
+          <strong>
+                <td class="food"></td>
+                <td class="nutrition-label">Cal</td>
+                <td class="nutrition-label">Fat(g)</td>
+                <td class="nutrition-label">Carbs(g)</td>
+                <td class="nutrition-label">Protein(g)</td>
+              </tr>
+          </strong>
+      </table>
+     </td>
+    </tr>
+      {% for box in ingredient_boxes %}
+        <tr>
+	      <td valign="top" class="meal-totals meal-header">
+            <table cellpadding=2 cellspacing=0 border=0>
+              {% for i in box.ingredients %}
+              <tr>
+                <td class="food">{{i.description}}</td>
+                <td class="nutrition-label">{{i.calories}}</td>
+                <td class="nutrition-label">{{i.fat}}</td>
+                <td class="nutrition-label">{{i.carbohydrate}}</td>
+                <td class="nutrition-label">{{i.protein}}</td>
+              </tr>
+              {% endfor %}
+	          </table>
+          </td>
+        </tr>
+	{% endfor %}
+	<tr>
+	  <td valign="top" class="meal-totals meal-header">
+	    <table cellpadding=2 cellspacing=0 border=0>
+	      <tr>
+		<td class="food">Total</td>
+		<td class="nutrition-label">{{total.calories}}</td>
+		<td class="nutrition-label">{{total.fat}}</td>
+		<td class="nutrition-label">{{total.carbohydrate}}</td>
+		<td class="nutrition-label">{{total.protein}}</td>
+	      </tr>
+	    </table>
+	   </td>
+	  </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</div>
+</div>
+{% endblock content %}

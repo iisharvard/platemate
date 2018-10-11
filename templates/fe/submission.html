@@ -1,0 +1,78 @@
+{% load food_tags %}
+  <tr class="submission-row s-{{submission.get_meal_display}}{% if submission.hidden %} submission-hidden {% endif %}" id="s_{{submission.id}}">
+    <td valign="top" class="submission" width="410">
+      {% if submission.tagged_boxes %}
+        {{ submission.tagged_boxes|annotate_photo }}
+      {% else %}
+        <img src="{{submission.photo.photo_url}}" alt="Photo" />
+      {% endif %}
+    </td>
+    <td valign="top" class="submission">
+
+      {% if submission|should_show:debug %}
+        <table cellpadding=2 cellspacing=0 border=0>
+            {% for box, ingredients in submission.breakdown.items %}
+              {% if ingredients|length > 1 and box %}
+                <tr id="i_list_{{ingredients.id}}"><td colspan="5" class="list_name">{{ box.desc }}</td></tr>
+              {% endif %}
+              
+              {% for ingredient in ingredients %}
+                <tr id="i_{{ingredient.id}}" {% if not ingredient.from_turk and not ingredient.hidden %}class='user-added'{% endif %}>
+                  {% if ingredients|length > 1 and box %}
+                    {{ ingredient|show_ingredient_row:1 }}
+                  {% else %}
+                    {{ ingredient|show_ingredient_row:0 }}
+                  {% endif %}
+                </tr>
+              {% endfor %}
+            {% endfor %}
+      {% else %}
+        {% if submission.manual %}
+          {% if not debug %}
+          <table cellpadding=2 cellspacing=0 border=0>
+          {% endif %}
+          {% for ingredient in submission.manual_ingredients %}
+            <tr id="i_{{ingredient.id}}" class='user-added'>{{ ingredient|show_ingredient_row:0 }}</tr>
+          {% endfor %}
+        {% else %}
+          {% if submission.processed %}
+            <em>We're processing your photo right now.  Results should appear in the next few hours.</em>
+          {% else %}
+            <em>Your photo has been submitted.  Hang tight!</em>
+          {% endif %}
+        {% endif %} 
+      {% endif %}
+      
+       {% if debug or submission.completed or submission.manual %}
+        <tr id="{{submission.id}}_add">
+           <td colspan="5" class="add-food">
+             <a href="#" class="add-food" onClick="$('#new_food_{{submission.id}}').show('highlight',{},1000);return false"><span class="add-food-plus">+</span> <span class="add-food-text">Add Food</span></a>
+             <input type="text" id="new_food_{{submission.id}}" size="20" style="display:none" />
+           </td>
+         </tr>
+         
+       </table>
+      {% endif %}
+       
+       <a href="#" onClick="delete_submission({{submission.id}});return false;" class="delete-photo"><img src="{{path}}/static/img/delete.png" border=0 alt="Delete">Delete this photo</a>
+  </td>
+ </tr>
+ 
+ <script type="text/javascript">
+ $(function() {
+   $("#new_food_{{ submission.id }}").autocomplete({
+     source: "{{path}}/food/autocomplete/",
+     minLength: 2,
+     select: function(event, ui){
+       var foodId = ui.item.value;
+       var foodName = ui.item.label;
+       //if (confirm("Are you sure you want to add " + foodName + "?")) { 
+         add_ingredient({{submission.id}}, foodId);
+       //}
+      
+       $("#new_food_{{ submission.id }}")[0].value = "";
+       return false;
+     }
+   });
+ });
+ </script>

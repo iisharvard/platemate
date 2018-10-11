@@ -1,0 +1,34 @@
+{% extends "hit_base.html" %}
+{% load food_tags %}
+
+{% block instructions %}
+For each pair of photos below, you'll see boxes that other Turkers have drawn. Your job is to <b>select the boxes that best divide the foods on the plate.</b>
+<br/><br />It's okay if some boxes contain one food made of many <i>parts</i>, like a salad with lettuce and dressing or a sandwich with bread, cheese, and meat. But, one box should never contain two <i>completely distinct</i> foods, like a piece of chicken and an apple.
+Please do not select a photo if it has a box that does not contain food. If all the photos have boxes without food, please skip this task. 
+<br/><br/>Select the best group of boxes for each pair by clicking on it. The background will turn green.
+{% endblock instructions %}
+
+{% block jobs %}
+
+  <div id="MAIN_REVIEW">
+  {% for job in hit.jobs.all %}
+    <b>Click the photo with the best boxes:</b><br /><br />
+    <div class="break"></div>
+    {% for box_group in job.box_groups.all %}
+      <div class="vote-item" id="{{ job.id }}_{{ box_group.id }}_item">{{ box_group|annotate_photo }}</div>
+
+      <script type="text/javascript">
+      $("#{{ job.id }}_{{ box_group.id }}_item img, #{{ job.id }}_{{ box_group.id }}_item span").click(function(e) {
+        var curVote  = $("#{{ job.id }}_box_group_id")[0];
+        $("#{{ job.id }}_" + curVote.value + "_item img").parent().removeClass("selected");
+        $("#{{ job.id }}_{{ box_group.id }}_item img").parent().addClass("selected");
+        curVote.value = "{{ box_group.id }}";
+      });
+      </script>
+
+    {% endfor %}
+    <input type='hidden' name='{{ job.id }}_box_group_id' id='{{ job.id }}_box_group_id' />
+    <div class="break"></div>
+  {% endfor %}
+  </div>
+{% endblock jobs %}

@@ -1,0 +1,4 @@
+{% load food_tags %}
+{{ ingredientlist.ingredients.all|format_list }}
+<br />
+{{ ingredientlist.ingredients.all.0.box|annotate_photo }}

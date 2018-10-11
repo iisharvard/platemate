@@ -1,9 +1,0 @@
-{% load food_tags %}
-{% if ingredient.amount %}
-{{ ingredient.food.food_name }}<br />
-<i>{{ ingredient.calories }} cal ({{ ingredient.amount|floatformat:2 }} * {{ ingredient.serving.serving_description }})</i>
-{% else %}
-{{ ingredient.food.food_name }}
-{% endif %}
-<br />
-{{ ingredient.box|annotate_photo }}

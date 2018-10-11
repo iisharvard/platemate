@@ -1,1 +1,0 @@
-[{% for food in foods %}{ "value": {{ food.food_id }}, "label": "{{ food.food_name }}" }{% if not forloop.last %},{% endif %}{% endfor %}]

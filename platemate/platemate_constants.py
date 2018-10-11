@@ -1,1 +1,0 @@
-API_USER_NAME = "API_USER"
