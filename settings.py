@@ -31,10 +31,13 @@ DATABASES = {
     }
 }
 
-PYTHONVAR = 'python'
+PYTHONVAR = "python"
 
 # Hostnames that users can connect to your site with.
-ALLOWED_HOSTS = [u"localhost", u".us-east-1.elasticbeanstalk.com"]
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = ["localhost", os.getenv("HOST", "localhost")]
 
 API_KEY = os.getenv("API_KEY", "")
 
