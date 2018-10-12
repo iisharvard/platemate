@@ -147,22 +147,15 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'log/platemate.log',
-            'formatter': 'verbose'
-        },
+        'console': {
+            'class': 'logging.StreamHandler',
+        }
     },
     'loggers': {
         'django': {
-            'handlers':['file'],
+            'handlers':['console'],
             'propagate': True,
             'level':'DEBUG',
-        },
-        'platemate': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
         },
     }
 }

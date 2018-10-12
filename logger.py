@@ -15,11 +15,6 @@ TURK_WARNING = 50
 
 content_type_logger = logging.getLogger('content_type_logger')
 content_type_logger.setLevel(logging.INFO)
-fh = logging.FileHandler('log/content_type_info.log')
-formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-fh.setFormatter(formatter)
-fh.setLevel(logging.INFO)
-content_type_logger.addHandler(fh)
 
 def log(message, level):
     if level >= LOGGING_LEVEL:
