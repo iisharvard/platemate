@@ -15,8 +15,8 @@ class Manager(base.Manager):
     photoset = CharField(max_length=100)
 
     def setup(self):
-        self.hire(tag.draw_always_vote, 'tag')
-        self.hire(identify.describe_and_match, 'identify')
+        self.hire(tag.draw_maybe_vote, 'tag')
+        self.hire(identify.describe_match_maybe_vote, 'identify')
 
         photo_search = os.path.join(settings.STATIC_DOC_ROOT, 'photos', self.photoset, '*.jpg')
         for path in glob.glob(photo_search):
