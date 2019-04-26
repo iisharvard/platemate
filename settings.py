@@ -1,5 +1,6 @@
 # Django settings for platemate project.
 import os
+import urlparse
 from management.mturk import MTurkClient
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -17,7 +18,7 @@ TEMPLATE_DIRS = (
 
 STATIC_DOC_ROOT = os.path.join(BASE_PATH, "static")
 
-URL_PATH = ""
+URL_PATH = os.getenv("BASE_URL", "http://localhost")
 
 DATABASES = {
     'default': {
@@ -162,8 +163,8 @@ LOGGING = {
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
-LOGIN_REDIRECT_URL = URL_PATH + "/"
-LOGIN_URL = URL_PATH + "/login/"
+LOGIN_REDIRECT_URL = urlparse.urljoin(URL_PATH, "/")
+LOGIN_URL = urlparse.urljoin(URL_PATH, "/login/")
 
 # EMAIL STUFF
 
