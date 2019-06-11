@@ -167,7 +167,7 @@ class Supervisor(object):
                 job = hit.jobs.get(pk=job_id)
                 responses[job_id] = responses.get(job_id, self.Response(assignment=asst, job=job))
                 setattr(responses[job_id], field, value)
-                log(u"  %s_%s = []" % (job_id, field), MANAGER_CONTROL)
+                log(u"  %s_%s = %s" % (job_id, field, value), MANAGER_CONTROL)
 
             for response in responses.values():
                 self.validate_response(response)
