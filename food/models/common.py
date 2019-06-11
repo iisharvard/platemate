@@ -183,16 +183,20 @@ class BoxGroup(SmartModel):
 
     @staticmethod
     def from_json(json_str, photo=None):
+        groups = json.loads(json_str)
+        return BoxGroup.from_dict(groups, photo)
+
+    @staticmethod
+    def from_dict(groups, photo=None):
         new_group = BoxGroup()
         new_group.save()
-        json_obj = json.loads(json_str)
-        for json_box in json_obj.values():
+        for box in groups.values():
             new_group.boxes.create(
                 photo=photo,
-                x=json_box["x1"],
-                y=json_box["y1"],
-                width=json_box["width"],
-                height=json_box["height"],
+                x=box["x1"],
+                y=box["y1"],
+                width=box["width"],
+                height=box["height"],
             )
         new_group.photo = photo
         new_group.save()
@@ -396,7 +400,7 @@ class FoodSearchResult(SmartModel):
     food = ForeignKey(Food)
     results = ForeignKey(FoodSearchResults)
     ordering = IntegerField()
-
+    # TODO handling non-existing calories
     def __str__(self):
         return self.food.food_name + "(" + str(self.ordering) + ")"
 

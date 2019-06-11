@@ -17,16 +17,16 @@ class Response(base.Response):
     box_group = OneOf(BoxGroup)
 
     def validate(self):
-        self.box_group_json = unquote(self.box_group_json)
-        self.raw = self.box_group_json
+        self.raw = unquote(self.box_group_json)
+        self.box_group_json = json.loads(self.raw)
 
         # Try to Parse JSON
-        if self.box_group_json == '':
+        if not self.box_group_json:
             #return "No boxes drawn"
             self.box_group = BoxGroup.factory(photo=self.to_job.photo)
             return True
         else:
-            self.box_group = BoxGroup.from_json(self.box_group_json, photo=self.to_job.photo)
+            self.box_group = BoxGroup.from_dict(self.box_group_json, photo=self.to_job.photo)
 
         # Remove duplicates
         boxes = self.box_group.boxes.all()[:]
