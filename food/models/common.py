@@ -444,10 +444,14 @@ class IngredientList(SmartModel):
 
     @staticmethod
     def from_json(json_str, box=None):
+        selections = json.loads(json_str)
+        return IngredientList.from_dict(selections, box)
+
+    @staticmethod
+    def from_dict(selections, box=None):
         new_list = IngredientList()
         new_list.save()
-        json_obj = json.loads(json_str)
-        for id, name in json_obj.items():
+        for id, name in selections.items():
             food = Food.get_food(id)
             new_ingredient = Ingredient(food=food)
             new_ingredient.box = box

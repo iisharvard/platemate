@@ -17,9 +17,6 @@ class Response(base.Response):
     box_group = OneOf(BoxGroup)
 
     def validate(self):
-        self.raw = unquote(self.box_group_json)
-        self.box_group_json = json.loads(self.raw)
-
         # Try to Parse JSON
         if not self.box_group_json:
             #return "No boxes drawn"

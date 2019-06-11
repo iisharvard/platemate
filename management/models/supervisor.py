@@ -8,6 +8,8 @@ from django.conf import settings
 from django.db import transaction
 from datetime import datetime
 from time import sleep
+from urllib import unquote
+import json
 
 class Supervisor(object):
 
@@ -166,6 +168,13 @@ class Supervisor(object):
                 job_id, field = key.split('_', 1)
                 job = hit.jobs.get(pk=job_id)
                 responses[job_id] = responses.get(job_id, self.Response(assignment=asst, job=job))
+
+                if field == "box_group_json" or field == "selections":
+                    try:
+                        value = json.loads(unquote(value))
+                    except ValueError:
+                        value = {}
+
                 setattr(responses[job_id], field, value)
                 log(u"  %s_%s = %s" % (job_id, field, value), MANAGER_CONTROL)
 

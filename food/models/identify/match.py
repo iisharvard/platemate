@@ -21,16 +21,13 @@ class Response(base.Response):
     ingredient_list = OneOf(IngredientList)
 
     def validate(self):
-        self.selections = unquote(self.selections)
-        self.raw = self.selections
-
-        if self.selections in ['', '[]', '{}']:
+        if not self.selections:
             return "No foods matched!"
         else:
             box = self.to_job.box
             box.desc = self.to_job.desc
             box.save()
-            self.ingredient_list = IngredientList.from_json(self.selections, box=box)
+            self.ingredient_list = IngredientList.from_dict(self.selections, box=box)
 
         num = self.ingredient_list.ingredients.count()
         if num <= 4:
