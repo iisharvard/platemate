@@ -176,7 +176,7 @@ class Supervisor(object):
                         value = {}
 
                 setattr(responses[job_id], field, value)
-                log(u"  %s_%s = %s" % (job_id, field, value), MANAGER_CONTROL)
+                log(u"  %s_%s =" % (job_id, field), MANAGER_CONTROL, value)
 
             for response in responses.values():
                 self.validate_response(response)

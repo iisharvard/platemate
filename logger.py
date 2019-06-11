@@ -1,5 +1,5 @@
-import sys
 import logging
+import pprint
 
 LOGGING_LEVEL = 10
 
@@ -16,10 +16,11 @@ TURK_WARNING = 50
 content_type_logger = logging.getLogger('content_type_logger')
 content_type_logger.setLevel(logging.INFO)
 
-def log(message, level):
+def log(message, level, *args):
     if level >= LOGGING_LEVEL:
         print message
-        sys.stdout.flush()
+        for arg in args:
+            pprint.pprint(arg)
 
 def log_content_type_info(message):
     content_type_logger.info(message)
