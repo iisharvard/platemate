@@ -14,12 +14,16 @@ class Output(base.Output):
 class Manager(base.Manager):
 
     def setup(self):
+        self.hire(tag.box_filter, 'filter')
         self.hire(tag.box_draw, 'draw')
         self.hire(tag.box_vote, 'vote')
 
     def work(self):
         for input in self.assigned:
-            self.employee('draw').assign(photo=input.photo)
+            self.employee('filter').assign(photo=input.photo)
+
+        for output in self.employee('filter').finished:
+            self.employee('draw').assign(photo=output.photo)
 
         for output in self.employee('draw').finished:
             bg1, bg2 = output.box_groups.all()[:2]
