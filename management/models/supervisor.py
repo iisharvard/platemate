@@ -169,6 +169,10 @@ class Supervisor(object):
                 job = hit.jobs.get(pk=job_id)
                 responses[job_id] = responses.get(job_id, self.Response(assignment=asst, job=job))
 
+                # TODO: use mashemallow to unmarshal responses.
+                if field == "has_food":
+                    value = bool(value)
+
                 if field == "box_group_json" or field == "selections":
                     try:
                         value = json.loads(unquote(value))
