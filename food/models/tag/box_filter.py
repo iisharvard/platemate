@@ -62,7 +62,7 @@ class Manager(base.Manager):
                 answers = job.valid_responses
 
                 cnt = Counter()
-
+                # TODO recording photo id correctly
                 for answer in answers:
                     if answer.has_food:
                         cnt[answer.photo] += 1
