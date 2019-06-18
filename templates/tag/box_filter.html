@@ -22,9 +22,9 @@ Please do not select a photo if it has a box that does not contain food. If all 
         </td>
         <td valign='top' class='taglist'>
           <strong>Your tags:</strong><br />
-            <input type='radio' name='{{ job.id }}_has_food' id='{{ job.id }}_has_food'/>
+            <input type='radio' name='{{ job.id }}_has_food' id='{{ job.id }}_has_food' value="True"/>
             <label for="true">Yes</label>
-            <input type='radio'/>
+            <input type='radio' name='{{ job.id }}_has_food' id='{{ job.id }}_has_food' value=""/>
             <label for="false">No</label>
         </td>
       </tr>
