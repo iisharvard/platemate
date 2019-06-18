@@ -53,6 +53,9 @@ class Manager(base.Manager):
         for input in self.assigned:
             self.new_job(photo=input.photo, from_input=input)
 
+# TODO: Create table for food_exist
+# TODO: Found reportign API and short circuit no food photo.
+# TODO: Reports other images that doesn't go through the flow.
         for hit in self.completed_hits:
             for job in hit.jobs.all():
                 answers = job.valid_responses
