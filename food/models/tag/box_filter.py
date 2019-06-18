@@ -3,7 +3,7 @@ from food.models.common import *
 from management.helpers import *
 from management.qualifications import *
 import management.models as base
-from urllib import unquote
+from collections import Counter
 
 class Input(base.Input):
     photo = OneOf(Photo)
@@ -16,6 +16,7 @@ class Job(base.Job):
 
 class Response(base.Response):
     photo = OneOf(Photo)
+    has_food = BooleanField(default=False)
 
     def validate(self):
         """
@@ -59,4 +60,11 @@ class Manager(base.Manager):
         for hit in self.completed_hits:
             for job in hit.jobs.all():
                 answers = job.valid_responses
-                self.finish(box_groups=[answer.box_group for answer in answers], from_job=job)
+
+                cnt = Counter()
+
+                for answer in answers:
+                    if answer.has_food:
+                        cnt[answer.photo] += 1
+
+                self.finish(photo=[photo for photo, num in cnt if num > 1], from_job=job)
