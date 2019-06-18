@@ -171,6 +171,7 @@ class Supervisor(object):
 
                 # TODO: use mashemallow to unmarshal responses.
                 if field == "has_food":
+                    # Python trick to convert empty strings to False
                     value = bool(value)
 
                 if field == "box_group_json" or field == "selections":
