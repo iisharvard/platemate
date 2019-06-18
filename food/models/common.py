@@ -107,6 +107,7 @@ class Submission(SmartModel):
 
 class Photo(SmartModel):
     photo_url = URLField(verbose_name="Photo URL")
+    has_food = BooleanField(default=False)
 
     def __str__(self):
         return self.photo_url
