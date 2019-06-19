@@ -22,8 +22,8 @@ class Response(base.Response):
         """
         True or false question, no validation needed.
         """
-        self.raw = self.photo_id
-        self.photo_id = Photo.objects.get(id=self.photo_id)
+        self.photo_id = self.to_job.photo_id
+        self.photo = Photo.objects.get(id=self.photo_id)
 
         return True
 
