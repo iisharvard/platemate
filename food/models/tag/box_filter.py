@@ -65,9 +65,5 @@ class Manager(base.Manager):
                     counter += 1
 
             # TODO check if no-food job must be closed.
-            if self.duplication > 1:
-                if counter > 1 :
-                    self.finish(photo=response.photo, from_job=job)
-            else:
-                if counter > 0:
-                    self.finish(photo=response.photo, from_job=job)
+            if counter > (self.duplication // 2):
+                self.finish(photo=response.photo, from_job=job)
