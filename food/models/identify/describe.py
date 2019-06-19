@@ -63,13 +63,13 @@ class Manager(base.Manager):
     # LOGIC #
     #########
     def work(self):
-        for input in self.assigned:
+        for assignment in self.assigned:
             self.new_job(
                 iteration=1,
-                box=input.box,
+                box=assignment.box,
                 desc='',
                 ingredients='',
-                from_input=input,
+                from_input=assignment,
             )
 
         for job in self.completed_jobs:

@@ -60,12 +60,12 @@ class Manager(base.Manager):
     #########
     def work(self):
 
-        for input in self.assigned:
+        for assignment in self.assigned:
             self.new_job(
-                box=input.box,
-                desc=input.desc,
-                ingredients=input.ingredients,
-                from_input=input,
+                box=assignment.box,
+                desc=assignment.desc,
+                ingredients=assignment.ingredients,
+                from_input=assignment,
             )
 
         for job in self.completed_jobs:

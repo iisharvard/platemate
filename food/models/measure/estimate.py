@@ -76,8 +76,8 @@ class Manager(base.Manager):
     #########
     def work(self):
 
-        for input in self.assigned:
-            self.new_job(ingredient=input.ingredient, from_input=input)
+        for assignment in self.assigned:
+            self.new_job(ingredient=assignment.ingredient, from_input=assignment)
 
         for job in self.completed_jobs:
             responses = job.valid_responses

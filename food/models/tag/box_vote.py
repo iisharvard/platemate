@@ -52,8 +52,8 @@ class Manager(base.Manager):
 
     def work(self):
 
-        for input in self.assigned:
-            self.new_job(box_groups=input.box_groups.all(), from_input=input)
+        for assignment in self.assigned:
+            self.new_job(box_groups=assignment.box_groups.all(), from_input=assignment)
 
         for job in self.completed_jobs:
             if self.duplication > 1:

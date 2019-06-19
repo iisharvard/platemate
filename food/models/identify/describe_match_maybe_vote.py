@@ -16,8 +16,8 @@ class Manager(base.Manager):
         self.hire(identify.match_vote, 'vote')
 
     def work(self):
-        for input in self.assigned:
-            self.employee('describe').assign(box=input.box)
+        for assignment in self.assigned:
+            self.employee('describe').assign(box=assignment.box)
 
         for output in self.employee('describe').finished:
             self.employee('match').assign(

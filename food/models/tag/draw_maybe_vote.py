@@ -19,8 +19,8 @@ class Manager(base.Manager):
         self.hire(tag.box_vote, 'vote')
 
     def work(self):
-        for input in self.assigned:
-            self.employee('filter').assign(photo=input.photo)
+        for assignment in self.assigned:
+            self.employee('filter').assign(photo=assignment.photo)
 
         for output in self.employee('filter').finished:
             self.employee('draw').assign(photo=output.photo)

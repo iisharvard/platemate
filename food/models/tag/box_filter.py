@@ -53,11 +53,10 @@ class Manager(base.Manager):
         pass
 
     def work(self):
-        for input in self.assigned:
-            self.new_job(photo=input.photo, from_input=input)
+        for assignment in self.assigned:
+            self.new_job(photo=assignment.photo, from_input=assignment)
 
-# TODO: Create table for food_exist
-# TODO: Found reportign API and short circuit no food photo.
+# TODO: Found reporting API and short circuit no food photo.
 # TODO: Reports other images that doesn't go through the flow.
         for job in self.completed_jobs:
             counter = 0
