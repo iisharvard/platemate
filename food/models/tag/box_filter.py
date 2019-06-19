@@ -38,12 +38,12 @@ class Manager(base.Manager):
 
     # Payment
     reward = .05
-    duplication = 1
+    duplication = 3
 
     # Advertising
     qualifications = [min_approval(98), min_completed(100), locale('US')]
     keywords = ['picture', 'identify', 'food']
-    title = 'Draw a box around each food on a plate'
+    title = 'Identify if there are food on a plate'
     description = 'Help us figure out if there is any food on a plate.'
 
     #########
@@ -65,6 +65,7 @@ class Manager(base.Manager):
                 if response.has_food:
                     counter += 1
 
+            # TODO check if no-food job must be closed.
             if self.duplication > 1:
                 if counter > 1 :
                     self.finish(photo=response.photo, from_job=job)
