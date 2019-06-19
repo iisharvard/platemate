@@ -39,7 +39,7 @@ class Manager(base.Manager):
 
     # Payment
     reward = .05
-    duplication = 3
+    duplication = 1
 
     # Advertising
     qualifications = [min_approval(98), min_completed(100), locale('US')]
