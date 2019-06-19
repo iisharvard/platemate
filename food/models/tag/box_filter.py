@@ -3,7 +3,6 @@ from food.models.common import *
 from management.helpers import *
 from management.qualifications import *
 import management.models as base
-from collections import Counter
 
 class Input(base.Input):
     photo = OneOf(Photo)
@@ -60,14 +59,15 @@ class Manager(base.Manager):
 # TODO: Create table for food_exist
 # TODO: Found reportign API and short circuit no food photo.
 # TODO: Reports other images that doesn't go through the flow.
-        for hit in self.completed_hits:
-            for job in hit.jobs.all():
-                answers = job.valid_responses
+        for job in self.completed_jobs:
+            counter = 0
+            for response in job.valid_responses:
+                if response.has_food:
+                    counter += 1
 
-                cnt = Counter()
-                # TODO recording photo id correctly
-                for answer in answers:
-                    if answer.has_food:
-                        cnt[answer.photo] += 1
-
-                self.finish(photo=[photo for photo, num in cnt if num > 1], from_job=job)
+            if self.duplication > 1:
+                if counter > 1 :
+                    self.finish(photo=response.photo, from_job=job)
+            else:
+                if counter > 0:
+                    self.finish(photo=response.photo, from_job=job)
