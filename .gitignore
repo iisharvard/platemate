@@ -125,8 +125,3 @@ venv.bak/
 /static/photos/test*
 /static/api/photos/raw
 /static/api/photos/resized
-
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
