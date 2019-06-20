@@ -204,7 +204,7 @@ class Supervisor(object):
         else:
             self.turk.reject(asst.turk_id, asst.feedback)
             # TODO reenable after filter is working.
-            #self.turk.extend_hit(asst.hit.turk_id, 1) Commented out because generally hits are rejected because of bad photo data, don't want hit to advance.
+            self.turk.extend_hit(asst.hit.turk_id, 1) #Commented out because generally hits are rejected because of bad photo data, don't want hit to advance.
             asst.approved = False
             log(u'Rejected assignment %s because %s' % (asst.turk_id, asst.feedback), MANAGER_CONTROL)
         asst.save()
