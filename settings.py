@@ -1,6 +1,10 @@
 # Django settings for platemate project.
 import os
 import urlparse
+
+from dotenv import load_dotenv
+load_dotenv()
+
 from management.mturk import MTurkClient
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))

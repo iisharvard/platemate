@@ -10,3 +10,4 @@ django-smtp-ssl
 django-pdb
 postgres==2.2.1
 psycopg2==2.7.1
+python-dotenv==0.10.3
