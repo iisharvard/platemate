@@ -8,3 +8,5 @@ django-sslserver
 django_extensions
 django-smtp-ssl
 django-pdb
+postgres==2.2.1
+psycopg2==2.7.1
