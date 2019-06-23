@@ -2,6 +2,7 @@ Django==1.8.16
 Pillow
 httpagentparser
 boto
+boto3
 oauth
 requests
 django-sslserver

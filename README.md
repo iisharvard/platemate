@@ -15,7 +15,7 @@ This should install:
 
 * Django 1.8.16
 * Pillow (latest)
-* Boto (latest)
+* Boto3 (latest)
 * httpagentparser (latest)
 * oauth latest
 
