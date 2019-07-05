@@ -42,7 +42,7 @@ class MTurkClient:
 
         self.boto_config = {
             "aws_access_key_id": aws_access_key,
-            "aws_secret_access_key": aws_access_key,
+            "aws_secret_access_key": aws_secret_key,
             "region_name": "us-east-1"
         }
 
@@ -193,4 +193,5 @@ class MTurkClient:
     # STATUS / DIAGNOSTICS
     # --------------------
     def balance(self):
-        return self.c.get_account_balance()["AvailableBalance"]
+        balance_response = self.c.get_account_balance()
+        return float(balance_response["AvailableBalance"])
