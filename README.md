@@ -26,6 +26,20 @@ This should install:
 * Store your AWS access ID and secret key in the environment variables MTURK_ID
   and MTURK_KEY.
 
+## Run local version of Postgres Server
+
+If Postgres is installed with `brew` - `brew info postgresql@9.5`
+
+```shell script
+pg_ctl -D /usr/local/var/postgresql@9.5 start
+```
+
+Check if DB is accessible with `psql`:
+
+```shell script
+psql platemate platemate
+```
+
 ## Create Database Tables
 
 From the platemate directory, run:
@@ -40,6 +54,12 @@ python manage.py migrate
 ```ShellSession
 python manage.py createsuperuser
 # TODO add the user to initial data fixutre (or is there one?)
+```
+
+## Change password of existing user
+
+```shell script
+python manage.py changepassword <username>
 ```
 
 ## Run the project

@@ -12,8 +12,8 @@ def turk_balance(request):
             return HttpResponse("Low: %.2f" % balance, status=402)
         else:
             return HttpResponse("OK: %.2f" % balance, status=200)
-    except:
-        return HttpResponse("Balance check failed.", status=503)
+    except Exception as err:
+        return HttpResponse("Balance check failed. " + err.message, status=503)
 
 def ping(request):
     template = get_template('util/ping.html')
