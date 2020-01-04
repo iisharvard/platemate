@@ -141,30 +141,34 @@ class Supervisor(object):
         results = self.turk.hit_results(hit.turk_id)
 
         # Break HIT answers into job-specific responses
-        for id, answers in results.items():
+        for assignment in results:
 
             # Ignore assignments we've already parsed
-            if hit.assignments.filter(turk_id=id):
+            if hit.assignments.filter(turk_id=assignment['assignment_id']):
                 continue
 
-            worker, created = Worker.objects.get_or_create(turk_id=answers.pop('worker_id'))
-            worker.country = answers.pop('country')
-            worker.os = answers.pop('os')
-            worker.browser = answers.pop('browser')
-            worker.ip = answers.pop('ip')
+            worker, created = Worker.objects.get_or_create(turk_id=assignment.get('worker_id'))
+            worker.country = assignment['answer'].pop('country')
+            worker.os = assignment['answer'].pop('os')
+            worker.browser = assignment['answer'].pop('browser')
+            worker.ip = assignment['answer'].pop('ip')
             worker.save()
 
-            asst = hit.assignments.create(turk_id=id)
-            asst.comment = answers.pop('comment')
-            asst.accept_time = answers.pop('accept_time')
-            asst.submit_time = answers.pop('submit_time')
+            asst = hit.assignments.create(turk_id=assignment.get('assignment_id'))
+            comment = assignment['answer'].pop('comment')
+            asst.comment = '' if comment is None else comment
+            asst.accept_time = assignment.get('accept_time')
+            asst.submit_time = assignment.get('submit_time')
             asst.worker = worker
             asst.save()
 
             log(u'Recording assignment %s on HIT %s from worker %s...' % (asst.turk_id, hit.turk_id, worker.turk_id), MANAGER_CONTROL)
 
             responses = {}
-            for key, value in answers.items():
+            # TODO: how to parse the results?
+            for key, value in assignment.get('answer').items():
+                if '_' not in key:
+                    continue
                 job_id, field = key.split('_', 1)
                 job = hit.jobs.get(pk=job_id)
                 responses[job_id] = responses.get(job_id, self.Response(assignment=asst, job=job))

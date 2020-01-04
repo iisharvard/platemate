@@ -1,21 +1,20 @@
 # Modules
 # -------
-from boto.mturk.connection import MTurkConnection, MTurkRequestError
+
 from boto.mturk.question import ExternalQuestion
-from boto.mturk import qualification
-from boto.mturk.price import Price
 import boto3
+from botocore.exceptions import ClientError
 from logger import *
 from helpers import *
-import sys, traceback
-from collections import defaultdict
+import sys
 from datetime import datetime
+import xmltodict
 
 def catcherror(f):
     def new_f(*args, **kwargs):
         try:
             f(*args, **kwargs)
-        except MTurkRequestError, e:
+        except ClientError as e:
             type, value, tb = sys.exc_info()
 
             message = '----------------\n'
@@ -66,8 +65,6 @@ class MTurkClient:
         'Reward': '0.01',
         'MaxAssignments': 1,
 
-        'height': 700,
-
         'QualificationRequirements': [],
     }
 
@@ -81,50 +78,51 @@ class MTurkClient:
         the newly created page to MTurk."""
 
         settings = self.default_settings.copy()
-        settings.update(extra_settings)
-
-        settings['Reward'] = str(settings['Reward'])
-        settings['QualificationRequirements'] = settings['QualificationRequirements']
-        settings['Keywords'] = ','.join(settings['Keywords'])
-        height = settings.pop('height')
-        settings["Question"] = ExternalQuestion(url, height).get_as_xml()
+        settings['LifetimeInSeconds'] = extra_settings.get('lifetime', DAY)
+        settings['AssignmentDurationInSeconds'] = extra_settings.get('duration', 10 * MINUTE)
+        settings['AutoApprovalDelayInSeconds'] = extra_settings.get('approval_delay', DAY)
+        settings['Title'] = extra_settings.get('title', 'Unknown')
+        settings['Description'] = extra_settings.get('description', 'Unknown')
+        settings['Keywords'] = ','.join(extra_settings.get('keywords', []))
+        settings['Reward'] = str(extra_settings.get('reward', '0.01'))
+        settings['QualificationRequirements'] = extra_settings.get('qualifications', [])
+        settings['MaxAssignments'] = extra_settings.get('max_assignments', 1)
+        settings["Question"] = ExternalQuestion(url, extra_settings.get('height', 700)).get_as_xml()
 
         hit = self.c.create_hit(**settings)["HIT"]
-        #print 'Created hit %s' % hit.HITId
-        return hit["HITId"], hit["HITTypeId"]
-
-        #hit_type=None, # Let Amazon do this automatically
-        #annotation=None, # Optional annotation for our system to use
-        #questions=None, # If you want to create multiple HITs at a time? Probably irrelevant for External
-        #response_groups=None, # Unclear what this does
+        return hit["HITId"], hit["HITGroupId"]
 
     def get_hit(self, hit_id):
-        return self.c.get_hit(hit_id)["HIT"]
+        return self.c.get_hit(HITId=hit_id)["HIT"]
 
     def hit_results(self, hit_id, type=None): # type in ['Submitted','Approved','Rejected',None]
-        results = defaultdict(lambda: {})
+        results = []
 
         try:
-            assignments = self.c.list_assignments_for_hit(
-                HITID=hit_id,
-                status=None,
+            response = self.c.list_assignments_for_hit(
+                HITId=hit_id,
                 MaxResults=100,
-            )["Assignments"]
-
-            for asst in assignments:
-                answers = asst.answers[0] if len(asst.answers) > 0 else []
-                for qfa in answers:
-                    field, response = qfa.qid, qfa.fields[0]
-                    results[asst.AssignmentId][field] = response
-
-                results[asst.AssignmentId]['worker_id'] = asst.WorkerId
-
-                results[asst.AssignmentId]['accept_time'] = datetime.strptime(asst.AcceptTime, "%Y-%m-%dT%H:%M:%SZ")
-                results[asst.AssignmentId]['submit_time'] = datetime.strptime(asst.SubmitTime, "%Y-%m-%dT%H:%M:%SZ")
+            )
+            for assignment in response["Assignments"]:
+                asst = {
+                    'worker_id': assignment['WorkerId'],
+                    'assignment_id': assignment['AssignmentId'],
+                    'auto_approval_time': assignment['AutoApprovalTime'],
+                    'accept_time': assignment['AcceptTime'],
+                    'submit_time': assignment['SubmitTime'],
+                    'assignment_status': assignment['AssignmentStatus'],
+                    'answer': {},
+                }
+                xml_doc = xmltodict.parse(assignment['Answer'])
+                for answer_field in xml_doc['QuestionFormAnswers']['Answer']:
+                    field = answer_field['QuestionIdentifier']
+                    response = answer_field['FreeText']
+                    asst['answer'][field] = response
+                results.append(asst)
+            return results
         except:
             log(u'Error getting assignments for HIT %s. Does this hit exist on Amazon?' % (hit_id), MANAGER_CONTROL)
-        finally:
-            return results
+            return []
 
     # URL of a HIT on MTurk
     def hit_url_turk(self, hit_id):
