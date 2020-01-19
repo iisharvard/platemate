@@ -33,8 +33,10 @@ def show_hit(request, hit_id):
 
     template_name = '%s.html' % h.template
     print 'template_name:', template_name
-    useragent = httpagentparser.detect(request.META["HTTP_USER_AGENT"])
-
+    try:
+        useragent = httpagentparser.detect(request.META["HTTP_USER_AGENT"])
+    except KeyError:
+        useragent = {'os': {'name': 'Unknown'}}
     try:
         ip = request.META["HTTP_X_FORWARDED_FOR"]
     except KeyError:
