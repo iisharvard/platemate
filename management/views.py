@@ -76,7 +76,7 @@ def show_hit(request, hit_id):
     })
 
 def show_responses(request, operation):
-    responses = Response.objects.filter(job__manager__operation=operation).order_by('job__manager__pk')
+    responses = Response.objects.filter(job__manager__operation=operation).order_by('-assignment_id')
     return render(
         request,
         'responses.html',

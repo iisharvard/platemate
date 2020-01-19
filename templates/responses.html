@@ -32,9 +32,14 @@
             <td><b>Country:</b> {{ response.assignment.worker.country }}</td>
             <td><b>Response ID:</b> {{ response.pk }}</td>
         <tr>
-            <td valign=top colspan=2><b>Job</b><br /> {{ response.to_job|display_job }}</td>
+            <td valign=top colspan=2>
+                <b>Job</b>
+                <br />
+                {{ response.to_job|display_job }}
+            </td>
             <td valign=top colspan=2>
                 <b>Response</b><br /> {{ response|display_response }}<br />
+                <b>Submit time:</b> {{ response.assignment.submit_time }}<br />
                 <b>Comment:</b> {{ response.assignment.comment }}
             </td>
         </tr>
