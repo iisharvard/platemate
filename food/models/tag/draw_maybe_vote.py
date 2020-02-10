@@ -26,18 +26,22 @@ class Manager(base.Manager):
             self.employee('draw').assign(photo=output.photo)
 
         for output in self.employee('draw').finished:
-            bg1, bg2 = output.box_groups.all()[:2]
-            similarity = BoxGroup.similarity(bg1, bg2)
-
-            # If responses are similar enough, don't bother voting
-            if similarity > MIN_SIMILARITY:
-                log('Box groups have similarity %.2f so skipping vote' % similarity, FOOD_CONTROL)
-                self.finish(box_group=bg1)
-
-            # Otherwise, we need to vote
+            box_groups = output.box_groups.all()
+            if len(box_groups) == 1:
+                self.finish(box_group=box_groups[0])
             else:
-                log('Box groups have similarity %.2f so voting' % similarity, FOOD_CONTROL)
-                self.employee('vote').assign(box_groups=[bg1, bg2])
+                bg1, bg2 = box_groups[:2]
+                similarity = BoxGroup.similarity(bg1, bg2)
+
+                # If responses are similar enough, don't bother voting
+                if similarity > MIN_SIMILARITY:
+                    log('Box groups have similarity %.2f so skipping vote' % similarity, FOOD_CONTROL)
+                    self.finish(box_group=bg1)
+
+                # Otherwise, we need to vote
+                else:
+                    log('Box groups have similarity %.2f so voting' % similarity, FOOD_CONTROL)
+                    self.employee('vote').assign(box_groups=[bg1, bg2])
 
         for output in self.employee('vote').finished:
             self.finish(box_group=output.box_group)

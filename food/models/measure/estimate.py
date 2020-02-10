@@ -62,7 +62,7 @@ class Manager(base.Manager):
     max_wait = 5 * MINUTE
 
     # Payment
-    reward = .13
+    reward = .10
     duplication = 3
 
     # Advertising
@@ -83,7 +83,8 @@ class Manager(base.Manager):
             responses = job.valid_responses
 
             calories = [r.ingredient.calories for r in responses]
-            avg_calories = mean(sorted(calories)[1: -1])
+            calories = calories if len(calories) < 3 else sorted(calories)[1: -1]
+            avg_calories = mean(calories)
             avg_serving = mode([r.ingredient.serving for r in responses])
 
             i = Ingredient.factory(

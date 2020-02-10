@@ -28,10 +28,13 @@ class Manager(base.Manager):
 
         for output in self.employee('match').finished:
             lists = output.ingredient_lists.all()
-            if lists[0] == lists[1]:
+            if len(lists) == 1:
                 self.finish(ingredient_list=lists[0])
             else:
-                self.employee('vote').assign(ingredient_lists=lists)
+                if lists[0] == lists[1]:
+                    self.finish(ingredient_list=lists[0])
+                else:
+                    self.employee('vote').assign(ingredient_lists=lists)
 
         for output in self.employee('vote').finished:
             self.finish(ingredient_list=output.ingredient_list)
