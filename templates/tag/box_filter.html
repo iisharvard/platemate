@@ -1,0 +1,34 @@
+
+{% extends "hit_base.html" %}
+{% load food_tags %}
+
+{% block instructions %}
+We need your help to identify if there are any food in the photo below. Use the
+radio box to indicate yes or no.
+{% endblock instructions %}
+
+{% block jobs %}
+
+  <div id="MAIN_REVIEW">
+  {% for job in hit.jobs.all %}
+    <b>Check if the photo contains any food:</b><br /><br />
+    <div class="break"></div>
+    <table cellpadding=0 cellspacing=0 border=0>
+      <tr>
+        <td valign='top'>
+          <img src='{{ job.photo.photo_url }}' id='{{ job.id }}_photo' /><br />
+        </td>
+        <td valign='top' class='taglist'>
+          <strong>Your tags:</strong><br />
+            <input type='radio' name='{{ job.id }}_has_food' id='{{ job.id }}_has_food' value="True"/>
+            <label for="true">Yes</label>
+            <input type='radio' name='{{ job.id }}_has_food' id='{{ job.id }}_has_food' value=""/>
+            <label for="false">No</label>
+        </td>
+      </tr>
+    </table>
+
+    <div class="break"></div>
+  {% endfor %}
+  </div>
+{% endblock jobs %}
