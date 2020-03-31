@@ -21,10 +21,8 @@ This should install:
 
 ## Modify Local Settings
 
-* In the platemate directory modify `local_settings.example.py` to your paths
-  and rename to `local_settings.py`.
-* Store your AWS access ID and secret key in the environment variables MTURK_ID
-  and MTURK_KEY.
+* For a development environment, copy .env.example to .env and set any relevant variables.
+* For a production environment, do the same, or set the environment variables in .bashrc or some other method.
 
 ## Run local version of Postgres Server
 

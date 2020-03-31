@@ -13,7 +13,7 @@ BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 DEBUG = (lambda : os.getenv("DEBUG", "false").lower() == "true")()
 
 ADMINS = (
-    (os.getenv("ADMIN_NAME", "John Doe"), os.getenv("ADMIN_EMAIL", "user@example.com")),
+    (os.getenv("ADMIN_NAME"), os.getenv("ADMIN_EMAIL")),
 )
 
 TEMPLATE_DIRS = (
@@ -32,7 +32,7 @@ DATABASES = {
         'USER': os.getenv("DB_USER", "platemate"),                      # Not used with sqlite3.
         'PASSWORD': os.getenv("DB_PASSWORD", ""),                  # Not used with sqlite3.
         'HOST': os.getenv("DB_HOST", "127.0.0.1"),                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': os.getenv("DB_PORT", "5432"),                      # Set to empty string for default. Not used with sqlite3.
+        'PORT': os.getenv("DB_PORT", "5432"),                    # Set to empty string for default. Not used with sqlite3.
         # 'OPTIONS': {
         #     'timeout': 20
         # }
@@ -40,6 +40,8 @@ DATABASES = {
 }
 
 PYTHONVAR = "python"
+PYTHONIOENCODING = "UTF-8"
+
 
 # Hostnames that users can connect to your site with.
 if DEBUG:
@@ -47,7 +49,7 @@ if DEBUG:
 else:
     ALLOWED_HOSTS = ["localhost", os.getenv("HOST", "localhost")]
 
-API_KEY = os.getenv("API_KEY", "")
+API_KEY = os.getenv("API_KEY", "NOTAVALIDKEY") # Don't default to empty string, dangerous.
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -175,8 +177,11 @@ LOGIN_URL = urlparse.urljoin(URL_PATH, "/login/")
 
 # EMAIL STUFF
 
+EMAIL_BACKEND="django_smtp_ssl.SSLEmailBackend"
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'harvardplatemate@gmail.com'
-EMAIL_HOST_PASSWORD = 'bananaS5'
-EMAIL_PORT = 587
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+SERVER_EMAIL = os.getenv('SERVER_EMAIL')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
