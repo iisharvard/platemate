@@ -157,13 +157,21 @@ LOGGING = {
         },
     },
     'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        }
+        'verbose': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_PATH, 'log/verbose.log')
+        },
+        'concise': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_PATH, 'log/concise.log')
+        },
+
     },
     'loggers': {
         'django': {
-            'handlers':['console'],
+            'handlers':['verbose', 'concise'],
             'propagate': True,
             'level':'DEBUG',
         },
