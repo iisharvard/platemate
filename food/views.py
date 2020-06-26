@@ -9,6 +9,7 @@ from django import forms
 from datetime import date, datetime
 from django.db import transaction
 
+from logger import *
 from helpers import *
 
 #for api
@@ -169,8 +170,10 @@ def api_submission_statuses(request):
                 status = 'NOT_FOUND'
                 data = {}
             response_json[submission_id] = {"status": status, "data": data}
+        logger.info("Submission statuses fetched successfully")
         return JsonResponse(response_json, safe=False)
     except ValueError:
+        logger.error("ValueError checking submission statuses")
         return HttpResponseBadRequest("There was an error, please try again.")
 
 def photo_summary(request, photo_id):
@@ -336,10 +339,14 @@ def api_photo_upload(request):
 
         data = dict({"submission_id" : s.id})
 
+        logger.info("New photo uploaded successfully. Submission saved.")
+
         return JsonResponse(data)
     except ValueError:
+        logger.error("ValueError when uploading new photo")
         return HttpResponseBadRequest("There was an error, please try again.")
     except IOError:
+        logger.error("IOError when uploading new photo")
         return HttpResponse("There was an error saving data, please try again.", status=500)
 
 @transaction.atomic
