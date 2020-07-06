@@ -173,7 +173,7 @@ def api_submission_statuses(request):
         logger.info("Submission statuses fetched successfully")
         return JsonResponse(response_json, safe=False)
     except ValueError:
-        logger.error("ValueError checking submission statuses")
+        logger.exception("ValueError checking submission statuses")
         return HttpResponseBadRequest("There was an error, please try again.")
 
 def photo_summary(request, photo_id):
@@ -343,10 +343,10 @@ def api_photo_upload(request):
 
         return JsonResponse(data)
     except ValueError:
-        logger.error("ValueError when uploading new photo")
+        logger.exception("ValueError when uploading new photo")
         return HttpResponseBadRequest("There was an error, please try again.")
     except IOError:
-        logger.error("IOError when uploading new photo")
+        logger.exception("IOError when uploading new photo")
         return HttpResponse("There was an error saving data, please try again.", status=500)
 
 @transaction.atomic
