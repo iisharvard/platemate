@@ -167,11 +167,14 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_PATH, 'log/concise.log')
         },
-
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
     },
     'loggers': {
         'django': {
-            'handlers':['verbose', 'concise'],
+            'handlers': ['verbose', 'concise', 'mail_admins'],
             'propagate': True,
             'level':'DEBUG',
         },
