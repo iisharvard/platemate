@@ -92,7 +92,7 @@ class Supervisor(object):
             dummy = Job()
             jobs = [dummy] * (jobcount + 1)
             h = self.create_hit(jobs, announce=False)
-            sleep(1)
+            sleep(5)
             self.delete_hit(h)
 
     def create_hit(self, jobs, announce=True):
