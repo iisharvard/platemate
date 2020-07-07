@@ -39,6 +39,9 @@ def process_photo_and_get_url(photo, sub_dir, photo_name):
     logger.info("Processsing image")
     logger.info(raw_photo)
 
+    if raw_photo.mode in ("RGBA", "P"):
+        raw_photo = raw_photo.convert("RGB")
+
     # Resize it to 400px wide (usually 300 high)
     width, height = raw_photo.size
     new_size = 400, int(height * 400.0 / width)
