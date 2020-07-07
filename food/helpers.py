@@ -2,6 +2,7 @@ import os, sys
 from django.conf import settings
 from PIL import Image
 from models.common import *
+from logger import *
 import platemate_constants
 
 def is_authenticated_api_request(request):
@@ -34,6 +35,9 @@ def process_photo_and_get_url(photo, sub_dir, photo_name):
 
     # Raw image
     raw_photo = Image.open(raw_photo_path)
+
+    logger.info("Processsing image")
+    logger.info(raw_photo)
 
     # Resize it to 400px wide (usually 300 high)
     width, height = raw_photo.size
