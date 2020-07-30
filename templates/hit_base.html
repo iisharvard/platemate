@@ -82,8 +82,10 @@
         {% block jobs %}{% endblock jobs %}
         
         <br />
+        {% comment "Disabling this for now b/c nobody was checking it and there is a 'Report HIT' feature that this kind of conflicts with" %}
         Thanks for working on our HITs! If you have any feedback on our task, please let us know, especially if the instructions are unclear or something isn't working.<br /><br />
         <textarea id='comment' name="comment"></textarea><br /><br />
+        {% endcomment %}
 
         {% if forbidden %}
             <script>
