@@ -16,7 +16,7 @@
   </head>
   <body>
     <div id="wrapper">
-    
+
     {% for response in responses %}
     <table border=1 cellpadding=5>
         <tr>
@@ -40,7 +40,6 @@
             <td valign=top colspan=2>
                 <b>Response</b><br /> {{ response|display_response }}<br />
                 <b>Submit time:</b> {{ response.assignment.submit_time }}<br />
-                <b>Comment:</b> {{ response.assignment.comment }}
             </td>
         </tr>
     </table>

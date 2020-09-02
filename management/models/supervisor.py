@@ -155,8 +155,9 @@ class Supervisor(object):
             worker.save()
 
             asst = hit.assignments.create(turk_id=assignment.get('assignment_id'))
-            comment = assignment['answer'].pop('comment')
-            asst.comment = '' if comment is None else comment
+            # comments are disabled since we use turk feedback instead
+            # comment = assignment['answer'].pop('comment')
+            # asst.comment = '' if comment is None else comment
             asst.accept_time = assignment.get('accept_time')
             asst.submit_time = assignment.get('submit_time')
             asst.worker = worker
