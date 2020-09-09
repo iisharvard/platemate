@@ -20,9 +20,12 @@ class Response(base.Response):
     def validate(self):
         self.raw = (self.measurement, self.serving)
 
+        if self.measurement is None:
+            return "No measurement entered."
+
         self.measurement = self.measurement.strip()
 
-        if self.measurement in [None, '']:
+        if not self.measurement:
             return "No measurement entered."
 
         def parse(str):
