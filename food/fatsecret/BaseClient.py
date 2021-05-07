@@ -1,7 +1,7 @@
 from Errors import *
 from TokenStore import *
 from oauth import oauth
-from OAuth import *
+from OAuthModels import *
 import urllib
 import httplib
 try:
