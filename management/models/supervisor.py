@@ -87,13 +87,20 @@ class Supervisor(object):
 
     @transaction.atomic
     def refresh_hits(self):
-        log(u"Refreshing HITs for %s" % (self.__class__.__name__), TURK_CONTROL)
-        for jobcount in range(self.batch_size):
-            dummy = Job()
-            jobs = [dummy] * (jobcount + 1)
-            h = self.create_hit(jobs, announce=False)
-            sleep(5)
-            self.delete_hit(h)
+        pass
+        # This logic does not work anymore. Deleting HIT raises an error:
+        # An error occurred (RequestError) when calling the DeleteHIT operation: This HIT is currently in the state 'Unassignable'.
+        # This operation can be called with a status of: Reviewing, Reviewable (1620320956873)
+        #
+        # Need to rethink how to "bubble up" HITs to the top of the workers queue
+
+        # log(u"Refreshing HITs for %s" % (self.__class__.__name__), TURK_CONTROL)
+        # for jobcount in range(self.batch_size):
+        #     dummy = Job()
+        #     jobs = [dummy] * (jobcount + 1)
+        #     h = self.create_hit(jobs, announce=False)
+        #     sleep(5)
+        #     self.delete_hit(h)
 
     def create_hit(self, jobs, announce=True):
         # Set up HIT settings
