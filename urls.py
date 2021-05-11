@@ -26,7 +26,7 @@ urlpatterns = patterns(
     (r'^hit_list/(?P<operation>\w*)/$', 'management.views.hit_list'),
 
     # Experiment summary
-    (r'^summary/(?P<photo_id>\w*)/$', 'food.views.photo_summary'),
+    (r'^summary/(?P<submission_id>\w*)/$', 'food.views.photo_summary'),
     # Static Content
     (
         r'^static/(?P<path>.*)$',

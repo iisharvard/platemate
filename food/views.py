@@ -176,8 +176,9 @@ def api_submission_statuses(request):
         logger.exception("ValueError checking submission statuses")
         return HttpResponseBadRequest("There was an error, please try again.")
 
-def photo_summary(request, photo_id):
-    photo = Photo.objects.filter(id=photo_id)[0]
+def photo_summary(request, submission_id):
+    submission = Submission.objects.get(pk=submission_id)
+    photo = submission.photo
     box_group = BoxGroup.objects.filter(photo=photo)
     boxes = Box.objects.filter(photo=photo)
     ingredient_boxes = []

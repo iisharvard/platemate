@@ -2,6 +2,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from models import *
+from food.models import *
 #from urllib2 import urlopen
 import requests
 import httpagentparser
@@ -76,13 +77,19 @@ def show_hit(request, hit_id):
     })
 
 def show_responses(request, operation):
-    responses = Response.objects.filter(job__manager__operation=operation).order_by('-assignment_id')
+    # Limiting the result set here, so the page does not grow unbounded
+    page_size = 10
+    limit = request.GET.get('limit', str(page_size)) # poor man's pagination
+    limit = int(limit)
+    responses = Response.objects.filter(job__manager__operation=operation).order_by('-assignment_id')[:limit]
     return render(
         request,
         'responses.html',
         context={
             "responses": responses,
             "path": settings.URL_PATH,
+            "next_limit": limit + page_size,
+            "operation": operation,
         }
     )
 

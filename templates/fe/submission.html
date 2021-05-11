@@ -53,8 +53,11 @@
          
        </table>
       {% endif %}
-       
-       <a href="#" onClick="delete_submission({{submission.id}});return false;" class="delete-photo"><img src="{{path}}/static/img/delete.png" border=0 alt="Delete">Delete this photo</a>
+       <div style="margin: 1em 0 0 0;">
+            <div><a href="{{path}}/summary/{{submission.photo.id}}">Photo Summary</a></div>
+            <div><a href="{{path}}/responses/{{submission.manager.operation}}/">Related responses</a></div>
+            <div><a href="#" onClick="delete_submission({{submission.id}});return false;" class="delete-photo"><img src="{{path}}/static/img/delete.png" border=0 alt="Delete">Delete this photo</a></div>
+       </div>
   </td>
  </tr>
  
