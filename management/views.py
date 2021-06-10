@@ -93,10 +93,22 @@ def show_responses(request, operation):
         }
     )
 
-def hit_list(request, operation=None):
-    if not operation:
-        hits = Hit.objects.all()
+def hit_list(request):
+    page_size = 25
+    limit = request.GET.get('limit', str(page_size)) # poor man's pagination
+    limit = int(limit)
+    operation = request.GET.get('operation')
+    if operation:
+        hits = Hit.objects.filter(manager__operation=operation).order_by('-creation_time')[:limit]
     else:
-        hits = Hit.objects.filter(manager__operation=operation)
-    urls = [hit.turk_url for hit in hits]
-    return HttpResponse('\n'.join(urls))
+        hits = Hit.objects.all().order_by('-creation_time')[:limit]
+    return render(
+        request,
+        'fe/hits.html',
+        context={
+            "hits": hits,
+            "path": settings.URL_PATH,
+            "next_limit": limit + page_size,
+            "operation": operation,
+        }
+    )

@@ -1,0 +1,35 @@
+{% extends "fe/authenticated.html" %}
+{% load food_tags %}
+
+{% block authenticated-content %}
+
+<table cellpadding=2 cellspacing=0>
+    <thead>
+        <tr style="">
+        <td>Manager</td>
+        <td>Creation Time</td>
+        <td>Completed</td>
+        <td>Title</td>
+        <td>Reward</td>
+        <td>Turk mode</td>
+        <td>Turk url</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for hit in hits %}
+        <tr style="">
+            <td>{{hit.manager}}</td>
+            <td>{{hit.creation_time}}</td>
+            <td>{{hit.completed}}</td>
+            <td>{{hit.manager.downcast.title}}</td>
+            <td>{{hit.manager.downcast.reward}}</td>
+            <td>{{hit.turk_mode}}</td>
+            <td><a href="{{hit.turk_url}}" target="_blank">Turk url</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div>
+    <a href="{{path}}/hits/?limit={{next_limit}}">Next Page</a>
+</div>
+{% endblock authenticated-content %}
