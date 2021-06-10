@@ -84,7 +84,7 @@ def show_responses(request, operation):
     responses = Response.objects.filter(job__manager__operation=operation).order_by('-assignment_id')[:limit]
     return render(
         request,
-        'responses.html',
+        'fe/responses.html',
         context={
             "responses": responses,
             "path": settings.URL_PATH,

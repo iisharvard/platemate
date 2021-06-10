@@ -1,21 +1,9 @@
+{% extends "fe/authenticated.html" %}
 {% load food_tags %}
 
-<html>
-  <head>
-    <script src="{{path}}/static/scripts/json2.js" type="text/javascript"></script>
-    <script src="{{path}}/static/scripts/jquery.min.js" type="text/javascript"></script>
-    <script src="{{path}}/static/scripts/jquery-ui-1.8.6.custom.min.js" type="text/javascript"></script>
-    <script src="{{path}}/static/scripts/jquery.imgareaselect.min.js" type="text/javascript"></script>
-    <script src="{{path}}/static/scripts/jquery.blockUI.js" type="text/javascript"></script>
-    <script src="{{path}}/static/scripts/typewatch.js" type="text/javascript"></script>
+{% block authenticated-content %}
 
-    <link rel="stylesheet" href="{{path}}/static/css/platebrain.css" type="text/css" />
-    <link rel="stylesheet" href="{{path}}/static/css/jquery-ui.css" type="text/css" />
-    <link rel="stylesheet" href="{{path}}/static/css/imgareaselect-default.css" type="text/css" />
-    <title>PlateMate</title>
-  </head>
-  <body>
-    <div id="wrapper">
+<div id="wrapper">
 
     {% for response in responses %}
     <table border=1 cellpadding=5>
@@ -52,6 +40,6 @@
             <a href="{{path}}/responses/{{operation}}/?limit={{next_limit}}">Load more</a>
         </div>
     </div>
-    </div>
-  </body>
-</html>
+</div>
+
+{% endblock authenticated-content %}
