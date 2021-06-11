@@ -27,12 +27,18 @@
         </td>
         <td>
             <div style="margin-left: 20px;">
+                {% with stats=submission.stats %}
+                    <div>Jobs: {{stats.n_jobs}}</div>
+                    <div>HITs: {{stats.n_hits}}</div>
+                    <div>Reward: ${{stats.total_reward|floatformat:2}}</div>
+                    <div>Completed in: {{stats.completion_time}}</div>
+                {% endwith %}
             </div>
         </td>
     </tr>
     {% endfor %}
 </table>
-
+{{ stats }}
 <div>
     <a href="{{path}}/submissions/?limit={{next_limit}}">Load more</a>
 </div>
