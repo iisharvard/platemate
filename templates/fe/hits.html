@@ -11,6 +11,7 @@
         <td>Completed</td>
         <td>Title</td>
         <td>Reward</td>
+        <td>Duplication</td>
         <td>Turk mode</td>
         <td>Turk url</td>
         </tr>
@@ -23,6 +24,7 @@
             <td>{{hit.completed}}</td>
             <td>{{hit.manager.downcast.title}}</td>
             <td>{{hit.manager.downcast.reward}}</td>
+            <td>{{hit.manager.downcast.duplication}}</td>
             <td>{{hit.turk_mode}}</td>
             <td><a href="{{hit.turk_url}}" target="_blank">Turk url</a></td>
         </tr>
@@ -30,6 +32,6 @@
     </tbody>
 </table>
 <div>
-    <a href="{{path}}/hits/?limit={{next_limit}}">Next Page</a>
+    <a href="{{path}}/hits/?limit={{next_limit}}">Load more</a>
 </div>
 {% endblock authenticated-content %}
