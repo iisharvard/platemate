@@ -25,7 +25,7 @@ urlpatterns = patterns(
     (r'^pipeline/(?P<operation>\w*)/((?P<photo>\d+)/)?$', 'food.views.show_pipeline'),
 
     # HITs
-    (r'^hits/$', 'management.views.hit_list'),
+    (r'^hits/$', 'food.views.hit_list'),
 
     # Submissions
     (r'^submissions/(?P<submission_id>\w*)/$', 'food.views.submission_details'),

@@ -3,7 +3,8 @@ from django.http import HttpResponse, Http404, HttpResponseBadRequest, HttpRespo
 from django.core.context_processors import csrf
 from django.shortcuts import get_object_or_404, render
 from models.common import *
-from management.models import Manager
+from management.models.manager import Manager
+from management.models.turk import Hit
 #from django.contrib.auth.decorators import login_required
 from django import forms
 from datetime import date, datetime
@@ -239,6 +240,26 @@ def submission_list(request):
         }
     )
 
+@login_required
+def hit_list(request):
+    page_size = 25
+    limit = request.GET.get('limit', str(page_size)) # poor man's pagination
+    limit = int(limit)
+    operation = request.GET.get('operation')
+    if operation:
+        hits = Hit.objects.filter(manager__operation=operation).order_by('-creation_time')[:limit]
+    else:
+        hits = Hit.objects.all().order_by('-creation_time')[:limit]
+    return render(
+        request,
+        'fe/hits.html',
+        context={
+            "hits": hits,
+            "path": settings.URL_PATH,
+            "next_limit": limit + page_size,
+            "operation": operation,
+        }
+    )
 
 @login_required
 def edit_ingredient(request):
