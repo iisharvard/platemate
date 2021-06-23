@@ -1,13 +1,11 @@
 from django.db.models import *
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist
 from food.food_db import *
 from management.models import SmartModel, Manager
 from management.helpers import *
-import json
 from management.models.smart_model import OneOf, ManyOf
-from logger import *
-from datetime import date
+import json
+from raw_db_queries import query_jobs_for_submissions
 
 PHOTO_WIDTH = 400
 PHOTO_HEIGHT = 300
@@ -104,6 +102,24 @@ class Submission(SmartModel):
 
     def __str__(self):
         return self.get_meal_display() + " on " + str(self.date) + " for " + self.user.username
+
+    def query_jobs(self):
+        return query_jobs_for_submissions([self.id])
+
+    def stats(self):
+        rewards = {m.id: m.reward for m in Manager.objects.all()}
+        jobs_result = self.query_jobs()
+        n_jobs = len(jobs_result)
+        n_hits = len(set([j.hit_id for j in jobs_result]))
+        total_reward = sum([rewards[j.manager_id] for j in jobs_result])
+        completion_time = (self.completed - self.submitted) if self.completed else 0
+        return {
+            'n_jobs': n_jobs,
+            'n_hits': n_hits,
+            'total_reward': total_reward,
+            'completion_time': completion_time
+        }
+
 
 class Photo(SmartModel):
     photo_url = URLField(verbose_name="Photo URL")

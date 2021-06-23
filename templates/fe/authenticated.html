@@ -1,0 +1,58 @@
+{% extends "fe/base.html" %}
+
+{% block navigation %}
+<style type="text/css">
+  .main_navigation {
+    width: 1100px;
+    margin: 20px auto 0 auto;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .main_navigation > .nav-left {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .nav-logo {
+
+  }
+  .nav-links {
+    align-self: flex-end;
+    margin-bottom: 20px;
+  }
+  .nav-links a {
+    margin-left: 20px;
+  }
+  .main_navigation > .nav-profile {
+
+  }
+</style>
+
+<div class="main_navigation">
+  <div class="nav-left">
+    <div class="nav-logo">
+      <a href="/">
+        <img src="{{path}}/static/img/logo.png" height="75"/>
+      </a>
+    </div>
+    <div class="nav-links">
+      <a href="/submissions">Submissions</a>
+      <a href="/hits">HITs</a>
+      <a href="/responses/real">Responses</a>
+    </div>
+  </div>
+  <div class="nav-profile">
+    <div id="loggedin">Logged in as {{ user.username }}. <a href="{{path}}/logout/">Logout.</a></div>
+  </div>
+</div>
+{% endblock navigation %}
+
+{% block content %}
+  <div id="main">
+    <div id="main-content">
+      {% block authenticated-content %}{% endblock authenticated-content %}
+    </div>
+  </div>
+{% endblock content %}

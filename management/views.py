@@ -84,7 +84,7 @@ def show_responses(request, operation):
     responses = Response.objects.filter(job__manager__operation=operation).order_by('-assignment_id')[:limit]
     return render(
         request,
-        'responses.html',
+        'fe/responses.html',
         context={
             "responses": responses,
             "path": settings.URL_PATH,
@@ -92,11 +92,3 @@ def show_responses(request, operation):
             "operation": operation,
         }
     )
-
-def hit_list(request, operation=None):
-    if not operation:
-        hits = Hit.objects.all()
-    else:
-        hits = Hit.objects.filter(manager__operation=operation)
-    urls = [hit.turk_url for hit in hits]
-    return HttpResponse('\n'.join(urls))

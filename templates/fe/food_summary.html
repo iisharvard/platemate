@@ -1,7 +1,7 @@
-{% extends "fe/base.html" %}
+{% extends "fe/authenticated.html" %}
 {% load food_tags %}
 
-{% block content %}
+{% block authenticated-content %}
 
 <style type="text/css">
 td.hidden {
@@ -55,9 +55,6 @@ function updateTotals() {
   }
 }
 </script>
-<div id="main">
-<img src="{{path}}/static/img/logo.png" height="75"/>
-<div id="main-content">
 <script type="text/javascript">
   $(function() {
   	updateTotals();
@@ -123,6 +120,4 @@ function updateTotals() {
     </td>
   </tr>
 </table>
-</div>
-</div>
-{% endblock content %}
+{% endblock authenticated-content %}

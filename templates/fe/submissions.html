@@ -1,0 +1,46 @@
+{% extends "fe/authenticated.html" %}
+{% load food_tags %}
+
+{% block authenticated-content %}
+
+<table cellpadding=2 cellspacing=0>
+    {% for submission in submissions %}
+    <tr style="">
+        <td>
+            <a href="/submissions/{{submission.id}}">
+                <img src="{{submission.photo.photo_url}}" alt="Photo" width="100px"/>
+            </a>
+        </td>
+        <td>
+            <div style="margin-left: 20px;">
+                <div>User: {{submission.user}}</div>
+                <div>Meal: {{submission.meal}}</div>
+                <div>Date: {{submission.date}}</div>
+            </div>
+        </td>
+        <td>
+            <div style="margin-left: 20px;">
+                <div>Submitted: {{submission.submitted}}</div>
+                <div>Processed: {{submission.processed}}</div>
+                <div>Completed: {{submission.completed}}</div>
+            </div>
+        </td>
+        <td>
+            <div style="margin-left: 20px;">
+                {% with stats=submission.stats %}
+                    <div>Jobs: {{stats.n_jobs}}</div>
+                    <div>HITs: {{stats.n_hits}}</div>
+                    <div>Reward: ${{stats.total_reward|floatformat:2}}</div>
+                    <div>Completed in: {{stats.completion_time}}</div>
+                {% endwith %}
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{{ stats }}
+<div>
+    <a href="{{path}}/submissions/?limit={{next_limit}}">Load more</a>
+</div>
+
+{% endblock authenticated-content %}

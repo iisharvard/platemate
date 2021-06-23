@@ -1,7 +1,7 @@
-{% extends "fe/base.html" %}
+{% extends "fe/authenticated.html" %}
 {% load food_tags %}
 
-{% block content %}
+{% block authenticated-content %}
 
 <style type="text/css">
 td.hidden {
@@ -119,15 +119,18 @@ function updateTotals() {
   }
 }
 </script>
-<div id="main">
-<img src="{{path}}/static/img/logo.png" height="75"/>
-<div id="loggedin">Logged in as {{ user.username }}. <a href="{{path}}/logout/">Logout.</a></div>
+
+<style type="text/css">
+  #nav {
+    margin: 10px 0;
+  }
+</style>
+
 <div id="nav">
   <strong>{{day}}</strong>
   <div id="date-select">View another date: <input type="text" id="datepicker" value="{{ day }}" /></div>
 </div>
 
-<div id="main-content">
 <script type="text/javascript">
   $(function() {
   	$( "#datepicker" ).datepicker({
@@ -194,6 +197,4 @@ function updateTotals() {
 </form>
 </div>
 
-</div>
-</div>
-{% endblock content %}
+{% endblock authenticated-content %}

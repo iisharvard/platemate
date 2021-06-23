@@ -3,7 +3,8 @@ from django.http import HttpResponse, Http404, HttpResponseBadRequest, HttpRespo
 from django.core.context_processors import csrf
 from django.shortcuts import get_object_or_404, render
 from models.common import *
-from management.models import Manager
+from management.models.manager import Manager
+from management.models.turk import Hit
 #from django.contrib.auth.decorators import login_required
 from django import forms
 from datetime import date, datetime
@@ -146,7 +147,7 @@ def fe_day(request, day):
             "day": d,
             "path": settings.URL_PATH,
             "form": SubmissionForm(initial={"date": d}),
-            "debug": "debug" in request.REQUEST,
+            "debug": "debug" in request.GET,
         }
         c.update(csrf(request))
         return render(request, "fe/index.html", context=c)
@@ -176,7 +177,8 @@ def api_submission_statuses(request):
         logger.exception("ValueError checking submission statuses")
         return HttpResponseBadRequest("There was an error, please try again.")
 
-def photo_summary(request, submission_id):
+@login_required
+def submission_details(request, submission_id):
     submission = Submission.objects.get(pk=submission_id)
     photo = submission.photo
     box_group = BoxGroup.objects.filter(photo=photo)
@@ -221,6 +223,43 @@ def photo_summary(request, submission_id):
         'box_group': box_group[0]
     }
     return render(request, "fe/food_summary.html", context=c)
+
+@login_required
+def submission_list(request):
+    page_size = 10
+    limit = request.GET.get('limit', str(page_size)) # poor man's pagination
+    limit = int(limit)
+    submissions = Submission.objects.order_by('-id')[:limit]
+    return render(
+        request,
+        'fe/submissions.html',
+        context={
+            "submissions": submissions,
+            "path": settings.URL_PATH,
+            "next_limit": limit + page_size,
+        }
+    )
+
+@login_required
+def hit_list(request):
+    page_size = 25
+    limit = request.GET.get('limit', str(page_size)) # poor man's pagination
+    limit = int(limit)
+    operation = request.GET.get('operation')
+    if operation:
+        hits = Hit.objects.filter(manager__operation=operation).order_by('-creation_time')[:limit]
+    else:
+        hits = Hit.objects.all().order_by('-creation_time')[:limit]
+    return render(
+        request,
+        'fe/hits.html',
+        context={
+            "hits": hits,
+            "path": settings.URL_PATH,
+            "next_limit": limit + page_size,
+            "operation": operation,
+        }
+    )
 
 @login_required
 def edit_ingredient(request):
