@@ -116,7 +116,10 @@ class MTurkClient:
                 xml_doc = xmltodict.parse(assignment['Answer'])
                 for answer_field in xml_doc['QuestionFormAnswers']['Answer']:
                     field = answer_field['QuestionIdentifier']
-                    response = answer_field['FreeText']
+                    # Some responses are coming as empty XML elements, resulting in the value of response for this key
+                    # to be None. DB has a NOT NULL constraint on this field. As a temp fix assign empty string to make
+                    # the response save successfully.
+                    response = answer_field['FreeText'] or ''
                     asst['answer'][field] = response
                 results.append(asst)
             return results
