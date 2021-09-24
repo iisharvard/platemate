@@ -171,7 +171,7 @@ def api_submission_statuses(request):
                 status = 'NOT_FOUND'
                 data = {}
             response_json[submission_id] = {"status": status, "data": data}
-        logger.info("Submission statuses fetched successfully")
+        logger.debug("Submission statuses fetched successfully")
         return JsonResponse(response_json, safe=False)
     except ValueError:
         logger.exception("ValueError checking submission statuses")
