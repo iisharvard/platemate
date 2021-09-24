@@ -10,27 +10,6 @@ import sys
 from datetime import datetime
 import xmltodict
 
-def catcherror(f):
-    def new_f(*args, **kwargs):
-        try:
-            f(*args, **kwargs)
-        except ClientError as e:
-            type, value, tb = sys.exc_info()
-
-            message = '----------------\n'
-            message += '    WARNING\n'
-            message += '----------------\n'
-            message += str(value)
-            message += '\n----------------\n'
-            log(message, TURK_WARNING)
-
-            #print 'Type: %s' % type
-            #print 'Value: %s' % value
-            #print 'Traceback:'
-            #traceback.print_tb(tb)
-
-    return new_f
-
 class MTurkClient:
 
     # SETUP
@@ -140,7 +119,6 @@ class MTurkClient:
             NumberOfAdditionalAssignments=extras,
         )
 
-    @catcherror
     def delete_hit(self, hit_id):
         self.c.update_expiration_for_hit(
             HITId=hit_id,
@@ -157,14 +135,12 @@ class MTurkClient:
 
     # ASSIGNMENTS
     # ===========
-    @catcherror
     def approve(self, asst_id, feedback=None):
         return self.c.approve_assignment(
             AssignmentId=asst_id,
             RequesterFeedback=feedback,
         )
 
-    @catcherror
     def reject(self, asst_id, feedback=None):
         self.c.reject_assignment(
             AssignmentId=asst_id,
