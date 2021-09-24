@@ -1,6 +1,7 @@
 from food.models.common import *
 import management.models as base
 from food.models import tag
+from logger import *
 
 # Roughly means, if boxes are within 30% side length of each other and very close, approve.
 MIN_SIMILARITY = 0.7
