@@ -136,10 +136,16 @@ class MTurkClient:
     # ASSIGNMENTS
     # ===========
     def approve(self, asst_id, feedback=None):
-        return self.c.approve_assignment(
-            AssignmentId=asst_id,
-            RequesterFeedback=feedback,
-        )
+        try:
+            return self.c.approve_assignment(
+                AssignmentId=asst_id,
+                RequesterFeedback=feedback,
+            )
+        except ClientError as e:
+            if "This operation can be called with a status of" in str(e):
+                log("Tried to approve assignment but it is already approved or rejected; skipping", MANAGER_CONTROL)
+            else:
+                raise e
 
     def reject(self, asst_id, feedback=None):
         self.c.reject_assignment(
