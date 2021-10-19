@@ -364,7 +364,7 @@ def api_photo_upload(request):
         photo_name = str(random.randint(0, 1000000)) + "_" + time_string + "_" + photo.name
         static_sub_dir = 'api/photos'
         saved_photo_url = process_photo_and_get_url(photo, static_sub_dir, photo_name)
-        p = Photo.factory(photo_url=saved_photo_url)
+        p = Photo.factory(photo_url=saved_photo_url, caption=request.REQUEST['caption'])
         u = create_or_get_api_user()
 
         s = Submission(
