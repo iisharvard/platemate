@@ -58,6 +58,12 @@ table.list {
     font-size: 90%;
 }
 
+.caption {
+  max-width: 400px;
+  background-color: white;
+  padding-top: 3px;
+}
+
 /* DRAW BOXES */
 
 td.taglist {
@@ -221,7 +227,7 @@ textarea.food_ingredients {
 /* MEASURE */
 
 .portion_guide {
-    width: 400px;    
+    width: 400px;
     background-color: #cc3300;
 }
 
@@ -232,7 +238,7 @@ textarea.food_ingredients {
     padding: 5px;
     border-bottom: 1px dotted white;
 }
- 
+
 .portion_guide td.heading {
     font-weight: bold;
     color: #cc3300;

@@ -1,7 +1,7 @@
 {% extends "hit_base.html" %}
 
 {% block instructions %}
-We need your help breaking up a picture into different foods. For each photo, <b>draw boxes around each item on the plate</b>. After each box, <b>click the "Add" button</b>. You'll see every item you've selected to the right of the photo, and can remove items if you want to draw them again. If the photo does not contain food, please skip this hit.  
+We need your help breaking up a picture into different foods. For each photo, <b>draw boxes around each item on the plate</b>. After each box, <b>click the "Add" button</b>. You'll see every item you've selected to the right of the photo, and can remove items if you want to draw them again. If the photo does not contain food, please skip this hit.
 <ul>
     <li>One item might have many ingredients
     <li><b>Example:</b> if you see a sandwich and a side salad, draw two boxes.
@@ -38,6 +38,9 @@ We need your help breaking up a picture into different foods. For each photo, <b
       <tr>
         <td valign='top'>
           <img src='{{ job.photo.photo_url }}' id='{{ job.id }}_photo' /><br />
+          {% if job.photo.caption %}
+            <div class="caption">{{ job.photo.caption }}</div>
+          {% endif %}
           <input type='button' class='addbutton' id='{{ job.id }}_add' value='Add' />
         </td>
         <td valign='top' class='taglist'>

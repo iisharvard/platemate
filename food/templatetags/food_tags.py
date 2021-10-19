@@ -14,8 +14,9 @@ def annotate_photo(value):
     if class_name == 'BoxGroup':
         boxes = value.boxes.all()
         if len(boxes) == 0:
-            return mark_safe("<div class='container'><img class='mainphoto' src='" + value.photo.photo_url + "' /></div>")
-        photo_url = boxes[0].photo.photo_url
+            photo_url = value.photo.photo_url
+        else:
+            photo_url = boxes[0].photo.photo_url
         other_boxes = []
     elif class_name == 'Box':
         bg = value.group
@@ -28,6 +29,8 @@ def annotate_photo(value):
 
     #photo_url = arg.photo_url
     ret = "<div class='container'><img class='mainphoto' src='" + photo_url + "' />"
+    if value.photo.caption is not None:
+        ret += "<div class='caption'>" + value.photo.caption + "</div>"
     for box in boxes:
         ret += "<span class='box' style='background-image: url(" + photo_url + "); background-position: -" + str(box.x) + "px -" + str(box.y) + "px; top: " + str(box.y) + "px; left: " + str(box.x) + "px; width: " + str(box.width) + "px; height: " + str(box.height) + "px;'></span>"
         ret += "<span class='box-border' style='top: " + str(box.y) + "px; left: " + str(box.x) + "px; width: " + str(box.width) + "px; height: " + str(box.height) + "px;'></span>"

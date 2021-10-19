@@ -5,6 +5,9 @@
         {{ submission.tagged_boxes|annotate_photo }}
       {% else %}
         <img src="{{submission.photo.photo_url}}" alt="Photo" />
+        {% if submission.photo.caption %}
+          <div class="caption">{{ submission.photo.caption }}</div>
+        {% endif %}
       {% endif %}
     </td>
     <td valign="top" class="submission">
@@ -15,7 +18,7 @@
               {% if ingredients|length > 1 and box %}
                 <tr id="i_list_{{ingredients.id}}"><td colspan="5" class="list_name">{{ box.desc }}</td></tr>
               {% endif %}
-              
+
               {% for ingredient in ingredients %}
                 <tr id="i_{{ingredient.id}}" {% if not ingredient.from_turk and not ingredient.hidden %}class='user-added'{% endif %}>
                   {% if ingredients|length > 1 and box %}
@@ -40,9 +43,9 @@
           {% else %}
             <em>Your photo has been submitted.  Hang tight!</em>
           {% endif %}
-        {% endif %} 
+        {% endif %}
       {% endif %}
-      
+
        {% if debug or submission.completed or submission.manual %}
         <tr id="{{submission.id}}_add">
            <td colspan="5" class="add-food">
@@ -50,7 +53,7 @@
              <input type="text" id="new_food_{{submission.id}}" size="20" style="display:none" />
            </td>
          </tr>
-         
+
        </table>
       {% endif %}
        <div style="margin: 1em 0 0 0;">
@@ -60,7 +63,7 @@
        </div>
   </td>
  </tr>
- 
+
  <script type="text/javascript">
  $(function() {
    $("#new_food_{{ submission.id }}").autocomplete({
@@ -69,10 +72,10 @@
      select: function(event, ui){
        var foodId = ui.item.value;
        var foodName = ui.item.label;
-       //if (confirm("Are you sure you want to add " + foodName + "?")) { 
+       //if (confirm("Are you sure you want to add " + foodName + "?")) {
          add_ingredient({{submission.id}}, foodId);
        //}
-      
+
        $("#new_food_{{ submission.id }}")[0].value = "";
        return false;
      }

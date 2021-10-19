@@ -123,6 +123,7 @@ class Submission(SmartModel):
 
 class Photo(SmartModel):
     photo_url = URLField(verbose_name="Photo URL")
+    caption = CharField(max_length=500, null=True, default=None)
 
     def __str__(self):
         return self.photo_url
