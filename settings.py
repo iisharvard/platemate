@@ -169,6 +169,12 @@ LOGGING = {
             'filename': os.path.join(BASE_PATH, 'log/concise.log'),
             'formatter': 'stamped'
         },
+        'content_type_debug': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_PATH, 'log/content_type_debug.log'),
+            'formatter': 'stamped'
+        },
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
@@ -179,8 +185,12 @@ LOGGING = {
         'django': {
             'handlers': ['verbose', 'concise', 'mail_admins'],
             'propagate': True,
-            'level':'DEBUG',
+            'level': 'DEBUG'
         },
+        'content_type_debug': {
+            'handlers': ['content_type_debug'],
+            'level': 'DEBUG'
+        }
     }
 }
 

@@ -18,9 +18,7 @@ MANAGER_CONTROL = 20
 TURK_CONTROL = 20
 
 logger = logging.getLogger('django')
-
-content_type_logger = logging.getLogger('content_type_logger')
-content_type_logger.setLevel(logging.INFO)
+content_type_logger = logging.getLogger('content_type_debug')
 
 def log(message, level, *args):
     if level >= MIN_LEVEL:
@@ -29,4 +27,4 @@ def log(message, level, *args):
             logger.log(level, pprint.pformat(arg))
 
 def log_content_type_info(message):
-    content_type_logger.info(message)
+    content_type_logger.debug(message)
