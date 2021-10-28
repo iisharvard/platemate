@@ -157,16 +157,10 @@ LOGGING = {
         },
     },
     'handlers': {
-        'verbose': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_PATH, 'log/verbose.log'),
-            'formatter': 'stamped'
-        },
-        'concise': {
+        'app': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_PATH, 'log/concise.log'),
+            'filename': os.path.join(BASE_PATH, 'log/app.log'),
             'formatter': 'stamped'
         },
         'content_type_debug': {
@@ -183,7 +177,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['verbose', 'concise', 'mail_admins'],
+            'handlers': ['app', 'mail_admins'],
             'propagate': True,
             'level': 'DEBUG'
         },
