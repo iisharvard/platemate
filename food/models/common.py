@@ -60,23 +60,22 @@ class Submission(SmartModel):
         self.processed = datetime.now()
         self.save()
 
+    def check_all_identified(self):
+        if self.tagged_boxes is None:
+            return False
+
+        tagged_boxes = self.tagged_boxes.boxes.all()
+        matched_boxes = set([i.box for i in self.identified_ingredients.all()])
+        return len(tagged_boxes) == len(tagged_boxes)
+
     def check_completed(self):
         if self.completed is not None:
             return True
 
-        if self.tagged_boxes is None:
-            return False
-
-        # Have all the tagged boxes been measured?
-
-        matched_boxes = set([i.box for i in self.identified_ingredients.all()])
-        tagged_boxes = self.tagged_boxes.boxes.all()
-
-        if len(matched_boxes) != len(tagged_boxes):
+        if not self.check_all_identified():
             return False
 
         # Have all the measured boxes been identified?
-
         num_identified = self.identified_ingredients.count()
         num_measured = self.measured_ingredients.count()
         if num_measured == num_identified:
