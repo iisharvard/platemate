@@ -79,7 +79,8 @@ class SmartModel(Model):
 class OneOf(ForeignKey):
 
     def __init__(self, *args, **kwargs):
-        kwargs['related_name'] = '+'
+        if 'related_name' not in kwargs:
+            kwargs['related_name'] = '+'
         kwargs['null'] = True
         super(OneOf, self).__init__(*args, **kwargs)
 
