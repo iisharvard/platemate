@@ -447,7 +447,7 @@ class Ingredient(SmartModel):
 
 class IngredientList(SmartModel):
     ingredients = ManyOf(Ingredient, related_name='list')
-    box = OneOf(Box)
+    box = OneOf(Box, related_name='ingredient_list')
 
     def __eq__(self, other):
         return [i.food.pk for i in self.ingredients.all()] == [i.food.pk for i in other.ingredients.all()]

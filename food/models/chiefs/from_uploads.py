@@ -15,27 +15,26 @@ class Manager(base.Manager):
 
     def setup(self):
         self.hire(tag.draw_maybe_vote, 'tag')
-        self.hire(identify.describe_match_maybe_vote, 'identify')
+        self.hire(identify.identify_all, 'identify_all')
         self.hire(measure.estimate, 'measure')
 
     def work(self):
-        # New submissions -> Tag
+        # New submissions -> tag
         for submission in Submission.objects.filter(processed=None):
             submission.manager = self
             submission.mark_processed()
             log('New submission %s now processing!' % submission, MANAGER_CONTROL)
             self.employee('tag').assign(photo=submission.photo)
 
-        # Tag -> Identify
+        # tag -> identify_all
         for output in self.employee('tag').finished:
             submission = output.box_group.submission
             submission.tagged_boxes = output.box_group
             submission.save()
-            for box in output.box_group.boxes.all():
-                self.employee('identify').assign(box=box)
+            self.employee('identify_all').assign(box_group=output.box_group)
 
-       # Identify -> Measure
-        for output in self.employee('identify').finished:
+       # identify_all -> measure
+        for output in self.employee('identify_all').finished:
             submission = output.ingredient_list.box.photo.submission
             for ingredient in output.ingredient_list.ingredients.all():
                 submission.identified_ingredients.add(ingredient)
@@ -43,7 +42,7 @@ class Manager(base.Manager):
             for ingredient in output.ingredient_list.ingredients.all():
                 self.employee('measure').assign(ingredient=ingredient)
 
-        # Measure -> active submission
+        # measure -> active submission
         for output in self.employee('measure').finished:
             submission = output.ingredient.submission
             submission.measured_ingredients.add(output.ingredient)
