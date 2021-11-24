@@ -4,9 +4,11 @@ from django.shortcuts import get_object_or_404, render
 from models import *
 from food.models import *
 #from urllib2 import urlopen
+from django.views.decorators.csrf import csrf_exempt
 import requests
 import httpagentparser
 import os, glob
+import json
 
 default_assignment_id = 'ASSIGNMENT_ID_NOT_AVAILABLE'
 
@@ -74,7 +76,26 @@ def show_hit(request, hit_id):
         "ip": ip,
         "path": settings.URL_PATH,
         "example_urls": examples,
+        "stubbed_hits": os.getenv("STUB_TURK") is not None,
     })
+
+@csrf_exempt
+def save_stubbed_hit(request):
+    if os.getenv("STUB_TURK") is None:
+        return HttpResponse("Dev mode only!")
+
+    data = {}
+    data["assignment_id"] = request.POST["assignmentId"]
+    answers = request.POST.copy()
+    answers.pop("hitId")
+    answers.pop("assignmentId")
+    data["answers"] = answers
+    filename = os.path.join(settings.BASE_PATH, 'tmp', 'hit_%s.json' % request.POST["hitId"])
+    with open(filename, 'w') as outfile:
+        json.dump(data, outfile)
+
+    return HttpResponse("HIT results saved to %s" % filename)
+
 
 def show_responses(request, operation):
     # Limiting the result set here, so the page does not grow unbounded

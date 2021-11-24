@@ -15,7 +15,7 @@
     $(document).ready(function() {
         $( "#tabs" ).tabs();
     });
-        
+
     $(document).ready(function() {
       $('form input').keydown(function(event){
         if(event.keyCode == 13) { // Prevent enter submitting
@@ -24,27 +24,28 @@
         }
       });
     });
-    
-        
+
+
   </script>
 
 
   </head>
   <body>
 
-    <div id="wrapper"> 
+    <div id="wrapper">
 
-       {% if hit.manager.sandbox %}
-
-           <form action='//workersandbox.mturk.com/mturk/externalSubmit' method='POST' name='hitForm' >
-       {% else %}
-
+        {% if stubbed_hits %}
+            <form action='/hit/save_stubbed/' method='POST' name='hitForm' >
+        {% elif hit.manager.sandbox %}
+            <form action='//workersandbox.mturk.com/mturk/externalSubmit' method='POST' name='hitForm' >
+        {% else %}
             <form action='//www.mturk.com/mturk/externalSubmit' method='POST' name='hitForm' >
-       {% endif %}
-       
+        {% endif %}
+
         <input type='hidden' name='country' value='{{ country }}' />
         <input type='hidden' name='browser' value='{{ browser }}' />
         <input type='hidden' name='os' value='{{ os }}' />
+        <input type='hidden' name='hitId' value='{{ hit.turk_id }}' />
         <input type='hidden' name='assignmentId' value='{{ assignment }}' />
         <input type='hidden' name='ip' value='{{ ip }}' />
 
@@ -78,9 +79,9 @@
                 <br/><br/>We use your answers to break down a picture into different foods, identify what those foods are, match them up with a nutritional database, and estimate how much of each food is there. Every step is important, and we appreciate your hard work!
         	</div>
         </div><br />
-        
+
         {% block jobs %}{% endblock jobs %}
-        
+
         <br />
         {% comment "Disabling this for now b/c nobody was checking it and there is a 'Report HIT' feature that this kind of conflicts with" %}
         Thanks for working on our HITs! If you have any feedback on our task, please let us know, especially if the instructions are unclear or something isn't working.<br /><br />
@@ -89,20 +90,20 @@
 
         {% if forbidden %}
             <script>
-                $(document).ready(function() { 
-                    $.blockUI({ message: '<h1>Please skip to another HIT.</h1> Because you worked on an earlier stage of this HIT, you are not eligible to do this one. We apologize for the inconvenience.' }); 
-                }); 
+                $(document).ready(function() {
+                    $.blockUI({ message: '<h1>Please skip to another HIT.</h1> Because you worked on an earlier stage of this HIT, you are not eligible to do this one. We apologize for the inconvenience.' });
+                });
             </script>
         {% else %}
             {% if assignment == "ASSIGNMENT_ID_NOT_AVAILABLE" %}
               <input type='submit' id='submitButton' value='You must ACCEPT the HIT before you can submit the results.' disabled>
               <script>
-                $(document).ready(function() { 
-                    $.blockUI({ message: 'Click "Accept HIT" above to work on this.' }); 
-                }); 
+                $(document).ready(function() {
+                    $.blockUI({ message: 'Click "Accept HIT" above to work on this.' });
+                });
               </script>
-              
-              
+
+
             {% else %}
 
               <script>
@@ -112,7 +113,7 @@
 					validation_passed = VALIDATE_INPUT()
 				if(validation_passed)
 					document.hitForm.submit()
-					
+
 			}
               </script>
               <input type='button' id='submitButton' value='Submit HIT' onclick="validate_and_submit()">

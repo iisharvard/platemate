@@ -9,6 +9,11 @@ from helpers import *
 import sys
 from datetime import datetime
 import xmltodict
+import os
+import json
+from random import randrange
+from django.conf import settings
+
 
 class MTurkClient:
 
@@ -56,6 +61,10 @@ class MTurkClient:
         replacing template {tags} with input values, and then send the URL to
         the newly created page to MTurk."""
 
+        if os.getenv("STUB_TURK"):
+            log('(Not actually creating HIT on Turk b/c in stub mode.)', MANAGER_CONTROL)
+            return str(randrange(sys.maxint)), str(randrange(sys.maxint))
+
         settings = self.default_settings.copy()
         settings['LifetimeInSeconds'] = extra_settings.get('lifetime', DAY)
         settings['AssignmentDurationInSeconds'] = extra_settings.get('duration', 10 * MINUTE)
@@ -75,8 +84,13 @@ class MTurkClient:
         return self.c.get_hit(HITId=hit_id)["HIT"]
 
     def hit_results(self, hit_id, type=None): # type in ['Submitted','Approved','Rejected',None]
-        results = []
+        if os.getenv("STUB_TURK"):
+            return self.stubbed_hit_results(hit_id)
+        else:
+            return self.real_hit_results(hit_id)
 
+    def real_hit_results(self, hit_id):
+        results = []
         try:
             response = self.c.list_assignments_for_hit(
                 HITId=hit_id,
@@ -105,6 +119,43 @@ class MTurkClient:
         except:
             log(u'Error getting assignments for HIT %s. Does this hit exist on Amazon?' % (hit_id), MANAGER_CONTROL)
             return []
+
+    def stubbed_hit_results(self, hit_id):
+        path = os.path.join(settings.BASE_PATH, 'tmp', 'hit_%s.json' % hit_id)
+        log("Looking for stubbed HIT data in %s" % path, MANAGER_CONTROL)
+        if not os.path.exists(path):
+            return []
+
+        response = json.load(open(path))
+
+        # JSON written from our stub endpoint will look like: (single assignment written at a time)
+        # {
+        #     "assignment_id": "123",
+        #     "answers": {
+        #         "job_12_field1": "foo",
+        #         "job_12_field2": "bar"
+        #     }
+        # }
+
+        asst = {
+            'worker_id': 'worker123',
+            'assignment_id': response['assignment_id'],
+            'auto_approval_time': datetime.now(),
+            'accept_time': datetime.now(),
+            'submit_time': datetime.now(),
+            'assignment_status': datetime.now(),
+            'answer': {},
+        }
+
+        log(response['answers'], MANAGER_CONTROL)
+
+        for key, value in response['answers'].items():
+            asst['answer'][key] = value or ''
+
+        os.remove(path)
+
+        return [asst]
+
 
     # URL of a HIT on MTurk
     def hit_url_turk(self, hit_id):
@@ -136,6 +187,10 @@ class MTurkClient:
     # ASSIGNMENTS
     # ===========
     def approve(self, asst_id, feedback=None):
+        if os.getenv("STUB_TURK") is not None:
+            log("Not really approving assignment since stubbed", MANAGER_CONTROL)
+            return
+
         try:
             return self.c.approve_assignment(
                 AssignmentId=asst_id,
