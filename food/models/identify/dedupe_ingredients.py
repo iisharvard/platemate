@@ -20,14 +20,36 @@ class Response(base.Response):
     selected_ingredients = OneOf(IngredientList)
     unselected_ingredients = OneOf(IngredientList)
 
+    # We assume here that client side validation has caught any attempt to submit zero selected
+    # ingredients.
     def validate(self):
-        self.raw = self.ingredients_choice
-        if self.ingredients_choice in ['', ' ', None]:
-            return "No choice of ingredients provided"
-        try:
-            self.ingredient_list = IngredientList.objects.get(pk=self.ingredients_choice)
-        except ObjectDoesNotExist:
-            return "Invalid choice entered"
+        # Parse out ingredient parameters coming from form into nice clean dictionary.
+        ingredient_params = {int(key[11:]): value == '1' for key, value in vars(self).items()
+                             if key.startswith('ingredient_')}
+
+        # Prepare lists
+        box = self.to_job.selected_ingredients.box
+        self.selected_ingredients = IngredientList(box=box)
+        self.unselected_ingredients = IngredientList(box=box)
+        self.selected_ingredients.save()
+        self.unselected_ingredients.save()
+
+        # Sort ingredients into lists
+        for food_id, selected in ingredient_params.items():
+            ingredient = Ingredient(food=Food.get_food(food_id))
+            # We need to include a box with the ingredients so that subsequent code
+            # can access the submission. This is a big code smell but we're just dealing with it for now.
+            # The box we set here may not be the same box the ingredient originally came from,
+            # but that doesn't matter since we're no longer highlighting any of the boxes in the measure step.
+            ingredient.box = box
+            ingredient.save()
+            if selected:
+                self.selected_ingredients.ingredients.add(ingredient)
+            else:
+                self.unselected_ingredients.ingredients.add(ingredient)
+        self.selected_ingredients.save()
+        self.unselected_ingredients.save()
+        self.save()
 
         return True
 

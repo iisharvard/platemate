@@ -79,7 +79,7 @@ In a third console tab, run the background script, also with the `STUB_TURK` env
 
 To add a new photo submission:
 
-    curl -F "upload=@static/photos/alpha2/pilot8.jpg" -F "caption=grilled+chicken,+rice,+and+veggies" -H "X-Api-Key: xxx" "http://localhost:8000/api/upload_photo"
+    curl -F "upload=@static/photos/alpha2/pilot8.jpg" -F "caption=grilled chicken, rice, and veggies" -H "X-Api-Key: xxx" "http://localhost:8000/api/upload_photo"
 
 (Change `xxx` to your API key if applicable.)
 
@@ -98,11 +98,17 @@ You should see fake HIT creation in the app log:
 Now visit each of the `Stubbed HIT URL`s printed in the log and perform the job.
 Most terminal applications provide a shortcut for doing this. On Mac OS X, it's Cmd+Double-click.
 
+You can only submit each link once.
+
 When you submit the form, it should say the data was saved to a temporary file.
 You should then see the app's log find the data and process it.
 
 Wait for each submission to be processed before submitting another one. Otherwise multiple submissions for the same HIT may overwrite each other.
-  It may take several iterations of the background loop for a new HIT to be generated or for the
+It may take several iterations of the background loop for a new HIT to be generated or for the
 app to report that the submission is complete.
+
+It is a good idea to take frequent snapshots of your development database at each stage of the process. That way, if you
+encounter a bug and make a change, you can run the code again without having to start over from the beginning.
+Undoing a HIT submission in the database is not straightforward. It is much easier to save snaphots and roll back.
 
 If new HITs are created, visit the new stub URLs, and repeat the process above.
