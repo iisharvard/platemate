@@ -67,7 +67,7 @@ class Submission(SmartModel):
 
         tagged_boxes = self.tagged_boxes.boxes.all()
         matched_boxes = set([i.box for i in self.identified_ingredients.all()])
-        return len(tagged_boxes) == len(tagged_boxes)
+        return len(tagged_boxes) == len(matched_boxes)
 
     def check_completed(self):
         if self.completed is not None:
