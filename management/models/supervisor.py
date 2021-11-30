@@ -9,6 +9,7 @@ from django.db import transaction
 from datetime import datetime
 from time import sleep
 from urllib import unquote
+from random import randrange
 import json
 
 class Supervisor(object):
@@ -137,6 +138,9 @@ class Supervisor(object):
                 Turk ID: %s
                 Turk URL: %s
                 Type: %s""" % (hit.id, len(jobs), self.duplication, hit.external_url, hit.turk_id, hit.turk_url, self.__class__.__name__), MANAGER_CONTROL)
+            if os.getenv("STUB_TURK"):
+                for i in range(0, self.duplication):
+                    log("Stubbed HIT URL %s: %s?assignmentId=%s" % (str(i + 1), hit.external_url, str(randrange(sys.maxint))), MANAGER_CONTROL)
 
         # TODO(jon): error handling
         return hit
