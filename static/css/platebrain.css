@@ -84,11 +84,14 @@ div.tagphotos {
 /* ANNOTATED PHOTOS */
 .container {
   position: relative;
-  background: black;
   width: 400px;
 }
 
-.mainphoto {
+.container.with-overlay {
+  background: black;
+}
+
+.container.with-overlay .mainphoto {
   opacity:0.6;
   filter:alpha(opacity=60);
 }
