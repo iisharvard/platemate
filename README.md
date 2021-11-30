@@ -2,106 +2,107 @@
 
 PlateMate: crowdsourcing nutritional analyses from food photographs
 
+## Prerequisites
+
+* libjpeg-dev for image manipulation
+* PostgreSQL for storage, with empty database named `platemate`
+* Python 2.7
+* Pip and Virtualenv packages
+
 ## Setup
 
-### Install requirements
+Setup and enter virtual environment:
 
-```ShellSession
-sudo apt-get install libjpeg-dev
-pip install -r requirements.txt
-```
+    python -m virtualenv venv
+    source venv/bin/activate
 
-This should install:
+Then install requirements:
 
-* Django 1.8.16
-* Pillow (latest)
-* Boto3 (latest)
-* httpagentparser (latest)
-* oauth latest
+    pip install -r requirements.txt
 
-## Modify Local Settings
+Next, set up environment variables for local settings:
 
-* For a development environment, copy .env.example to .env and set any relevant variables.
-* For a production environment, do the same, or set the environment variables in .bashrc or some other method.
+    cp .env.example .env
+    nano .env
 
-## Run local version of Postgres Server
+Next, migrate the database:
 
-If Postgres is installed with `brew` - `brew info postgresql@9.5`
+    python manage.py migrate auth
+    python manage.py migrate
 
-```shell script
-pg_ctl -D /usr/local/var/postgresql@9.5 start
-```
+and add an admin user:
 
-Check if DB is accessible with `psql`:
+    python manage.py createsuperuser
 
-```shell script
-psql platemate platemate
-```
+Finally, to run the dev server:
 
-## Create Database Tables
+    python manage.py runserver
 
-From the platemate directory, run:
+See below for more info on development environment workflows.
 
-```ShellSession
-python manage.py migrate auth
-python manage.py migrate
-```
+## Resetting the Database
 
-## Add an admin user
+Ensure that no connections are open (stop development server and/or scripts). Then drop and recreate the database with:
 
-```ShellSession
-python manage.py createsuperuser
-# TODO add the user to initial data fixutre (or is there one?)
-```
+    dropdb platemate
+    createdb platemate
 
-## Change password of existing user
+Then re-run migrations:
 
-```shell script
-python manage.py changepassword <username>
-```
+    python manage.py migrate auth
+    python manage.py migrate
+    python manage.py createsuperuser
 
-## Run the project
+Remember the username and password for the superuser account as you may need it later.
 
-```ShellSession
-python manage.py runserver 0.0.0.0:8000
-```
+## Stubbing Mechanical Turk
 
-or
+To speed up development you may want to complete HITs directly rather than go through Mechanical Turk's sandbox environment.
 
-```ShellSession
-./run.sh
-```
+You can accomplish this as follows:
 
-## Create HITs on Amazon MTurk sandbox
+First, ensure `DEBUG=True` in your `.env` file.
 
-```ShellSession
-python experiment.py BATCH_NAME sandbox
-```
+In one console tab, run dev server using the `STUB_TURK` env variable.
 
-where `BATCH_NAME` is a subdirectory under `static/uploaded`. This is
-hardcoded and specifying any other path will break things.
+    source venv/bin/activate
+    STUB_TURK=1 python manage.py runserver
 
-## Issues
+In another console tab, tail the app log:
 
-### Module Not Found
+    tail -f log/app.log
 
-Cause: Likely an import statement in the module is failing because of a
-missing library.
+In a third console tab, run the background script, also with the `STUB_TURK` env variable:
 
-Fix: Try each import in the module individually.
+    source venv/bin/activate
+    STUB_TURK=1 python uploads.py sandbox
 
-### Database Locked
+To add a new photo submission:
 
-It seems that when both the runserver and the experiment scripts are running,
-there is a race condition on the database that would crash one script if the
-other is accessing the DB.
+    curl -F "upload=@static/photos/alpha2/pilot8.jpg" -F "caption=grilled+chicken,+rice,+and+veggies" -H "X-Api-Key: xxx" "http://localhost:8000/api/upload_photo"
 
-### Accessing the database through adminer on iis-dev:
+(Change `xxx` to your API key if applicable.)
 
-http://adminer.iis-dev.seas.harvard.edu/adminer/
+You should see fake HIT creation in the app log:
 
-### Deleting all hits from mturk AND resetting the database
+    [2021-11-29 14:32:31] INFO [django:25] (Not actually creating HIT on Turk b/c in stub mode.)
+    [2021-11-29 14:32:31] INFO [django:25] Created HIT 1 with 1 jobs and 3 assignments
+                    External URL: http://localhost:8000/hit/1/
+                    Turk ID: 3869167084222035276
+                    Turk URL: https://workersandbox.mturk.com/mturk/preview?groupId=7567002453003033515
+                    Type: box_filter_Manager
+    [2021-11-29 14:32:31] INFO [django:25] Stubbed HIT URL 1: http://localhost:8000/hit/1/?assignmentId=1156712811778504304
+    [2021-11-29 14:32:31] INFO [django:25] Stubbed HIT URL 2: http://localhost:8000/hit/1/?assignmentId=3399088044964261634
+    [2021-11-29 14:32:31] INFO [django:25] Stubbed HIT URL 3: http://localhost:8000/hit/1/?assignmentId=7694945927389101546
 
-```ShellSession
-python cleanup.py flush
-```
+Now visit each of the `Stubbed HIT URL`s printed in the log and perform the job.
+Most terminal applications provide a shortcut for doing this. On Mac OS X, it's Cmd+Double-click.
+
+When you submit the form, it should say the data was saved to a temporary file.
+You should then see the app's log find the data and process it.
+
+Wait for each submission to be processed before submitting another one. Otherwise multiple submissions for the same HIT may overwrite each other.
+  It may take several iterations of the background loop for a new HIT to be generated or for the
+app to report that the submission is complete.
+
+If new HITs are created, visit the new stub URLs, and repeat the process above.
