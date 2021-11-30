@@ -8,7 +8,7 @@ from django.template import defaultfilters
 register = template.Library()
 
 @register.filter
-def annotate_photo(value):
+def annotate_photo(value, overlay=True):
     "Shows the boxes from a BoxGroup or Box on a photo"
     class_name = value.__class__.__name__
     if class_name == 'BoxGroup':
@@ -27,15 +27,18 @@ def annotate_photo(value):
     else:
         return ''
 
+
     #photo_url = arg.photo_url
-    ret = "<div class='container'><img class='mainphoto' src='" + photo_url + "' />"
+    overlay_class = "with-overlay" if overlay else ""
+    ret = "<div class='container %s'><img class='mainphoto' src='%s' />" % (overlay_class, photo_url)
     if value.photo.caption is not None:
         ret += "<div class='caption'>" + value.photo.caption + "</div>"
-    for box in boxes:
-        ret += "<span class='box' style='background-image: url(" + photo_url + "); background-position: -" + str(box.x) + "px -" + str(box.y) + "px; top: " + str(box.y) + "px; left: " + str(box.x) + "px; width: " + str(box.width) + "px; height: " + str(box.height) + "px;'></span>"
-        ret += "<span class='box-border' style='top: " + str(box.y) + "px; left: " + str(box.x) + "px; width: " + str(box.width) + "px; height: " + str(box.height) + "px;'></span>"
-    for box in other_boxes:
-        ret += "<span class='box-border other' style='top: " + str(box.y) + "px; left: " + str(box.x) + "px; width: " + str(box.width) + "px; height: " + str(box.height) + "px;'></span>"
+    if overlay:
+        for box in boxes:
+            ret += "<span class='box' style='background-image: url(" + photo_url + "); background-position: -" + str(box.x) + "px -" + str(box.y) + "px; top: " + str(box.y) + "px; left: " + str(box.x) + "px; width: " + str(box.width) + "px; height: " + str(box.height) + "px;'></span>"
+            ret += "<span class='box-border' style='top: " + str(box.y) + "px; left: " + str(box.x) + "px; width: " + str(box.width) + "px; height: " + str(box.height) + "px;'></span>"
+        for box in other_boxes:
+            ret += "<span class='box-border other' style='top: " + str(box.y) + "px; left: " + str(box.x) + "px; width: " + str(box.width) + "px; height: " + str(box.height) + "px;'></span>"
     ret += "</div>"
     return mark_safe(ret)
 
