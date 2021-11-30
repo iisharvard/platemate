@@ -76,7 +76,8 @@ class Supervisor(object):
         if self.waiting_jobs:
             earliest_job = self.waiting_jobs.aggregate(Min('creation_time'))['creation_time__min']
             time_elapsed = datetime.now() - earliest_job
-            if time_elapsed.seconds >= self.max_wait:
+            max_wait = 2 if settings.DEBUG else self.max_wait
+            if time_elapsed.seconds >= max_wait:
                 self.create_hit(self.waiting_jobs)
 
     def delete_hit(self, hit):

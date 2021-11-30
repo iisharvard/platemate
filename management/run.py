@@ -9,7 +9,7 @@ from time import sleep
 from django.db import transaction
 from helpers import *
 
-CHECK_FREQ = 15.0
+CHECK_FREQ = 3.0 if settings.DEBUG else 15.0
 REFRESH_FREQ = 300.0
 
 def run(chief_module, operation, args={}):
