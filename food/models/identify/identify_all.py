@@ -23,7 +23,9 @@ class Manager(base.Manager):
         for output in self.employee('describe_match_maybe_vote').finished:
             box_group = output.ingredient_list.box.groups.get()
             submission = box_group.submission
-            if submission.check_all_identified():
+            if submission.check_all_identified() and not submission.ingredients_combined:
+                submission.ingredients_combined = True
+                submission.save()
                 self.finish(ingredient_list=self.combined_ingredient_list(box_group))
 
     def combined_ingredient_list(self, box_group):

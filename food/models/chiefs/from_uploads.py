@@ -16,6 +16,7 @@ class Manager(base.Manager):
     def setup(self):
         self.hire(tag.draw_maybe_vote, 'tag')
         self.hire(identify.identify_all, 'identify_all')
+        self.hire(identify.dedupe_ingredients, 'dedupe_ingredients')
         self.hire(measure.estimate, 'measure')
 
     def work(self):
@@ -33,8 +34,12 @@ class Manager(base.Manager):
             submission.save()
             self.employee('identify_all').assign(box_group=output.box_group)
 
-       # identify_all -> measure
+        # identify_all -> dedupe_ingredients
         for output in self.employee('identify_all').finished:
+            self.employee('dedupe_ingredients').assign(ingredient_list=output.ingredient_list)
+
+       # dedupe_ingredients -> measure
+        for output in self.employee('dedupe_ingredients').finished:
             submission = output.ingredient_list.box.photo.submission
             for ingredient in output.ingredient_list.ingredients.all():
                 submission.identified_ingredients.add(ingredient)

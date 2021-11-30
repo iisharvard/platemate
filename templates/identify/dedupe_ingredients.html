@@ -1,0 +1,51 @@
+{% extends "hit_base.html" %}
+{% load food_tags %}
+
+{% block instructions %}
+Below, you will see a picture of a meal and a list of ingredients.
+<br /><br />
+The ingredients are a result of multiple Turkers attempting to identify foods in different parts of the meal.
+This process often results in ingredients that are very similar to each other being specified by different Turkers.
+<br /><br />
+We call these very similar ingredients "duplicates". Your goal is to <b>remove any duplicates and leave
+only the ingredients that best describe the meal</b>.
+<br /><br />
+You can remove an ingredient by un-checking the box next to it.
+<br /><br />
+For example, if the list contained both "Cooked Carrots" and "Carrots", you might un-check "Carrots" and
+leave "Cooked Carrots" checked.
+{% endblock instructions %}
+
+{% block jobs %}
+  <div id="MAIN">
+    {% for job in hit.jobs.all %}
+      <div id='{{ job.id }}_list'>
+        <div class="left">{{ job.selected_ingredients.box|annotate_photo:False }}</div>
+        <div class="right">
+          Considering the picture of the food, <b>un-check any duplicate ingredients</b> below.
+          <br/><br/>
+          {% if job.unselected_ingredients %}
+            Another Turker has already unselected some ingredients. If you think they were wrongly unselected, please re-check their boxes.
+            <br/><br/>
+          {% endif %}
+          If the list looks OK as is, you don't need to make any changes.
+          <br/><br/>
+          Your goal is to <b>select a set of ingredients that best describe the picture</b>, without any duplicates.
+          <br/><br/>
+          When you have finished, click 'Submit HIT' below.
+          <br/><br/>
+          {% for ingredient in job.selected_ingredients.ingredients.all %}
+            {% include "ingredient_check_box.html" with ingredient=ingredient checked=True %}<br/>
+          {% endfor %}
+          {% if job.unselected_ingredients %}
+            {% for ingredient in job.unselected_ingredients.ingredients.all %}
+              {% include "ingredient_check_box.html" with ingredient=ingredient checked=False %}<br/>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+      <div class="break"><br /></div>
+      <hr /><br />
+    {% endfor %}
+  </div>
+{% endblock jobs %}

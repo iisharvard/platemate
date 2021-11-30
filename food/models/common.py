@@ -39,6 +39,7 @@ class Submission(SmartModel):
     processed = DateTimeField(null=True)
     completed = DateTimeField(null=True)
     hidden = BooleanField(default=False)
+    ingredients_combined = BooleanField(default=False)
 
     def breakdown(self):
         boxes = {None: []}
