@@ -21,8 +21,11 @@ class Manager(base.Manager):
         # Each time a box is completed with matching, check if the submission has all ingredients
         # identified. If so, we are done and we merge all the ingredient lists into one.
         for output in self.employee('describe_match_maybe_vote').finished:
-            box_group = output.ingredient_list.box.groups.get()
+            box = output.ingredient_list.box
+            box_group = box.groups.get()
             submission = box_group.submission
+            submission.identified_boxes.add(box)
+            submission.save()
             if submission.check_all_identified() and not submission.ingredients_combined:
                 submission.ingredients_combined = True
                 submission.save()

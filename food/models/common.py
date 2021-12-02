@@ -31,6 +31,9 @@ class Submission(SmartModel):
     identified_ingredients = ManyOf('Ingredient', related_name='identified_for_submissions')
     measured_ingredients = ManyOf('Ingredient', related_name='measured_for_submissions')
 
+    # The boxes that have gone through describe_match_maybe_vote
+    identified_boxes = ManyOf('Box')
+
     # User answers
     manual = BooleanField(default=False)
 
@@ -65,9 +68,7 @@ class Submission(SmartModel):
         if self.tagged_boxes is None:
             return False
 
-        tagged_boxes = self.tagged_boxes.boxes.all()
-        matched_boxes = set([i.box for i in self.identified_ingredients.all()])
-        return len(tagged_boxes) == len(matched_boxes)
+        return self.tagged_boxes.boxes.count() == self.identified_boxes.count()
 
     def check_completed(self):
         if self.completed is not None:
