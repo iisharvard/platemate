@@ -169,13 +169,13 @@ span.food_desc {
     background-color: #efefef;
 }
 
-.foodlist .right, .measure-item .right {
-    margin-left: 420px;
-}
-
 .left {
     float: left;
     padding-right: 20px;
+}
+
+.right {
+    margin-left: 420px;
 }
 
 .food_results, .food_selections {

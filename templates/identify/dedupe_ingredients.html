@@ -14,6 +14,8 @@ You can remove an ingredient by un-checking the box next to it.
 <br /><br />
 For example, if the list contained both "Cooked Carrots" and "Carrots", you might un-check "Carrots" and
 leave "Cooked Carrots" checked.
+<br /><br />
+If no changes are needed, please check the "No changes are needed" box instead.
 {% endblock instructions %}
 
 {% block jobs %}
@@ -28,8 +30,6 @@ leave "Cooked Carrots" checked.
             Another Turker has already unselected some ingredients. If you think they were wrongly unselected, please re-check their boxes.
             <br/><br/>
           {% endif %}
-          If the list looks OK as is, you don't need to make any changes.
-          <br/><br/>
           Your goal is to <b>select a set of ingredients that best describe the picture</b>, without any duplicates.
           <br/><br/>
           When you have finished, click 'Submit HIT' below.
@@ -42,6 +42,13 @@ leave "Cooked Carrots" checked.
               {% include "ingredient_check_box.html" with ingredient=ingredient checked=False %}<br/>
             {% endfor %}
           {% endif %}
+          <br/><br/>
+          <b>If no changes are needed</b>, check the box below instead:
+          <br/><br/>
+          <label>
+            <input type="checkbox">
+            No changes are needed—the list doesn't have any duplicates
+          </label>
         </div>
       </div>
       <div class="break"><br /></div>
