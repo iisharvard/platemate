@@ -29,26 +29,24 @@ class Response(base.Response):
 
         # Prepare lists
         box = self.to_job.selected_ingredients.box
-        self.selected_ingredients = IngredientList(box=box)
-        self.unselected_ingredients = IngredientList(box=box)
-        self.selected_ingredients.save()
-        self.unselected_ingredients.save()
+        selected = IngredientList.objects.create(box=box)
+        unselected = IngredientList.objects.create(box=box)
 
         # Sort ingredients into lists
-        for food_id, selected in ingredient_params.items():
-            ingredient = Ingredient(food=Food.get_food(food_id))
+        for food_id, sel in ingredient_params.items():
             # We need to include a box with the ingredients so that subsequent code
             # can access the submission. This is a big code smell but we're just dealing with it for now.
             # The box we set here may not be the same box the ingredient originally came from,
             # but that doesn't matter since we're no longer highlighting any of the boxes in the measure step.
-            ingredient.box = box
-            ingredient.save()
-            if selected:
-                self.selected_ingredients.ingredients.add(ingredient)
+            ingredient = Ingredient.objects.create(food=Food.get_food(food_id), box=box)
+            if sel:
+                selected.ingredients.add(ingredient)
             else:
-                self.unselected_ingredients.ingredients.add(ingredient)
-        self.selected_ingredients.save()
-        self.unselected_ingredients.save()
+                unselected.ingredients.add(ingredient)
+        selected.save()
+        unselected.save()
+        self.selected_ingredients_id = selected.id
+        self.unselected_ingredients_id = unselected.id
         self.save()
 
         return True
