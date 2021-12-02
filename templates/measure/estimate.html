@@ -2,10 +2,10 @@
 {% load food_tags %}
 
 {% block instructions %}
-In each photo you see below, a box containing one food item will be highlighted.  To the right of each photo you will see the name of one food item underlined.  <b>Estimate how much of that item is in the highlighted portion of the photo.</b>  There are several ways to measure each item (by weight, volume, or other food-specific sizes) so first pick the measurement option that makes it easiest for you to accurately estimate the amount of food. We have provided a portion guide to help you.<br /><br />
+Below, you will see one or more photos of food. To the right of each photo you will see the name of one food item underlined. <b>Estimate how much of that item is in the photo.</b>  There are several ways to measure each item (by weight, volume, or other food-specific sizes) so first pick the measurement option that makes it easiest for you to accurately estimate the amount of food. We have provided a portion guide to help you.<br /><br />
 
-Make sure you only estimate the amount of the specific food listed, and not all foods in the highlighted portion. If you don't think the underlined item appears in the photo, measure the closest thing.
-If a photo does not contain food, please skip this HIT. 
+Make sure you only estimate the amount of the specific food listed. If you don't think the underlined item appears in the photo, measure the closest thing.
+If a photo does not contain food, please skip this HIT.
 {% endblock instructions %}
 
 {% block jobs %}
@@ -14,7 +14,7 @@ If a photo does not contain food, please skip this HIT.
 
     <div id='{{ job.id }}_list' class='measure-item'>
       <div class='left'>
-        {{ job.ingredient.box|annotate_photo }}
+        {{ job.ingredient.box|annotate_photo:False }}
         <br />
         <table class='portion_guide' cellspacing=0>
             <tr>
@@ -62,14 +62,14 @@ If a photo does not contain food, please skip this HIT.
 
       </div>
       <div class='right'>
-        <b>Step 1: Look at the picture.</b> Think about how much <span class='food_desc'>{{ job.ingredient.food.food_name }}</span> is inside the solid red box.  Ignore foods that belong to other boxes, which are marked with dashed lines, or other ingredients in the solid red box.<br /><br />
+        <b>Step 1: Look at the picture.</b> Think about how much <span class='food_desc'>{{ job.ingredient.food.food_name }}</span> is in the picture.<br /><br />
 
-        <b>Step 2: Choose a measurement option.</b> This drop-down contains several ways of measuring <span class='food_desc'>{{ job.ingredient.food.food_name }}</span>.  Select the option that will allow you to most accurately estimate the amount in the highlighted portion of the photo.<br />
+        <b>Step 2: Choose a measurement option.</b> This drop-down contains several ways of measuring <span class='food_desc'>{{ job.ingredient.food.food_name }}</span>.  Select the option that will allow you to most accurately estimate the amount in the photo.<br />
         <select name='{{ job.id }}_serving' id='{{ job.id }}_serving' class="measurement-select">{{ job.ingredient.food|measurement_options }}</select>
         <br /><span class='message' id="{{ job.id }}_desc_message">&nbsp;</span>
         <br /><br />
 
-        <b>Step 3: Estimate your measurement.</b> How much <span class='food_desc'>{{ job.ingredient.food.food_name }}</span> of the unit you selected is there in the highlighted portion of the photo? <b>Write your answer as a decimal, like 1.75</b>. Use the portion guide below the picture.<br />
+        <b>Step 3: Estimate your measurement.</b> How much <span class='food_desc'>{{ job.ingredient.food.food_name }}</span> of the unit you selected is there in the photo? <b>Write your answer as a decimal, like 1.75</b>. Use the portion guide below the picture.<br />
         <input type="text" name='{{ job.id }}_measurement' id='{{ job.id }}_measurement' size='20' class='amount-select' /> <span id="{{ job.id }}_serving_descr">&nbsp;</span> <span id="{{ job.id }}_total">&nbsp;</span>
         <br /><span class='message' id="{{ job.id }}_cal_message">&nbsp;</span>
         <br /><br />
