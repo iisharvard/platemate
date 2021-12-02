@@ -19,6 +19,35 @@ If no changes are needed, please check the "No changes are needed" box instead.
 {% endblock instructions %}
 
 {% block jobs %}
+  <script type="text/javascript">
+    function VALIDATE_INPUT() {
+      var atLeastOneChecked = false;
+      var atLeastOneChanged = false;
+      var noChangesChecked = document.hitForm.querySelector('#no-changes').checked;
+      var ingredientBoxes = document.hitForm.querySelectorAll('input[type=checkbox][name*=ingredient]');
+      ingredientBoxes.forEach((box) => {
+        if (box.checked) {
+          atLeastOneChecked = true;
+        }
+        if (box.checked !== !!box.attributes['data-was-checked']) {
+          atLeastOneChanged = true;
+        }
+      });
+      if (!atLeastOneChecked) {
+        alert('At least one ingredient box must be checked.');
+        return false;
+      }
+      if (noChangesChecked && atLeastOneChanged) {
+        alert("You checked the 'no changes needed' box AND made changes to the ingredient list. Please either make changes to the ingredient selections OR check the 'no changes needed' box, not both.");
+        return false;
+      }
+      if (!noChangesChecked && !atLeastOneChanged) {
+        alert("If the ingredient list looks good as it is and no changes are needed, please check the 'no changes needed' box.");
+        return false;
+      }
+      return true;
+    }
+  </script>
   <div id="MAIN">
     {% for job in hit.jobs.all %}
       <div id='{{ job.id }}_list'>
@@ -46,7 +75,7 @@ If no changes are needed, please check the "No changes are needed" box instead.
           <b>If no changes are needed</b>, check the box below instead:
           <br/><br/>
           <label>
-            <input type="checkbox">
+            <input type="checkbox" id="no-changes">
             No changes are needed—the list doesn't have any duplicates
           </label>
         </div>
