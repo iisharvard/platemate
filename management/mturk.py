@@ -121,8 +121,7 @@ class MTurkClient:
             return []
 
     def stubbed_hit_results(self, hit_id):
-        path = os.path.join(settings.BASE_PATH, 'tmp', 'hit_%s.json' % hit_id)
-        log("Looking for stubbed HIT data in %s" % path, MANAGER_CONTROL)
+        path = self.stubbed_hit_result_path(hit_id)
         if not os.path.exists(path):
             return []
 
@@ -156,6 +155,8 @@ class MTurkClient:
 
         return [asst]
 
+    def stubbed_hit_result_path(self, hit_id):
+        return os.path.join(settings.BASE_PATH, 'tmp', 'hit_%s.json' % hit_id)
 
     # URL of a HIT on MTurk
     def hit_url_turk(self, hit_id):

@@ -142,6 +142,8 @@ class Supervisor(object):
             if os.getenv("STUB_TURK"):
                 for i in range(0, self.duplication):
                     log("Stubbed HIT URL %s: %s?assignmentId=%s" % (str(i + 1), hit.external_url, str(randrange(sys.maxint))), MANAGER_CONTROL)
+                path = self.turk.stubbed_hit_result_path(hit.turk_id)
+                log("Looking for stubbed HIT response data in %s" % path, MANAGER_CONTROL)
 
         # TODO(jon): error handling
         return hit
