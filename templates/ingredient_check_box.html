@@ -1,5 +1,7 @@
 <label>
   <input type="hidden" name="{{job.id}}_ingredient_{{ingredient.food.pk}}" value="0" />
-  <input type="checkbox" name="{{job.id}}_ingredient_{{ingredient.food.pk}}" value="1" {% if checked %}checked data-was-checked{% endif %} />
-  {{ ingredient.food.food_name }}
+  <input type="checkbox" name="{{job.id}}_ingredient_{{ingredient.food.pk}}" value="1"
+    onchange="ingredientBoxChanged(event)"
+    {% if checked %}checked data-was-checked{% endif %} />
+  <span class="food-name">{{ ingredient.food.food_name }}</span>
 </label>

@@ -24,7 +24,7 @@ If no changes are needed, please check the "No changes are needed" box instead.
       var atLeastOneChecked = false;
       var atLeastOneChanged = false;
       var noChangesChecked = document.hitForm.querySelector('#no-changes').checked;
-      var ingredientBoxes = document.hitForm.querySelectorAll('input[type=checkbox][name*=ingredient]');
+      var ingredientBoxes = getAllIngredientBoxes();
       ingredientBoxes.forEach((box) => {
         if (box.checked) {
           atLeastOneChecked = true;
@@ -47,6 +47,28 @@ If no changes are needed, please check the "No changes are needed" box instead.
       }
       return true;
     }
+
+    function getAllIngredientBoxes() {
+      return document.hitForm.querySelectorAll('input[type=checkbox][name*=ingredient]');
+    }
+
+    function ingredientBoxChanged(event) {
+      updateIngredientStyle(event.target);
+    }
+
+    function updateIngredientStyle(box) {
+      var label = box.closest('label');
+      var foodName = label.querySelector('.food-name');
+      foodName.style.textDecoration = box.checked ? '' : 'line-through';
+      foodName.style.color = box.checked ? '' : '#aaa';
+    }
+
+    function updateAllIngredientStyles() {
+      var ingredientBoxes = getAllIngredientBoxes();
+      ingredientBoxes.forEach((box) => updateIngredientStyle(box));
+    }
+
+    document.addEventListener('DOMContentLoaded', updateAllIngredientStyles, false);
   </script>
   <div id="MAIN">
     {% for job in hit.jobs.all %}
